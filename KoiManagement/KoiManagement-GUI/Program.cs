@@ -7,6 +7,7 @@ builder.Services.AddRazorPages();
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureManager();
 builder.Services.ConfigureAutoMapper();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -23,6 +24,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
 app.UseAuthorization();
 
 app.MapRazorPages();
