@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KoiManagement-GUI", "KoiManagement-GUI\KoiManagement-GUI.csproj", "{CF89CFF8-683A-4410-AD8F-570B801756F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KoiManagement-Business", "Business\KoiManagement-Business.csproj", "{7B5F477B-50C8-4BC6-B806-053522183DD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KoiManagement-Business", "KoiManagement-Business\KoiManagement-Business.csproj", "{7B5F477B-50C8-4BC6-B806-053522183DD3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KoiManagement-Repository", "KoiManagement-Repository\KoiManagement-Repository.csproj", "{2E4C56E3-D92B-430B-838F-256E89280CC9}"
 EndProject
