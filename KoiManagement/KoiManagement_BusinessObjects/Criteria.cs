@@ -4,4 +4,5 @@ public partial class Criteria : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
     public double Percent { get; set; }
+    public virtual ICollection<CriteriaPoint> CriteriaPoints { get; set; } = [];
 }
