@@ -1,21 +1,18 @@
 ﻿using AutoMapper;
+using KoiManagement_BusinessObjects;
 using KoiManagement_Repositories.IRepository;
 using KoiManagement_Service.IService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace KoiManagement_Service.Service
 {
 	public class ServiceManager : IServiceManager
 	{
-		private readonly IRepositoryManager repositoryManager;
-		private readonly IConfiguration configuration;
-		private readonly IMapper mapper;
 
-		public ServiceManager(IRepositoryManager repositoryManager, IConfiguration configuration, IMapper mapper)
+		public ServiceManager(IRepositoryManager repositoryManager, IConfiguration configuration, IMapper mapper, UserManager<User> userManager)
 		{
-			this.repositoryManager = repositoryManager;
-			this.configuration = configuration;
-			this.mapper = mapper;
+
 		}
 	}
 }

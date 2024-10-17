@@ -5,6 +5,7 @@ namespace KoiManagement_BusinessObjects;
 
 public partial class User : IdentityUser
 {
+	public string FullName { get; set; } = string.Empty;
 	public bool Active { get; set; } = true;
 	public DateTime? CreateAt { get; set; }
 	public DateTime? UpdateAt { get; set; }
