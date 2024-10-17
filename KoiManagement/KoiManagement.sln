@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KoiManagement_Repositories"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KoiManagement_Services", "KoiManagement_Services\KoiManagement_Services.csproj", "{30C2B3FA-6BCB-4D1E-9955-17562754AD7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KoiManagement_DAO", "KoiManagement_DAO\KoiManagement_DAO.csproj", "{BC15C206-2AA6-4AAD-8D1E-F263A921D0D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KoiManagement_DAO", "KoiManagement_DAO\KoiManagement_DAO.csproj", "{BC15C206-2AA6-4AAD-8D1E-F263A921D0D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
