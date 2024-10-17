@@ -2,13 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>KoiManagement_Repositories</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KoiManagement_DAO\KoiManagement_DAO.csproj" />
+    <ProjectReference Include="..\KoiManagement_BusinessObjects\KoiManagement_BusinessObjects.csproj" />
   </ItemGroup>
 
 </Project>
