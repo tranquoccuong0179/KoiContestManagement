@@ -1,18 +1,36 @@
 ﻿@page
 @model KoiManagement_GUI.Pages.LoginPageModel
 @{
+	string registrationResult = ViewData["RegistrationResult"] as string;
+	string loginResult = ViewData["LoginResult"] as string;
 }
 
 <body>
 	<div class="wrapper">
 		<form method="post">
 			<h1>Login</h1>
+			@{
+				if (!string.IsNullOrEmpty(registrationResult))
+				{
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						@Html.Raw(registrationResult)
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				}
+				if (!string.IsNullOrEmpty(loginResult))
+				{
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						@Html.Raw(loginResult)
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				}
+			}
 			<div class="input-box">
-				<input type="text" placeholder="Username" required>
+				<input type="text" placeholder="Username" asp-for="UserForAuthenticationDto.UserName">
 				<i class='bx bxs-user'></i>
 			</div>
 			<div class="input-box">
-				<input type="password" placeholder="Password" required>
+				<input type="password" placeholder="Password" asp-for="UserForAuthenticationDto.Password">
 				<i class='bx bxs-lock-alt'></i>
 			</div>
 			<button type="submit" class="btn">Sign in</button>

@@ -1,4 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_BusinessObjects.Constants;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -104,6 +106,30 @@ public partial class KoiManagementContext : IdentityDbContext
 				  .WithMany(u => u.Marks)
 				  .HasForeignKey(p => p.CompetitionRoundId)
 				  .OnDelete(DeleteBehavior.NoAction);
+		});
+		modelBuilder.Entity<IdentityRole>(entity =>
+		{
+			entity.HasData(
+				new IdentityRole
+				{
+					Name = Role.Admin,
+					NormalizedName = Role.Admin.ToUpper()
+				},
+				new IdentityRole
+				{
+					Name = Role.Constestant,
+					NormalizedName = Role.Constestant.ToUpper()
+				},
+				new IdentityRole
+				{
+					Name = Role.Referee,
+					NormalizedName = Role.Referee.ToUpper()
+				},
+				new IdentityRole
+				{
+					Name = Role.Manager,
+					NormalizedName = Role.Manager.ToUpper()
+				});
 		});
 	}
 }
