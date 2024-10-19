@@ -11,6 +11,9 @@ builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureManager();
 builder.Services.ConfigureAutoMapper();
 builder.Services.AddSession();
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.ConfigureBlobService(builder.Configuration);
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
 	options.Password.RequireDigit = false;
@@ -37,6 +40,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
