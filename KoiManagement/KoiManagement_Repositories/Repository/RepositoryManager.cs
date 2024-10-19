@@ -1,16 +1,17 @@
-﻿using KoiManagement_DAO;
-using KoiManagement_Repositories.IRepository;
+﻿using KoiManagement_Repositories.IRepository;
 
 namespace KoiManagement_Repositories.Repository
 {
 	public class RepositoryManager : IRepositoryManager
 	{
-		private readonly KoiManagementContext context;
+		private readonly Lazy<IKoiRepository> koiRepository;
 
-		public RepositoryManager(KoiManagementContext context)
+		public RepositoryManager()
 		{
-			this.context = context;
+			koiRepository = new Lazy<IKoiRepository>(() => new KoiRepository());
 		}
-		public Task Save() => context.SaveChangesAsync();
+
+		public IKoiRepository KoiRepository => koiRepository.Value;
+
 	}
 }

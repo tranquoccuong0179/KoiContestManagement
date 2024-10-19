@@ -7,10 +7,6 @@ namespace KoiManagement_DAO
 	{
 		private static KoiDAO instance;
 
-		public KoiDAO()
-		{
-		}
-
 		public static KoiDAO Instance
 		{
 			get
