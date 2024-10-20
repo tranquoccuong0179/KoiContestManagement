@@ -1,4 +1,7 @@
+using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
 using KoiManagement_Service.Extension;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,19 @@ builder.Services.AddRazorPages();
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureManager();
 builder.Services.ConfigureAutoMapper();
+builder.Services.AddSession();
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.ConfigureBlobService(builder.Configuration);
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+	options.Password.RequireDigit = false;
+	options.Password.RequiredLength = 5;
+	options.Password.RequireNonAlphanumeric = false;
+	options.Password.RequireUppercase = false;
+	options.Password.RequireLowercase = false;
+})
+	.AddEntityFrameworkStores<KoiManagementContext>();
 
 var app = builder.Build();
 
@@ -23,6 +39,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

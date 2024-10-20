@@ -2,12 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+<<<<<<<< HEAD:KoiManagement/KoiManagement_Services/KoiManagement_Services.csproj
+    <RootNamespace>KoiManagement_Services</RootNamespace>
+========
+>>>>>>>> nghiep:KoiManagement/KoiManagement_DAO/KoiManagement_DAO.csproj
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\KoiManagement_BusinessObjects\KoiManagement_BusinessObjects.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+<<<<<<<< HEAD:KoiManagement/KoiManagement_Services/KoiManagement_Services.csproj
+    <ProjectReference Include="..\KoiManagement_Repositories\KoiManagement_Repositories.csproj" />
+========
+    <Folder Include="Migrations\" />
+>>>>>>>> nghiep:KoiManagement/KoiManagement_DAO/KoiManagement_DAO.csproj
   </ItemGroup>
 
 </Project>

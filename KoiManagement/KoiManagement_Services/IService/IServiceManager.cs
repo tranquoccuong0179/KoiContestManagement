@@ -1,6 +1,9 @@
-﻿namespace KoiManagement_Service.IService
+﻿using KoiManagement_Services.AuthenticationServices;
+
+namespace KoiManagement_Service.IService
 {
-    public interface IServiceManager
-    {
-    }
+	public interface IServiceManager
+	{
+		IAuthenticationService AuthenticationService { get; }
+	}
 }
