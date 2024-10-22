@@ -1,0 +1,63 @@
+﻿@page
+@model KoiManagement_GUI.Pages.MarkPages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Mark</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Mark.CompetitionRoundId" class="control-label"></label>
+                <select asp-for="Mark.CompetitionRoundId" class ="form-control" asp-items="ViewBag.CompetitionRoundId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mark.Point" class="control-label"></label>
+                <input asp-for="Mark.Point" class="form-control" />
+                <span asp-validation-for="Mark.Point" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mark.Id" class="control-label"></label>
+                <input asp-for="Mark.Id" class="form-control" />
+                <span asp-validation-for="Mark.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Mark.Active" /> @Html.DisplayNameFor(model => model.Mark.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mark.CreateAt" class="control-label"></label>
+                <input asp-for="Mark.CreateAt" class="form-control" />
+                <span asp-validation-for="Mark.CreateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mark.UpdateAt" class="control-label"></label>
+                <input asp-for="Mark.UpdateAt" class="form-control" />
+                <span asp-validation-for="Mark.UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mark.DeleteAt" class="control-label"></label>
+                <input asp-for="Mark.DeleteAt" class="form-control" />
+                <span asp-validation-for="Mark.DeleteAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

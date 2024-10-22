@@ -1,0 +1,66 @@
+﻿@page
+@model KoiManagement_GUI.Pages.MarkPages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Mark[0].Point)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mark[0].CompetitionRound)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mark[0].Active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mark[0].CreateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mark[0].UpdateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mark[0].DeleteAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Mark) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Point)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompetitionRound.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeleteAt)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
