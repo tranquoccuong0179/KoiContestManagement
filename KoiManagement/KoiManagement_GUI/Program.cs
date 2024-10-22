@@ -20,6 +20,8 @@ builder.Services.AddAuthorization();
 builder.Services.ConfigureBlobService(builder.Configuration);
 builder.Services.AddScoped<IMarkRepository, MarkRepository>();
 builder.Services.AddScoped<IMarkService, MarkService>();
+builder.Services.AddScoped<ICriteriaService, CriteriaService>();
+builder.Services.AddScoped<ICriteriaRepository, CriteriaRepository>();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
 	options.Password.RequireDigit = false;
