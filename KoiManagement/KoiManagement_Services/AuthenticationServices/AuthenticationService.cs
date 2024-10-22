@@ -21,7 +21,7 @@ namespace KoiManagement_Services.AuthenticationServices
 			if (userForAuthenticationDto is null || userForAuthenticationDto.UserName is null || userForAuthenticationDto.Password is null) return null;
 			var user = await userManager.FindByNameAsync(userForAuthenticationDto.UserName);
 			if (user is null) return null;
-			var result = await userManager.CheckPasswordAsync(user, userForAuthenticationDto.Password);
+			var result = await userManager.CheckPasswordAsync(user, userForAuthenticationDto.Password) && user.Active;
 			return result ? mapper.Map<UserForReturnDto>(user) : null;
 		}
 
