@@ -1,6 +1,10 @@
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Repositories.IRepository;
+using KoiManagement_Repositories.Repository;
 using KoiManagement_Service.Extension;
+using KoiManagement_Services.IService;
+using KoiManagement_Services.Service;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,8 @@ builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureManager();
 builder.Services.ConfigureAutoMapper();
 builder.Services.AddSession();
+builder.Services.AddScoped<IMarkRepository, MarkRepository>();
+builder.Services.AddScoped<IMarkService, MarkService>();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
 	options.Password.RequireDigit = false;
