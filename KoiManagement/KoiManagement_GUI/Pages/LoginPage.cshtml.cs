@@ -1,3 +1,4 @@
+using KoiManagement_BusinessObjects.Constants;
 using KoiManagement_Service.IService;
 using KoiManagement_Services.AuthenticationServices.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,25 @@ namespace KoiManagement_GUI.Pages
 			var user = await serviceManager.AuthenticationService.AuthenticateUser(UserForAuthenticationDto);
 			if (user is not null)
 			{
-				ViewData["LoginResult"] = user.FullName;
+				HttpContext.Session.SetString("Id", user.Id);
+				HttpContext.Session.SetString("FullName", user.FullName);
+				if (user.Roles.Contains(Role.Admin))
+				{
+					HttpContext.Session.SetString("Role", Role.Admin);
+				}
+				else if (user.Roles.Contains(Role.Manager))
+				{
+					HttpContext.Session.SetString("Role", Role.Manager);
+				}
+				else if (user.Roles.Contains(Role.Referee))
+				{
+					HttpContext.Session.SetString("Role", Role.Referee);
+				}
+				else
+				{
+					HttpContext.Session.SetString("Role", Role.Constestant);
+				}
+				ViewData["LoginResult"] = HttpContext.Session.GetString("Role");
 				return Page();
 			}
 			else

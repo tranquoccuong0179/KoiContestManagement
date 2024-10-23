@@ -3,6 +3,7 @@ using KoiManagement_BusinessObjects.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace KoiManagement_DAO;
 
@@ -44,6 +45,23 @@ public partial class KoiManagementContext : IdentityDbContext
 	public virtual DbSet<Result> Results { get; set; }
 
 	public virtual DbSet<Round> Rounds { get; set; }
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+		if (!optionsBuilder.IsConfigured)
+		{
+			optionsBuilder.UseSqlServer(GetConnectionString());
+		}
+	}
+
+	private string GetConnectionString()
+	{
+		IConfiguration configuration = new ConfigurationBuilder()
+			.SetBasePath(Directory.GetCurrentDirectory())
+			.AddJsonFile("appsettings.json", true, true)
+			.Build();
+		return configuration.GetConnectionString("KoiManagementConnection");
+	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

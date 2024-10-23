@@ -22,7 +22,14 @@ namespace KoiManagement_Services.AuthenticationServices
 			var user = await userManager.FindByNameAsync(userForAuthenticationDto.UserName);
 			if (user is null) return null;
 			var result = await userManager.CheckPasswordAsync(user, userForAuthenticationDto.Password) && user.Active;
-			return result ? mapper.Map<UserForReturnDto>(user) : null;
+			if (result)
+			{
+				var roles = await userManager.GetRolesAsync(user);
+				var returnUser = mapper.Map<UserForReturnDto>(user);
+				returnUser.Roles = roles.ToList();
+				return returnUser;
+			}
+			return null;
 		}
 
 		public async Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistrationDto)
