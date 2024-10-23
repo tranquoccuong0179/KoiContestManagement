@@ -33,11 +33,11 @@ namespace KoiManagement_Services.KoiServices
 			return await repositoryManager.KoiRepository.Create(koi);
 		}
 
-		public async Task<bool> Delete(KoiForDeleteDto koiForDeleteDto, string userId, string koiId)
+		public async Task<bool> Delete(string userId, string koiId)
 		{
 			var koi = await repositoryManager.KoiRepository.GetById(koiId, userId);
 			if (koi is null) return false;
-			mapper.Map(koiForDeleteDto, koi);
+			koi.Active = false;
 			koi.DeleteAt = DateTime.Now;
 			return await repositoryManager.KoiRepository.Update(koi);
 		}
@@ -61,9 +61,9 @@ namespace KoiManagement_Services.KoiServices
 			return mapper.Map<List<KoiForReturnDto>>(koiList);
 		}
 
-		public async Task<bool> Update(KoiForUpdateDto koiForUpdateDto, string userId, string koiId)
+		public async Task<bool> Update(KoiForUpdateDto koiForUpdateDto)
 		{
-			var koi = await repositoryManager.KoiRepository.GetById(koiId, userId);
+			var koi = await repositoryManager.KoiRepository.GetById(koiForUpdateDto.Id, koiForUpdateDto.userId);
 			if (koi is null) return false;
 			mapper.Map(koiForUpdateDto, koi);
 			if (koiForUpdateDto.File is not null && koiForUpdateDto.File.Length > 0)

@@ -1,8 +1,7 @@
-﻿using KoiManagement_BusinessObjects;
-using KoiManagement_Service.IService;
+﻿using KoiManagement_Service.IService;
+using KoiManagement_Services.KoiServices.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_GUI.Pages.KoiPages
 {
@@ -16,16 +15,16 @@ namespace KoiManagement_GUI.Pages.KoiPages
 		}
 
 		[BindProperty]
-		public Koi Koi { get; set; } = default!;
+		public KoiForReturnDto Koi { get; set; } = default!;
 
-		public async Task<IActionResult> OnGetAsync(string id)
+		public async Task<IActionResult> OnGetAsync(string id, string userId)
 		{
 			if (id == null)
 			{
 				return NotFound();
 			}
 
-			var koi = await _context.Kois.FirstOrDefaultAsync(m => m.Id == id);
+			var koi = await serviceManager.KoiService.GetById(id, userId);
 
 			if (koi == null)
 			{
@@ -38,19 +37,18 @@ namespace KoiManagement_GUI.Pages.KoiPages
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(string id)
+		public async Task<IActionResult> OnPostAsync(string id, string userId)
 		{
 			if (id == null)
 			{
 				return NotFound();
 			}
 
-			var koi = await _context.Kois.FindAsync(id);
+			var koi = await serviceManager.KoiService.GetById(id, userId);
 			if (koi != null)
 			{
 				Koi = koi;
-				_context.Kois.Remove(Koi);
-				await _context.SaveChangesAsync();
+				await serviceManager.KoiService.Delete(userId, id);
 			}
 
 			return RedirectToPage("./Index");

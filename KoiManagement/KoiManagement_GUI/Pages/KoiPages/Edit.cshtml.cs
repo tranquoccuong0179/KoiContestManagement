@@ -1,38 +1,38 @@
-﻿using KoiManagement_BusinessObjects;
+﻿using AutoMapper;
 using KoiManagement_Service.IService;
+using KoiManagement_Services.KoiServices.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_GUI.Pages.KoiPages
 {
 	public class EditModel : PageModel
 	{
 		private readonly IServiceManager serviceManager;
+		private readonly IMapper mapper;
 
-		public EditModel(IServiceManager serviceManager)
+		public EditModel(IServiceManager serviceManager, IMapper mapper)
 		{
 			this.serviceManager = serviceManager;
+			this.mapper = mapper;
 		}
 
 		[BindProperty]
-		public Koi Koi { get; set; } = default!;
+		public KoiForUpdateDto Koi { get; set; } = default!;
 
-		public async Task<IActionResult> OnGetAsync(string id)
+		public async Task<IActionResult> OnGetAsync(string id, string userId)
 		{
 			if (id == null)
 			{
 				return NotFound();
 			}
 
-			var koi = await _context.Kois.FirstOrDefaultAsync(m => m.Id == id);
+			var koi = await serviceManager.KoiService.GetById(id, userId);
 			if (koi == null)
 			{
 				return NotFound();
 			}
-			Koi = koi;
-			ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
+			Koi = mapper.Map<KoiForUpdateDto>(koi);
 			return Page();
 		}
 
@@ -45,30 +45,14 @@ namespace KoiManagement_GUI.Pages.KoiPages
 				return Page();
 			}
 
-			_context.Attach(Koi).State = EntityState.Modified;
-
-			try
-			{
-				await _context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!KoiExists(Koi.Id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
+			await serviceManager.KoiService.Update(Koi);
 
 			return RedirectToPage("./Index");
 		}
 
-		private bool KoiExists(string id)
+		private async Task<bool> KoiExists(string id, string userId)
 		{
-			return _context.Kois.Any(e => e.Id == id);
+			return await serviceManager.KoiService.GetById(id, userId) is not null;
 		}
 	}
 }
