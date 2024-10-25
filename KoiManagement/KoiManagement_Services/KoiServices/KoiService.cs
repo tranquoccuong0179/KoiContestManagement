@@ -39,12 +39,17 @@ namespace KoiManagement_Services.KoiServices
 			if (koi is null) return false;
 			koi.Active = false;
 			koi.DeleteAt = DateTime.Now;
-			return await repositoryManager.KoiRepository.Update(koi);
+			return await repositoryManager.KoiRepository.Delete(koi);
 		}
 
 		public async Task<List<KoiForReturnDto>> GetAll()
 		{
 			var koiList = await repositoryManager.KoiRepository.GetAll();
+			return mapper.Map<List<KoiForReturnDto>>(koiList);
+		}
+		public async Task<List<KoiForReturnDto>> GetByUserIdActive(string userId)
+		{
+			var koiList = await repositoryManager.KoiRepository.GetByUserIdActive(userId);
 			return mapper.Map<List<KoiForReturnDto>>(koiList);
 		}
 

@@ -28,6 +28,14 @@ namespace KoiManagement_DAO
 			}
 		}
 
+		public async Task<List<Koi>> GetByUserIdActive(string userId)
+		{
+			using (var context = new KoiManagementContext())
+			{
+				return await context.Kois.Include(c => c.User).Where(c => c.UserId.Equals(userId) && c.Active).ToListAsync();
+			}
+		}
+
 		public async Task<List<Koi>> GetByUserId(string userId)
 		{
 			using (var context = new KoiManagementContext())
@@ -98,9 +106,9 @@ namespace KoiManagement_DAO
 				Koi? currentKoi = await GetById(koi.Id, koi.UserId);
 				try
 				{
-					if (currentKoi is null)
+					if (currentKoi is not null)
 					{
-						context.Kois.Remove(koi);
+						context.Entry<Koi>(koi).State = EntityState.Modified;
 						await context.SaveChangesAsync();
 						isSuccess = true;
 					}

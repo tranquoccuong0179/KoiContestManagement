@@ -18,7 +18,7 @@ namespace KoiManagement_GUI.Pages.KoiPages
 		public async Task OnGetAsync()
 		{
 			string userId = HttpContext.Session.GetString("Id");
-			Koi = await serviceManager.KoiService.GetByUserId(userId);
+			Koi = await serviceManager.KoiService.GetByUserIdActive(userId);
 		}
 	}
 }
