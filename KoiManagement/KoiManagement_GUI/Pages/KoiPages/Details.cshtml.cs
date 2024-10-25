@@ -8,6 +8,7 @@ namespace KoiManagement_GUI.Pages.KoiPages
 	public class DetailsModel : PageModel
 	{
 		private readonly IServiceManager serviceManager;
+		private string userId;
 
 		public DetailsModel(IServiceManager serviceManager)
 		{
@@ -16,12 +17,13 @@ namespace KoiManagement_GUI.Pages.KoiPages
 
 		public KoiForReturnDto Koi { get; set; } = default!;
 
-		public async Task<IActionResult> OnGetAsync(string id, string userId)
+		public async Task<IActionResult> OnGetAsync(string id)
 		{
 			if (id == null)
 			{
 				return NotFound();
 			}
+			userId = HttpContext.Session.GetString("Id");
 
 			var koi = await serviceManager.KoiService.GetById(id, userId);
 			if (koi == null)

@@ -1,4 +1,6 @@
-﻿namespace KoiManagement_Services.KoiServices.DTO
+﻿using KoiManagement_BusinessObjects;
+
+namespace KoiManagement_Services.KoiServices.DTO
 {
 	public class KoiForReturnDto
 	{
@@ -11,5 +13,6 @@
 		public string Image { get; init; }
 		public bool Active { get; init; }
 		public string UserId { get; init; }
+		public User User { get; init; }
 	}
 }

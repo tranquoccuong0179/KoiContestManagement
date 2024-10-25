@@ -32,7 +32,7 @@ namespace KoiManagement_DAO
 		{
 			using (var context = new KoiManagementContext())
 			{
-				return await context.Kois.Where(c => c.UserId.Equals(userId)).ToListAsync();
+				return await context.Kois.Include(c => c.User).Where(c => c.UserId.Equals(userId)).ToListAsync();
 			}
 		}
 
@@ -40,7 +40,7 @@ namespace KoiManagement_DAO
 		{
 			using (var context = new KoiManagementContext())
 			{
-				return await context.Kois.FirstOrDefaultAsync(c => c.Id.Equals(koiId) && c.UserId.Equals(userId));
+				return await context.Kois.Include(c => c.User).FirstOrDefaultAsync(c => c.Id.Equals(koiId) && c.UserId.Equals(userId));
 			}
 		}
 
