@@ -10,5 +10,6 @@
 		public double Size { get; init; }
 		public string Image { get; init; }
 		public bool Active { get; init; }
+		public string UserId { get; init; }
 	}
 }

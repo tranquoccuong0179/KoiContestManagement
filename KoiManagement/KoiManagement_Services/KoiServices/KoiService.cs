@@ -63,7 +63,7 @@ namespace KoiManagement_Services.KoiServices
 
 		public async Task<bool> Update(KoiForUpdateDto koiForUpdateDto)
 		{
-			var koi = await repositoryManager.KoiRepository.GetById(koiForUpdateDto.Id, koiForUpdateDto.userId);
+			var koi = await repositoryManager.KoiRepository.GetById(koiForUpdateDto.Id, koiForUpdateDto.UserId);
 			if (koi is null) return false;
 			mapper.Map(koiForUpdateDto, koi);
 			if (koiForUpdateDto.File is not null && koiForUpdateDto.File.Length > 0)

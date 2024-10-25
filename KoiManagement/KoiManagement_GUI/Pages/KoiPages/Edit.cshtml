@@ -11,8 +11,11 @@
 <hr />
 <div class="row">
 	<div class="col-md-4">
-		<form method="post">
+		<form method="post" enctype="multipart/form-data">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<input asp-for="Koi.Id" class="form-control" type="hidden" />
+			</div>
 			<div class="form-group">
 				<label asp-for="Koi.Name" class="control-label"></label>
 				<input asp-for="Koi.Name" class="form-control" />
@@ -37,6 +40,14 @@
 				<label asp-for="Koi.Size" class="control-label"></label>
 				<input asp-for="Koi.Size" class="form-control" />
 				<span asp-validation-for="Koi.Size" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Koi.File" class="control-label"></label>
+				<input asp-for="Koi.File" class="form-control" />
+				<span asp-validation-for="Koi.File" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input asp-for="Koi.UserId" class="form-control" type="hidden" />
 			</div>
 			<div class="form-group">
 				<input type="submit" value="Save" class="btn btn-primary" />

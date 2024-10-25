@@ -9,6 +9,7 @@ namespace KoiManagement_Services.KoiServices.DTO
 		{
 			CreateMap<KoiForCreationDto, Koi>().ForSourceMember(c => c.File, opt => opt.DoNotValidate());
 			CreateMap<KoiForUpdateDto, Koi>().ForSourceMember(c => c.File, opt => opt.DoNotValidate());
+			CreateMap<KoiForReturnDto, KoiForUpdateDto>();
 			CreateMap<Koi, KoiForReturnDto>();
 
 		}
