@@ -8,17 +8,18 @@ namespace KoiManagement_GUI.Pages.KoiPages
 	public class CreateModel : PageModel
 	{
 		private readonly IServiceManager serviceManager;
+		public string userId;
 
 		public CreateModel(IServiceManager serviceManager)
 		{
 			this.serviceManager = serviceManager;
+
 		}
 
 		public void OnGet()
 		{
-
+			userId = HttpContext.Session.GetString("Id") ?? string.Empty;
 		}
-
 		[BindProperty]
 		public KoiForCreationDto Koi { get; set; } = default!;
 

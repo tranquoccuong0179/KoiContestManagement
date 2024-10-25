@@ -14,9 +14,6 @@
 	<thead>
 		<tr>
 			<th>
-				@Html.DisplayNameFor(model => model.Koi[0].Id)
-			</th>
-			<th>
 				@Html.DisplayNameFor(model => model.Koi[0].Name)
 			</th>
 			<th>
@@ -34,9 +31,6 @@
 			<th>
 				@Html.DisplayNameFor(model => model.Koi[0].Image)
 			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Koi[0].Active)
-			</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -44,9 +38,6 @@
 		@foreach (var item in Model.Koi)
 		{
 			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Id)
-				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Name)
 				</td>
@@ -63,10 +54,7 @@
 					@Html.DisplayFor(modelItem => item.Size)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Image)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Active)
+					<img style="width:70px;height:70px" src="@item.Image" alt="koi" />
 				</td>
 				<td>
 					<a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

@@ -40,7 +40,7 @@ namespace KoiManagement_DAO
 		{
 			using (var context = new KoiManagementContext())
 			{
-				return await context.Kois.FirstOrDefaultAsync(c => c.Id.Equals(koiId) && c.UserId.Equals(koiId));
+				return await context.Kois.FirstOrDefaultAsync(c => c.Id.Equals(koiId) && c.UserId.Equals(userId));
 			}
 		}
 

@@ -10,6 +10,7 @@ namespace KoiManagement_GUI.Pages.KoiPages
 	{
 		private readonly IServiceManager serviceManager;
 		private readonly IMapper mapper;
+		private string userId;
 
 		public EditModel(IServiceManager serviceManager, IMapper mapper)
 		{
@@ -20,12 +21,13 @@ namespace KoiManagement_GUI.Pages.KoiPages
 		[BindProperty]
 		public KoiForUpdateDto Koi { get; set; } = default!;
 
-		public async Task<IActionResult> OnGetAsync(string id, string userId)
+		public async Task<IActionResult> OnGetAsync(string id)
 		{
 			if (id == null)
 			{
 				return NotFound();
 			}
+			userId = HttpContext.Session.GetString("Id");
 
 			var koi = await serviceManager.KoiService.GetById(id, userId);
 			if (koi == null)
@@ -50,8 +52,9 @@ namespace KoiManagement_GUI.Pages.KoiPages
 			return RedirectToPage("./Index");
 		}
 
-		private async Task<bool> KoiExists(string id, string userId)
+		private async Task<bool> KoiExists(string id)
 		{
+			userId = HttpContext.Session.GetString("Id");
 			return await serviceManager.KoiService.GetById(id, userId) is not null;
 		}
 	}
