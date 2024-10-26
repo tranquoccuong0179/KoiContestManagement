@@ -3,6 +3,10 @@
 
 @{
 	ViewData["Title"] = "Details";
+	if (HttpContext.Session.GetString("Id") is null)
+	{
+		Response.Redirect("/LoginPage");
+	}
 }
 
 <div class="container">

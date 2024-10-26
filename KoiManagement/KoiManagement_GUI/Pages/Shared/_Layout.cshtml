@@ -36,7 +36,9 @@
 										@Html.Raw(Context.Session.GetString("FullName"))
 									}
 								</span>
-								<button name="logout" class="btn btn-danger">Logout</button>
+								<form asp-page="/LogoutPage" method="post" style="display:inline;">
+									<button type="submit" class="btn btn-danger">Logout</button>
+								</form>
 							</h5>
 						</div>
 					</div>
