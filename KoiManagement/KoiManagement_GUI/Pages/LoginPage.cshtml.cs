@@ -47,8 +47,7 @@ namespace KoiManagement_GUI.Pages
 				{
 					HttpContext.Session.SetString("Role", Role.Constestant);
 				}
-				ViewData["LoginResult"] = HttpContext.Session.GetString("Id");
-				return Redirect("~/KoiPages");
+				return Redirect("~/ProfilePages");
 			}
 			else
 			{

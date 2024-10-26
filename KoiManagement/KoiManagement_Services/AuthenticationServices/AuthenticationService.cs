@@ -32,6 +32,16 @@ namespace KoiManagement_Services.AuthenticationServices
 			return null;
 		}
 
+		public async Task<UserForReturnDto?> GetUserById(string userId)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+			if (user is null) return null;
+			var roles = await userManager.GetRolesAsync(user);
+			var returnUser = mapper.Map<UserForReturnDto>(user);
+			returnUser.Roles = roles.ToList();
+			return returnUser;
+		}
+
 		public async Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistrationDto)
 		{
 			var user = mapper.Map<User>(userForRegistrationDto);
