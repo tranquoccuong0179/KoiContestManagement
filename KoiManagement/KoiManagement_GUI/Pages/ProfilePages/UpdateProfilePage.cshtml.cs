@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiManagement_GUI.Pages.ProfilePages
 {
-	public class UpdatePasswordPageModel : PageModel
+	public class UpdateProfilePageModel : PageModel
 	{
 		private readonly IServiceManager serviceManager;
 		private string userId;
 
 		[BindProperty]
-		public UserForUpdatePasswordDto UserForUpdatePasswordDto { get; set; }
-		public UpdatePasswordPageModel(IServiceManager serviceManager)
+		public UserForUpdateProfileDto UserForUpdateProfileDto { get; set; }
+		public UpdateProfilePageModel(IServiceManager serviceManager)
 		{
 			this.serviceManager = serviceManager;
 		}
@@ -27,13 +27,14 @@ namespace KoiManagement_GUI.Pages.ProfilePages
 				return Page();
 			}
 			userId = HttpContext.Session.GetString("Id");
-			var result = await serviceManager.AuthenticationService.UpdateUserPassword(userId, UserForUpdatePasswordDto);
+			var result = await serviceManager.AuthenticationService.UpdateUser(userId, UserForUpdateProfileDto);
 			if (!result.Succeeded)
 			{
-				ViewData["ErrorMessage"] = "Current password is incorrect";
+				ViewData["ErrorMessage"] = "Something went wrong";
 				return Page();
 			}
-			TempData["SuccessMessage"] = "Password updated successfully";
+			HttpContext.Session.SetString("FullName", UserForUpdateProfileDto.FullName);
+			TempData["SuccessMessage"] = "Profile updated successfully";
 			return RedirectToPage("/ProfilePages/Index");
 		}
 	}

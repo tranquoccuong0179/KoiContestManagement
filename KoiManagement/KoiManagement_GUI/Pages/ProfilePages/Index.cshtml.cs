@@ -20,6 +20,11 @@ namespace KoiManagement_GUI.Pages.ProfilePages
 		{
 			userId = HttpContext.Session.GetString("Id");
 			User = await serviceManager.AuthenticationService.GetUserById(userId);
+			string successMessage = TempData["SuccessMessage"] as string;
+			if (!string.IsNullOrEmpty(successMessage))
+			{
+				ViewData["SuccessMessage"] = successMessage;
+			}
 			return Page();
 		}
 	}
