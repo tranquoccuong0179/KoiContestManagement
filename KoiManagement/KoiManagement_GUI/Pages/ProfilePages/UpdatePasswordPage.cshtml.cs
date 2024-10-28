@@ -1,12 +1,38 @@
+using KoiManagement_Service.IService;
+using KoiManagement_Services.AuthenticationServices.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiManagement_GUI.Pages.ProfilePages
 {
-    public class UpdatePasswordPageModel : PageModel
-    {
-        public void OnGet()
-        {
-        }
-    }
+	public class UpdatePasswordPageModel : PageModel
+	{
+		private readonly IServiceManager serviceManager;
+		private string userId;
+
+		[BindProperty]
+		public UserForUpdatePasswordDto UserForUpdatePasswordDto { get; set; }
+		public UpdatePasswordPageModel(IServiceManager serviceManager)
+		{
+			this.serviceManager = serviceManager;
+		}
+		public void OnGet()
+		{
+		}
+
+		public async Task<IActionResult> OnPost()
+		{
+			if (!ModelState.IsValid)
+			{
+				return Page();
+			}
+			userId = HttpContext.Session.GetString("Id");
+			var result = await serviceManager.AuthenticationService.UpdateUserPassword(userId, UserForUpdatePasswordDto);
+			if (!result.Succeeded)
+			{
+				return Page();
+			}
+			return RedirectToPage("/ProfilePages/Index");
+		}
+	}
 }

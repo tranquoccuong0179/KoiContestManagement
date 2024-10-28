@@ -57,5 +57,12 @@ namespace KoiManagement_Services.AuthenticationServices
 
 			return result;
 		}
+
+		public async Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+
+			return await userManager.ChangePasswordAsync(user, userForUpdatePasswordDto.OldPassword, userForUpdatePasswordDto.NewPassword);
+		}
 	}
 }
