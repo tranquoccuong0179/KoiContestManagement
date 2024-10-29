@@ -24,11 +24,6 @@
         transform: scale(1.5)
     }
 
-    #profile .btn {
-        height: 140px;
-        width: 140px;
-    }
-
     #profile .name {
         font-size: 22px;
         font-weight: bold

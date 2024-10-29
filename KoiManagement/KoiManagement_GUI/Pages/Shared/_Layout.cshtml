@@ -39,9 +39,13 @@
 										@Html.Raw(Context.Session.GetString("FullName"))
 									}
 								</span>
+								<form asp-page="/ProfilePages/Index" method="get" style="display:inline;">
+									<button type="submit" class="btn btn-primary">Profile</button>
+								</form>
 								<form asp-page="/LogoutPage" method="post" style="display:inline;">
 									<button type="submit" class="btn btn-danger">Logout</button>
 								</form>
+
 							</h5>
 						</div>
 					</div>
