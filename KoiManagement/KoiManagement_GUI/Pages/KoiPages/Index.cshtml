@@ -8,66 +8,33 @@
 		Response.Redirect("/LoginPage");
 	}
 }
+<head>
+	<link rel="stylesheet" href="~/css/KoiPagesIndex.css" asp-append-version="true" />
+</head>
 
-<div class="container">
-	<h1>Index</h1>
+<div class="body-koi-index">
+	<div class="d-flex justify-content-between mb-5">
+		<h1>My kois</h1>
 
-	<p>
-		<a asp-page="Create" class="btn btn-primary">Create New</a>
-	</p>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					@Html.DisplayNameFor(model => model.Koi[0].Name)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Koi[0].Type)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Koi[0].Variety)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Koi[0].DateOfBirth)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Koi[0].Size)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Koi[0].Image)
-				</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var item in Model.Koi)
-			{
-				<tr>
-					<td>
-						@Html.DisplayFor(modelItem => item.Name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Type)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Variety)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.DateOfBirth)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Size)
-					</td>
-					<td>
-						<img style="width:70px;height:70px" src="@item.Image" alt="koi" />
-					</td>
-					<td>
-						<a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-						<a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-						<a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+		<p>
+			<a asp-page="Create" class="btn btn-primary">Create New</a>
+		</p>
+	</div>
+	<div class="row">
+		@foreach (var item in Model.Koi)
+		{
+			<div class="col-4 item me-3 d-flex justify-content-center">
+				<div class="card" style="width: 18rem;">
+					<img src="@item.Image" class="card-img-top" alt="@item.Id">
+					<div class="card-body">
+						<h5 class="card-title">@item.Name</h5>
+						<a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+						<a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+						<a class="btn btn-primary" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
 </div>
+

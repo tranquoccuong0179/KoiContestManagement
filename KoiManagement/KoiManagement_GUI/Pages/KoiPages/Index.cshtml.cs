@@ -1,5 +1,7 @@
-﻿using KoiManagement_Service.IService;
-using KoiManagement_Services.KoiServices.DTO;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Service.IService;
+using KoiManagement_Services.AuthenticationServices.DTO;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiManagement_GUI.Pages.KoiPages
@@ -8,16 +10,20 @@ namespace KoiManagement_GUI.Pages.KoiPages
 	{
 		private readonly IServiceManager serviceManager;
 
+		[BindProperty]
+		public UserForReturnDto UserForReturnDto { get; set; }
+
 		public IndexModel(IServiceManager serviceManager)
 		{
 			this.serviceManager = serviceManager;
 		}
 
-		public IList<KoiForReturnDto> Koi { get; set; } = default!;
+		public IList<Koi> Koi { get; set; } = default!;
 
 		public async Task OnGetAsync()
 		{
 			string userId = HttpContext.Session.GetString("Id");
+			UserForReturnDto = await serviceManager.AuthenticationService.GetUserById(userId);
 			Koi = await serviceManager.KoiService.GetByUserIdActive(userId);
 		}
 	}

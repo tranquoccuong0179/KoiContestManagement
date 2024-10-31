@@ -5,7 +5,7 @@ using KoiManagement_Repositories.IRepository;
 using KoiManagement_Services.IService;
 using KoiManagement_Services.KoiServices.DTO;
 
-namespace KoiManagement_Services.KoiServices
+namespace KoiManagement_Services.Service
 {
 	internal sealed class KoiService : IKoiService
 	{
@@ -42,28 +42,24 @@ namespace KoiManagement_Services.KoiServices
 			return await repositoryManager.KoiRepository.Delete(koi);
 		}
 
-		public async Task<List<KoiForReturnDto>> GetAll()
+		public async Task<List<Koi>> GetAll()
 		{
-			var koiList = await repositoryManager.KoiRepository.GetAll();
-			return mapper.Map<List<KoiForReturnDto>>(koiList);
+			return await repositoryManager.KoiRepository.GetAll();
 		}
-		public async Task<List<KoiForReturnDto>> GetByUserIdActive(string userId)
+		public async Task<List<Koi>> GetByUserIdActive(string userId)
 		{
-			var koiList = await repositoryManager.KoiRepository.GetByUserIdActive(userId);
-			return mapper.Map<List<KoiForReturnDto>>(koiList);
+			return await repositoryManager.KoiRepository.GetByUserIdActive(userId);
 		}
 
-		public async Task<KoiForReturnDto?> GetById(string koiId, string userId)
+		public async Task<Koi?> GetById(string koiId, string userId)
 		{
-			var koi = await repositoryManager.KoiRepository.GetById(koiId, userId);
-			return mapper.Map<KoiForReturnDto>(koi);
+			return await repositoryManager.KoiRepository.GetById(koiId, userId);
 
 		}
 
-		public async Task<List<KoiForReturnDto>> GetByUserId(string userId)
+		public async Task<List<Koi>> GetByUserId(string userId)
 		{
-			var koiList = await repositoryManager.KoiRepository.GetByUserId(userId);
-			return mapper.Map<List<KoiForReturnDto>>(koiList);
+			return await repositoryManager.KoiRepository.GetByUserId(userId);
 		}
 
 		public async Task<bool> Update(KoiForUpdateDto koiForUpdateDto)

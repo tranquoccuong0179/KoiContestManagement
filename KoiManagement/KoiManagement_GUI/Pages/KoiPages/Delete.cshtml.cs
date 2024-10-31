@@ -1,5 +1,5 @@
-﻿using KoiManagement_Service.IService;
-using KoiManagement_Services.KoiServices.DTO;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Service.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -16,7 +16,7 @@ namespace KoiManagement_GUI.Pages.KoiPages
 		}
 
 		[BindProperty]
-		public KoiForReturnDto Koi { get; set; } = default!;
+		public Koi Koi { get; set; } = default!;
 
 		public async Task<IActionResult> OnGetAsync(string id)
 		{
