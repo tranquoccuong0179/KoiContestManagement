@@ -10,14 +10,14 @@
 }
 
 <div class="container">
-	<h3 class="text-danger">Are you sure you want to delete @Model.Koi.Name?</h3>
+	<h3 class="text-danger animate__animated animate__slideInLeft">Are you sure you want to delete @Model.Koi.Name?</h3>
 	<div>
 		<div>
 			<div class="row">
-				<div class="col-4">
+				<div class="col-4 animate__zoomInLeft animate__animated">
 					<img class="img-thumbnail rounded" src="@Html.DisplayFor(model => model.Koi.Image)" alt="@Html.DisplayFor(model => model.Koi.Id)" />
 				</div>
-				<div class="col-8 d-flex align-items-center">
+				<div class="col-8 d-flex align-items-center animate__animated animate__zoomInRight">
 					<dl class="row">
 						<dt class="col-sm-2">
 							@Html.DisplayNameFor(model => model.Koi.Name)
@@ -60,7 +60,7 @@
 			</div>
 		</div>
 
-		<form method="post" class="mt-3">
+		<form method="post" class="mt-3 animate__animated animate__slideInUp">
 			<input type="hidden" asp-for="Koi.Id" />
 			<input type="submit" value="Delete" class="btn btn-danger" /> |
 			<a asp-page="./Index" class="btn btn-primary">Back to List</a>

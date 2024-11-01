@@ -5,29 +5,29 @@
 <div class="body" id="authenticate">
 	<div class="wrapper">
 		<form method="post">
-			<h1>Sign up</h1>
-			<div class="input-box">
+			<h1 class="animate__animated animate__backInDown">Sign up</h1>
+			<div class="input-box animate__animated animate__backInLeft">
 				<input type="text" placeholder="Username" asp-for="UserForRegistration.UserName">
 				<i class='bx bxs-user'></i>
 				<span asp-validation-for="UserForRegistration.UserName" class="text-danger"></span>
 			</div>
-			<div class="input-box">
+			<div class="input-box animate__animated animate__backInLeft">
 				<input type="text" placeholder="Fullname" asp-for="UserForRegistration.FullName">
 				<i class='bx bxs-user'></i>
 				<span asp-validation-for="UserForRegistration.FullName" class="text-danger"></span>
 			</div>
-			<div class="input-box">
+			<div class="input-box animate__animated animate__backInLeft">
 				<input type="password" placeholder="Password" asp-for="UserForRegistration.Password">
 				<i class='bx bxs-lock-alt'></i>
 				<span asp-validation-for="UserForRegistration.Password" class="text-danger"></span>
 			</div>
-			<div class="input-box">
+			<div class="input-box animate__animated animate__backInLeft">
 				<input type="password" placeholder="Confirm password" asp-for="UserForRegistration.ConfirmPassword">
 				<i class='bx bxs-lock-alt'></i>
 				<span asp-validation-for="UserForRegistration.ConfirmPassword" class="text-danger"></span>
 			</div>
-			<button type="submit" class="btn">Sign up</button>
-			<div class="register-link">
+			<button type="submit" class="btn animate__animated animate__backInUp">Sign up</button>
+			<div class="register-link animate__animated animate__backInUp">
 				<p>Already had an account? <a href="LoginPage">Register</a></p>
 			</div>
 		</form>

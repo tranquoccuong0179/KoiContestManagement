@@ -16,13 +16,13 @@
 	<div class="d-flex justify-content-between mb-5">
 
 		<p>
-			<a asp-page="Create" class="btn btn-primary">Create New</a>
+			<a asp-page="Create" class="btn btn-primary animate__flipInX animate__animated">Create New</a>
 		</p>
 	</div>
 	<div class="row">
 		@foreach (var item in Model.Koi)
 		{
-			<div class="col-4 item d-flex justify-content-center">
+			<div class="col-4 item d-flex justify-content-center animate__fadeInDownBig animate__animated">
 				<div class="card" style="width: 18rem;">
 					<img src="@item.Image" class="card-img-top" alt="@item.Id">
 					<div class="card-body">
