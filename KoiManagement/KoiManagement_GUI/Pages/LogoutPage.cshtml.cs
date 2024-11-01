@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiManagement_GUI.Pages
@@ -7,12 +6,8 @@ namespace KoiManagement_GUI.Pages
 	{
 		public void OnGet()
 		{
-		}
-
-		public IActionResult OnPost()
-		{
 			HttpContext.Session.Clear();
-			return RedirectToPage("LoginPage");
+			Response.Redirect("LoginPage");
 		}
 	}
 }

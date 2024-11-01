@@ -12,9 +12,8 @@
 	<link rel="stylesheet" href="~/css/KoiPagesIndex.css" asp-append-version="true" />
 </head>
 
-<div class="body-koi-index">
+<div class="body-koi-index container">
 	<div class="d-flex justify-content-between mb-5">
-		<h1>My kois</h1>
 
 		<p>
 			<a asp-page="Create" class="btn btn-primary">Create New</a>
@@ -23,7 +22,7 @@
 	<div class="row">
 		@foreach (var item in Model.Koi)
 		{
-			<div class="col-4 item me-3 d-flex justify-content-center">
+			<div class="col-4 item d-flex justify-content-center">
 				<div class="card" style="width: 18rem;">
 					<img src="@item.Image" class="card-img-top" alt="@item.Id">
 					<div class="card-body">
