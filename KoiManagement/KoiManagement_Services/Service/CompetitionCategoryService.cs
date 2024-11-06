@@ -1,0 +1,30 @@
+using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
+using KoiManagement_Repositories.IRepository;
+using KoiManagement_Repositories.Repository;
+using KoiManagement_Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KoiManagement_Services.Service
+{
+    public class CompetitionCategoryService : ICompetitionCategoryService
+    {
+        private readonly ICompetitionCategoryRepository _competitionCategoryRepository;
+
+        public CompetitionCategoryService()
+        {
+            _competitionCategoryRepository = new CompetitionCategoryRepository();
+        }
+
+        public List<CompetitionCategory> GetCompetitionCategories() => _competitionCategoryRepository.GetCompetitionCategories();
+
+        public CompetitionCategory? GetCompetitionCategory(string id) => _competitionCategoryRepository.GetCompetitionCategory(id);
+        public bool AddCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.AddCompetitionCategory(competitionCategory);
+        public bool UpdateCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.UpdateCompetitionCategory(competitionCategory);
+        public bool DeleteCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.DeleteCompetitionCategory(competitionCategory);
+    }
+}

@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICompetitionCategoryService _ccService;
 
-        public DeleteModel(KoiManagement_DAO.KoiManagementContext context)
+        public DeleteModel(ICompetitionCategoryService ccService)
         {
-            _context = context;
+            _ccService = ccService;
         }
 
         [BindProperty]

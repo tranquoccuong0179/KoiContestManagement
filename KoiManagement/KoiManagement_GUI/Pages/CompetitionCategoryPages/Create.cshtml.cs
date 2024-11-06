@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICompetitionCategoryService _ccService;
 
-        public CreateModel(KoiManagement_DAO.KoiManagementContext context)
+        public CreateModel(ICompetitionCategoryService ccService)
         {
-            _context = context;
+            _ccService = ccService;
         }
 
         public IActionResult OnGet()

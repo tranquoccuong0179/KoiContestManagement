@@ -8,16 +8,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
     public class EditModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICompetitionCategoryService _ccService;
 
-        public EditModel(KoiManagement_DAO.KoiManagementContext context)
+        public EditModel(ICompetitionCategoryService ccService)
         {
-            _context = context;
+            _ccService = ccService;
         }
 
         [BindProperty]
