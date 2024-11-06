@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoiManagement_DAO.Migrations
 {
     [DbContext(typeof(KoiManagementContext))]
-    [Migration("20241017145836_Init")]
-    partial class Init
+    [Migration("20241106040655_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -561,6 +561,32 @@ namespace KoiManagement_DAO.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "add7ba94-19b0-4413-ae9d-1fa105f93324",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "30b9341a-5eb7-40fa-8012-09820367504e",
+                            Name = "Contestant",
+                            NormalizedName = "CONTESTANT"
+                        },
+                        new
+                        {
+                            Id = "ab9ba915-b62c-4d6c-ae67-96a96df839bf",
+                            Name = "Referee",
+                            NormalizedName = "REFEREE"
+                        },
+                        new
+                        {
+                            Id = "ea9b3cf4-d4a9-4921-80b8-3ffd40f37df3",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

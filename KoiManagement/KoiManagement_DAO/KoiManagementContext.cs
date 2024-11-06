@@ -48,19 +48,17 @@ public partial class KoiManagementContext : IdentityDbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		if (!optionsBuilder.IsConfigured)
-		{
-			optionsBuilder.UseSqlServer(GetConnectionString());
-		}
+		optionsBuilder.UseSqlServer(GetConnectionString());
 	}
 
-	private string GetConnectionString()
+	private string? GetConnectionString()
 	{
-		IConfiguration configuration = new ConfigurationBuilder()
-			.SetBasePath(Directory.GetCurrentDirectory())
-			.AddJsonFile("appsettings.json", true, true)
-			.Build();
-		return configuration.GetConnectionString("KoiManagementConnection");
+		return "Server=(local);uid=sa;pwd=12345678;database=KoiManagement;Trusted_Connection=True;TrustServerCertificate=True;";
+		//IConfiguration configuration = new ConfigurationBuilder()
+		//	.SetBasePath(Directory.GetCurrentDirectory())
+		//	.AddJsonFile("appsettings.json", true, true)
+		//	.Build();
+		//return configuration["ConnectionStrings:KoiManagementConnection"];
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
