@@ -21,6 +21,11 @@ builder.Services.ConfigureBlobService(builder.Configuration);
 builder.Services.AddScoped<IMarkRepository, MarkRepository>();
 builder.Services.AddScoped<IMarkService, MarkService>();
 builder.Services.AddScoped<ICriteriaService, CriteriaService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICompetitionService, CompetitionService>();
+builder.Services.AddScoped<ICompetitionCategoryService, CompetitionCategoryService>();
+builder.Services.AddScoped<IRoundService, RoundService>();
+
 builder.Services.AddScoped<ICriteriaRepository, CriteriaRepository>();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {

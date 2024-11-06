@@ -22,14 +22,14 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 
         public CompetitionCategory CompetitionCategory { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public IActionResult OnGet(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var competitioncategory = await _context.CompetitionCategories.FirstOrDefaultAsync(m => m.Id == id);
+            var competitioncategory = _ccService.GetCompetitionCategory(id);
             if (competitioncategory == null)
             {
                 return NotFound();

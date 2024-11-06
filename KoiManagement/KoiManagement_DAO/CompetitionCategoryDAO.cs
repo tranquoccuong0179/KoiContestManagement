@@ -84,7 +84,7 @@ namespace KoiManagement_DAO
             {
                 if (existedCompetitionCategory != null)
                 {
-                    context.Competitions.Remove(existedCompetitionCategory);
+                    context.CompetitionCategories.Remove(existedCompetitionCategory);
                     context.SaveChanges();
                     result = true;
                 }

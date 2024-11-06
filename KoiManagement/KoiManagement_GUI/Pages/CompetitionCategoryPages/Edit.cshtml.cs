@@ -15,47 +15,50 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
     public class EditModel : PageModel
     {
         private readonly ICompetitionCategoryService _ccService;
+        private readonly ICategoryService _categoryService;
+        private readonly ICompetitionService _competitionService;
 
-        public EditModel(ICompetitionCategoryService ccService)
+        public EditModel(ICompetitionCategoryService ccService, ICategoryService categoryService, ICompetitionService competitionService, CompetitionCategory competitionCategory)
         {
             _ccService = ccService;
+            _categoryService = categoryService;
+            _competitionService = competitionService;
+            CompetitionCategory = competitionCategory;
         }
 
         [BindProperty]
         public CompetitionCategory CompetitionCategory { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public IActionResult OnGet(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var competitioncategory =  await _context.CompetitionCategories.FirstOrDefaultAsync(m => m.Id == id);
+            var competitioncategory =  _ccService.GetCompetitionCategory(id);
             if (competitioncategory == null)
             {
                 return NotFound();
             }
             CompetitionCategory = competitioncategory;
-           ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
-           ViewData["CompetitionId"] = new SelectList(_context.Competitions, "Id", "Id");
+           ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Id");
+           ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Id");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(CompetitionCategory).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                _ccService.UpdateCompetitionCategory(CompetitionCategory);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,7 +77,7 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 
         private bool CompetitionCategoryExists(string id)
         {
-            return _context.CompetitionCategories.Any(e => e.Id == id);
+            return _ccService.GetCompetitionCategory(id) != null;
         }
     }
 }

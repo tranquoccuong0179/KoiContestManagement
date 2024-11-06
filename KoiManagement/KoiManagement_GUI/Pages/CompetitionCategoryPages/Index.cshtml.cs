@@ -22,11 +22,9 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 
         public IList<CompetitionCategory> CompetitionCategory { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGetAsync()
         {
-            CompetitionCategory = await _context.CompetitionCategories
-                .Include(c => c.Category)
-                .Include(c => c.Competition).ToListAsync();
+            CompetitionCategory = _ccService.GetCompetitionCategories();
         }
     }
 }

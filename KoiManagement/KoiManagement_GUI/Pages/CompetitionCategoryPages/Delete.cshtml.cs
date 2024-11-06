@@ -23,14 +23,14 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
         [BindProperty]
         public CompetitionCategory CompetitionCategory { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public IActionResult OnGet(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var competitioncategory = await _context.CompetitionCategories.FirstOrDefaultAsync(m => m.Id == id);
+            var competitioncategory = _ccService.GetCompetitionCategory(id);
 
             if (competitioncategory == null)
             {
@@ -43,21 +43,19 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public IActionResult OnPost(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var competitioncategory = await _context.CompetitionCategories.FindAsync(id);
+            var competitioncategory = _ccService.GetCompetitionCategory(id);
             if (competitioncategory != null)
             {
                 CompetitionCategory = competitioncategory;
-                _context.CompetitionCategories.Remove(CompetitionCategory);
-                await _context.SaveChangesAsync();
+                _ccService.DeleteCompetitionCategory(CompetitionCategory);
             }
-
             return RedirectToPage("./Index");
         }
     }

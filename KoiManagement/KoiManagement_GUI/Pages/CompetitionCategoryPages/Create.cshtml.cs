@@ -14,16 +14,20 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
     public class CreateModel : PageModel
     {
         private readonly ICompetitionCategoryService _ccService;
+        private readonly ICategoryService _categoryService;
+        private readonly ICompetitionService _competitionService;
 
-        public CreateModel(ICompetitionCategoryService ccService)
+        public CreateModel(ICompetitionCategoryService ccService, ICategoryService categoryService, ICompetitionService competitionService)
         {
             _ccService = ccService;
+            _categoryService = categoryService;
+            _competitionService = competitionService;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
-        ViewData["CompetitionId"] = new SelectList(_context.Competitions, "Id", "Id");
+        ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Id");
+        ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Id");
             return Page();
         }
 
@@ -31,16 +35,14 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
         public CompetitionCategory CompetitionCategory { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.CompetitionCategories.Add(CompetitionCategory);
-            await _context.SaveChangesAsync();
-
+            _ccService.AddCompetitionCategory(CompetitionCategory);
             return RedirectToPage("./Index");
         }
     }
