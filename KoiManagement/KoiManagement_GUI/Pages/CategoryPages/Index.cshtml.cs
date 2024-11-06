@@ -7,23 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.CategoryPages
 {
     public class IndexModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICategoryService _categoryService;
 
-        public IndexModel(KoiManagement_DAO.KoiManagementContext context)
+        public IndexModel(ICategoryService categoryService)
         {
-            _context = context;
+            _categoryService = categoryService;
         }
 
         public IList<Category> Category { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            Category = await _context.Categories.ToListAsync();
+            Category =  _categoryService.GetCategories();
         }
     }
 }

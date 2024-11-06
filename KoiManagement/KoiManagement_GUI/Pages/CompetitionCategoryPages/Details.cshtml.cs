@@ -7,36 +7,35 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.CategoryPages
+namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
     public class DetailsModel : PageModel
     {
-        private readonly ICategoryService _categoryService;
+        private readonly KoiManagement_DAO.KoiManagementContext _context;
 
-        public DetailsModel(ICategoryService categoryService)
+        public DetailsModel(KoiManagement_DAO.KoiManagementContext context)
         {
-            _categoryService = categoryService;
+            _context = context;
         }
 
-        public Category Category { get; set; } = default!;
+        public CompetitionCategory CompetitionCategory { get; set; } = default!;
 
-        public IActionResult OnGet(string id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = _categoryService.GetCategory(id);
-            if (category == null)
+            var competitioncategory = await _context.CompetitionCategories.FirstOrDefaultAsync(m => m.Id == id);
+            if (competitioncategory == null)
             {
                 return NotFound();
             }
             else
             {
-                Category = category;
+                CompetitionCategory = competitioncategory;
             }
             return Page();
         }

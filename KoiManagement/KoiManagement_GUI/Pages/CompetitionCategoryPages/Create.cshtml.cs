@@ -7,35 +7,39 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.CategoryPages
+namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
     public class CreateModel : PageModel
     {
-        private readonly ICategoryService _categoryService;
+        private readonly KoiManagement_DAO.KoiManagementContext _context;
 
-        public CreateModel(ICategoryService categoryService)
+        public CreateModel(KoiManagement_DAO.KoiManagementContext context)
         {
-            _categoryService = categoryService;
+            _context = context;
         }
 
         public IActionResult OnGet()
         {
+        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
+        ViewData["CompetitionId"] = new SelectList(_context.Competitions, "Id", "Id");
             return Page();
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
+        public CompetitionCategory CompetitionCategory { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            _categoryService.AddCategory(Category);
+
+            _context.CompetitionCategories.Add(CompetitionCategory);
+            await _context.SaveChangesAsync();
+
             return RedirectToPage("./Index");
         }
     }

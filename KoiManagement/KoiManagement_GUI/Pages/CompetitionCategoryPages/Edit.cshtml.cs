@@ -8,54 +8,57 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.CategoryPages
+namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
     public class EditModel : PageModel
     {
-        private readonly ICategoryService _categoryService;
+        private readonly KoiManagement_DAO.KoiManagementContext _context;
 
-        public EditModel(ICategoryService categoryService)
+        public EditModel(KoiManagement_DAO.KoiManagementContext context)
         {
-            _categoryService = categoryService;
+            _context = context;
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
+        public CompetitionCategory CompetitionCategory { get; set; } = default!;
 
-        public IActionResult OnGet(string id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category =  _categoryService.GetCategory(id);
-            if (category == null)
+            var competitioncategory =  await _context.CompetitionCategories.FirstOrDefaultAsync(m => m.Id == id);
+            if (competitioncategory == null)
             {
                 return NotFound();
             }
-            Category = category;
+            CompetitionCategory = competitioncategory;
+           ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
+           ViewData["CompetitionId"] = new SelectList(_context.Competitions, "Id", "Id");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            _context.Attach(CompetitionCategory).State = EntityState.Modified;
+
             try
             {
-                _categoryService.UpdateCategory(Category);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(Category.Id))
+                if (!CompetitionCategoryExists(CompetitionCategory.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +71,9 @@ namespace KoiManagement_GUI.Pages.CategoryPages
             return RedirectToPage("./Index");
         }
 
-        private bool CategoryExists(string id)
+        private bool CompetitionCategoryExists(string id)
         {
-            return _categoryService.GetCategory(id) != null;
+            return _context.CompetitionCategories.Any(e => e.Id == id);
         }
     }
 }

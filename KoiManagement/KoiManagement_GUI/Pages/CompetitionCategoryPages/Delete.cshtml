@@ -1,0 +1,58 @@
+﻿@page
+@model KoiManagement_GUI.Pages.CompetitionCategoryPages.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CompetitionCategory</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionCategory.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionCategory.Category.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionCategory.Competition)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionCategory.Competition.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionCategory.Active)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionCategory.Active)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionCategory.CreateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionCategory.CreateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionCategory.UpdateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionCategory.UpdateAt)
+        </dd>
+@*         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionCategory.DeleteAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionCategory.DeleteAt)
+        </dd> *@
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="CompetitionCategory.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
