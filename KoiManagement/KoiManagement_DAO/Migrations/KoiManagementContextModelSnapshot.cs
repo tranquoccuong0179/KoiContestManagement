@@ -562,25 +562,25 @@ namespace KoiManagement_DAO.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "54b67350-2edd-4c73-90ab-f785c2c93c79",
+                            Id = "add7ba94-19b0-4413-ae9d-1fa105f93324",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "494893fd-8ca2-4e83-976c-9e4eeb01970e",
-                            Name = "Constestant",
-                            NormalizedName = "CONSTESTANT"
+                            Id = "30b9341a-5eb7-40fa-8012-09820367504e",
+                            Name = "Contestant",
+                            NormalizedName = "CONTESTANT"
                         },
                         new
                         {
-                            Id = "ac435c21-2bef-4dc6-8fe5-6f24a5ddcd69",
+                            Id = "ab9ba915-b62c-4d6c-ae67-96a96df839bf",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
-                            Id = "81cd559a-76b5-4f15-96ef-2b6bca5737ad",
+                            Id = "ea9b3cf4-d4a9-4921-80b8-3ffd40f37df3",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });

@@ -1,12 +1,13 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
 namespace KoiManagement_DAO.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -524,6 +525,17 @@ namespace KoiManagement_DAO.Migrations
                         principalTable: "RefereeMarks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "30b9341a-5eb7-40fa-8012-09820367504e", null, "Contestant", "CONTESTANT" },
+                    { "ab9ba915-b62c-4d6c-ae67-96a96df839bf", null, "Referee", "REFEREE" },
+                    { "add7ba94-19b0-4413-ae9d-1fa105f93324", null, "Admin", "ADMIN" },
+                    { "ea9b3cf4-d4a9-4921-80b8-3ffd40f37df3", null, "Manager", "MANAGER" }
                 });
 
             migrationBuilder.CreateIndex(

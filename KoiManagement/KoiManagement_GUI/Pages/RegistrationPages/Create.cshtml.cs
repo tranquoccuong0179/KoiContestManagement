@@ -8,22 +8,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
+using KoiManagement_Repositories.IRepository;
 
 namespace KoiManagement_GUI.Pages.RegistrationPages
 {
     public class CreateModel : PageModel
     {
         private readonly IRegistrationService registrationService;
+        private readonly IKoiService koiService;
 
-        public CreateModel(IRegistrationService registrationService)
+        public CreateModel(IRegistrationService registrationService, IKoiService koiService)
         {
             this.registrationService = registrationService;
+            this.koiService = koiService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-        //ViewData["CompetitionCategoryId"] = new SelectList(_context.CompetitionCategories, "Id", "Id");
-        //ViewData["KoiId"] = new SelectList(_context.Kois, "Id", "Id");
+            //ViewData["CompetitionCategoryId"] = new SelectList(_context.CompetitionCategories, "Id", "Id");
+            Task<List<Koi>> koiTask = koiService.GetAll();
+            List<Koi> koiList = await koiTask;
+            ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");
             return Page();
         }
 
