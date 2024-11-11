@@ -1,4 +1,5 @@
 ﻿@page
+@using KoiManagement_BusinessObjects.Constants
 @model KoiManagement_GUI.Pages.ProfilePages.IndexModel
 @{
 	if (HttpContext.Session.GetString("Id") is null)
@@ -6,6 +7,7 @@
 		Response.Redirect("/LoginPage");
 	}
 	string successMessage = ViewData["SuccessMessage"] as string;
+	string role = HttpContext.Session.GetString("Role");
 }
 <head>
 	<link rel="stylesheet" href="~/css/ProfilePageIndex.css" asp-append-version="true" />
@@ -38,7 +40,12 @@
 					<div class=" d-flex mt-3 animate__animated animate__rotateInUpLeft">
 						<a asp-page="UpdateProfilePage" class="btn btn-primary me-2">Edit profile</a>
 						<a asp-page="UpdatePasswordPage" class="btn btn-primary me-2">Change password</a>
-						<a asp-page="/KoiPages/Index" class="btn btn-primary animate__animated animate__rotateInUpRight">Manage your kois</a>
+						@{
+							if (role == Role.Constestant)
+							{
+								<a asp-page="/KoiPages/Index" class="btn btn-primary animate__animated animate__rotateInUpRight">Manage your kois</a>
+							}
+						}
 					</div>
 
 				</div>

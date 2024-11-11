@@ -58,6 +58,14 @@ namespace KoiManagement_Services.AuthenticationServices
 			return result;
 		}
 
+		public async Task<IdentityResult> UpdateActiveStatus(string userId)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+			user.Active = !user.Active;
+			user.UpdateAt = DateTime.Now;
+			return await userManager.UpdateAsync(user);
+		}
+
 		public async Task<IdentityResult> UpdateUser(string userId, UserForUpdateProfileDto userForUpdateProfile)
 		{
 			var user = await userManager.FindByIdAsync(userId);
