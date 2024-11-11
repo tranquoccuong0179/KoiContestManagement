@@ -1,0 +1,70 @@
+﻿@page
+@model KoiManagement_GUI.Pages.RegistrationPages.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Registration</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Registration.KoiId" class="control-label"></label>
+                <select asp-for="Registration.KoiId" class="form-control" asp-items="ViewBag.KoiId"></select>
+                <span asp-validation-for="Registration.KoiId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Registration.CompetitionCategoryId" class="control-label"></label>
+                <select asp-for="Registration.CompetitionCategoryId" class="form-control" asp-items="ViewBag.CompetitionCategoryId"></select>
+                <span asp-validation-for="Registration.CompetitionCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Registration.IsCheckIn" /> @Html.DisplayNameFor(model => model.Registration.IsCheckIn)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Registration.CheckInTime" class="control-label"></label>
+                <input asp-for="Registration.CheckInTime" class="form-control" />
+                <span asp-validation-for="Registration.CheckInTime" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Registration.Id" />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Registration.Active" /> @Html.DisplayNameFor(model => model.Registration.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Registration.CreateAt" class="control-label"></label>
+                <input asp-for="Registration.CreateAt" class="form-control" />
+                <span asp-validation-for="Registration.CreateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Registration.UpdateAt" class="control-label"></label>
+                <input asp-for="Registration.UpdateAt" class="form-control" />
+                <span asp-validation-for="Registration.UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Registration.DeleteAt" class="control-label"></label>
+                <input asp-for="Registration.DeleteAt" class="form-control" />
+                <span asp-validation-for="Registration.DeleteAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
