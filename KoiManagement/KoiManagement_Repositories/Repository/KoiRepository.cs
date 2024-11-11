@@ -12,6 +12,7 @@ namespace KoiManagement_Repositories.Repository
 		public async Task<bool> Delete(Koi koi) => await KoiDAO.Instance.Delete(koi);
 
 		public async Task<List<Koi>> GetAll() => await KoiDAO.Instance.GetAll();
+		public async Task<List<Koi>> GetByUserIdActive(string userId) => await KoiDAO.Instance.GetByUserIdActive(userId);
 
 		public async Task<Koi?> GetById(string koiId, string userId) => await KoiDAO.Instance.GetById(koiId, userId);
 

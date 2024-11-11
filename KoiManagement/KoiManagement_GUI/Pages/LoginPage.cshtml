@@ -5,10 +5,10 @@
 	string loginResult = ViewData["LoginResult"] as string;
 }
 
-<body>
+<div class="body" id="authenticate">
 	<div class="wrapper">
 		<form method="post">
-			<h1>Login</h1>
+			<h1 class="animate__animated animate__backInDown">Login</h1>
 			@{
 				if (!string.IsNullOrEmpty(registrationResult))
 				{
@@ -25,18 +25,18 @@
 					</div>
 				}
 			}
-			<div class="input-box">
+			<div class="input-box animate__animated animate__backInLeft">
 				<input type="text" placeholder="Username" asp-for="UserForAuthenticationDto.UserName">
 				<i class='bx bxs-user'></i>
 			</div>
-			<div class="input-box">
+			<div class="input-box animate__animated animate__backInLeft">
 				<input type="password" placeholder="Password" asp-for="UserForAuthenticationDto.Password">
 				<i class='bx bxs-lock-alt'></i>
 			</div>
-			<button type="submit" class="btn">Sign in</button>
-			<div class="register-link">
+			<button type="submit" class="btn animate__animated animate__backInUp">Sign in</button>
+			<div class="register-link animate__animated animate__backInUp">
 				<p>Dont have an account? <a href="SignupPage">Register</a></p>
 			</div>
 		</form>
 	</div>
-</body>
+</div>

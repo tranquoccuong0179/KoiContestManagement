@@ -9,6 +9,7 @@ namespace KoiManagement_Services.AuthenticationServices.DTO
 		{
 			CreateMap<UserForRegistrationDto, User>();
 			CreateMap<User, UserForReturnDto>();
+			CreateMap<UserForUpdateProfileDto, User>();
 		}
 	}
 }

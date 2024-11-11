@@ -7,5 +7,8 @@ namespace KoiManagement_Services.AuthenticationServices
 	{
 		public Task<UserForReturnDto?> AuthenticateUser(UserForAuthenticationDto userForAuthenticationDto);
 		public Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistrationDto);
+		public Task<UserForReturnDto?> GetUserById(string userId);
+		Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto);
+		Task<IdentityResult> UpdateUser(string userId, UserForUpdateProfileDto userForUpdateProfile);
 	}
 }

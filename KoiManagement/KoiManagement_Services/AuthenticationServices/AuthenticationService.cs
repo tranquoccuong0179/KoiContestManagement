@@ -22,7 +22,24 @@ namespace KoiManagement_Services.AuthenticationServices
 			var user = await userManager.FindByNameAsync(userForAuthenticationDto.UserName);
 			if (user is null) return null;
 			var result = await userManager.CheckPasswordAsync(user, userForAuthenticationDto.Password) && user.Active;
-			return result ? mapper.Map<UserForReturnDto>(user) : null;
+			if (result)
+			{
+				var roles = await userManager.GetRolesAsync(user);
+				var returnUser = mapper.Map<UserForReturnDto>(user);
+				returnUser.Roles = roles.ToList();
+				return returnUser;
+			}
+			return null;
+		}
+
+		public async Task<UserForReturnDto?> GetUserById(string userId)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+			if (user is null) return null;
+			var roles = await userManager.GetRolesAsync(user);
+			var returnUser = mapper.Map<UserForReturnDto>(user);
+			returnUser.Roles = roles.ToList();
+			return returnUser;
 		}
 
 		public async Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistrationDto)
@@ -39,6 +56,22 @@ namespace KoiManagement_Services.AuthenticationServices
 			}
 
 			return result;
+		}
+
+		public async Task<IdentityResult> UpdateUser(string userId, UserForUpdateProfileDto userForUpdateProfile)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+
+			mapper.Map(userForUpdateProfile, user);
+			user.UpdateAt = DateTime.Now;
+			return await userManager.UpdateAsync(user);
+		}
+
+		public async Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+			user.UpdateAt = DateTime.Now;
+			return await userManager.ChangePasswordAsync(user, userForUpdatePasswordDto.OldPassword, userForUpdatePasswordDto.NewPassword);
 		}
 	}
 }

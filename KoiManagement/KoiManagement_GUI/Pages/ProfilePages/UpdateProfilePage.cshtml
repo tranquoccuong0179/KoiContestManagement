@@ -1,0 +1,42 @@
+﻿@page
+@model KoiManagement_GUI.Pages.ProfilePages.UpdateProfilePageModel
+@{
+	if (HttpContext.Session.GetString("Id") is null)
+	{
+		Response.Redirect("/LoginPage");
+	}
+	string errorMessage = ViewData["ErrorMessage"] as string;
+}
+
+<head>
+	<link href="~/css/UpdatePasswordPage.css" asp-append-version="true" rel="stylesheet" />
+</head>
+
+<div class="form-body">
+	<div class="row">
+		<div class="form-holder">
+			<div class="form-content">
+				<div class="form-items">
+					<h3 class="d-flex justify-content-center animate__animated animate__backInDown">Change profile</h3>
+					@if (!string.IsNullOrEmpty(errorMessage))
+					{
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							@Html.Raw(errorMessage)
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+					}
+					<form class="requires-validation" method="post">
+
+						<div class="col-md-12 animate__animated animate__backInLeft">
+							<input class="form-control" type="text" placeholder="Full name" asp-for="UserForUpdateProfileDto.FullName">
+							<span asp-validation-for="UserForUpdateProfileDto.FullName" class="text-danger"></span>
+						</div>
+						<div class="form-button mt-3 d-flex justify-content-center animate__animated animate__backInUp">
+							<button type="submit" class="btn btn-primary">Change</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
