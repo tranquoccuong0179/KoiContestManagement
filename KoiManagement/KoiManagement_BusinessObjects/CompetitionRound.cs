@@ -6,7 +6,7 @@ public partial class CompetitionRound : BaseEntity
     public string KoiId { get; set; } = string.Empty;
     public string CompetitionId { get; set; } = string.Empty;
     public string RoundId { get; set; } = string.Empty;
-    public virtual Competition? Competition { get; set; } 
+    public virtual Competition? Competition { get; set; }
     public virtual Koi? Koi { get; set; }
     public virtual Round? Round { get; set; }
     public virtual ICollection<Mark> Marks { get; set; } = new List<Mark>();

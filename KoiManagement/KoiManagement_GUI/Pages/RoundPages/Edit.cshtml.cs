@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
 
 namespace KoiManagement_GUI.Pages.RoundPages
 {
@@ -30,7 +24,7 @@ namespace KoiManagement_GUI.Pages.RoundPages
                 return NotFound();
             }
 
-            var round =  await _context.Rounds.FirstOrDefaultAsync(m => m.Id == id);
+            var round = await _context.Rounds.FirstOrDefaultAsync(m => m.Id == id);
             if (round == null)
             {
                 return NotFound();

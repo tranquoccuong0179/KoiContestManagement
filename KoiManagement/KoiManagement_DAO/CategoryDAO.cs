@@ -1,9 +1,4 @@
 using KoiManagement_BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoiManagement_DAO
 {
@@ -15,15 +10,15 @@ namespace KoiManagement_DAO
         {
             context = new KoiManagementContext();
         }
-        public static CategoryDAO Instance 
+        public static CategoryDAO Instance
         {
             get
-            { 
-                if(instance == null)
+            {
+                if (instance == null)
                 {
                     instance = new CategoryDAO();
                 }
-                return instance;    
+                return instance;
             }
         }
         public List<Category> GetCategories()

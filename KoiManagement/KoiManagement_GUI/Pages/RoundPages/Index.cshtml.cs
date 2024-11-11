@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using KoiManagement_BusinessObjects;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
 
 namespace KoiManagement_GUI.Pages.RoundPages
 {
@@ -19,7 +13,7 @@ namespace KoiManagement_GUI.Pages.RoundPages
             _context = context;
         }
 
-        public IList<Round> Round { get;set; } = default!;
+        public IList<Round> Round { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

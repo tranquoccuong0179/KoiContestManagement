@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
+﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiManagement_GUI.Pages.CategoryPages
 {
@@ -20,11 +13,11 @@ namespace KoiManagement_GUI.Pages.CategoryPages
             _categoryService = categoryService;
         }
 
-        public IList<Category> Category { get;set; } = default!;
+        public IList<Category> Category { get; set; } = default!;
 
         public void OnGet()
         {
-            Category =  _categoryService.GetCategories();
+            Category = _categoryService.GetCategories();
         }
     }
 }

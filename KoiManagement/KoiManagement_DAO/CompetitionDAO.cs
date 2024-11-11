@@ -1,9 +1,5 @@
 using KoiManagement_BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_DAO
 {
@@ -93,6 +89,18 @@ namespace KoiManagement_DAO
                 //Log
             }
             return result;
+        }
+
+        public Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories()
+        {
+            return context.Competitions
+                .Include(c => c.CompetitionCategories)
+                .ThenInclude(cc => cc.Category)
+                .ToList()
+                .ToDictionary(
+                    competition => competition,
+                    competition => competition.CompetitionCategories.Select(cc => cc.Category).ToList()
+                );
         }
     }
 }

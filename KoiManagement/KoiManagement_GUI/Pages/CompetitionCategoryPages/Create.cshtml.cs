@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
@@ -26,8 +21,8 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 
         public IActionResult OnGet()
         {
-        ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Name");
-        ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Name");
+            ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Name");
             return Page();
         }
 
