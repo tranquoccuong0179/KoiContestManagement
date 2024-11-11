@@ -14,12 +14,12 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CompetitionCategory.CompetitionId" class="control-label"></label>
+                <label class="control-label">Competition</label>
                 <select asp-for="CompetitionCategory.CompetitionId" class="form-control" asp-items="ViewBag.CompetitionId"></select>
                 <span asp-validation-for="CompetitionCategory.CompetitionId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CompetitionCategory.CategoryId" class="control-label"></label>
+                <label class="control-label">Category</label>
                 <select asp-for="CompetitionCategory.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
                 <span asp-validation-for="CompetitionCategory.CategoryId" class="text-danger"></span>
             </div>
@@ -29,21 +29,6 @@
                     <input class="form-check-input" asp-for="CompetitionCategory.Active" /> @Html.DisplayNameFor(model => model.CompetitionCategory.Active)
                 </label>
             </div>
-@*             <div class="form-group">
-                <label asp-for="CompetitionCategory.CreateAt" class="control-label"></label>
-                <input asp-for="CompetitionCategory.CreateAt" class="form-control" />
-                <span asp-validation-for="CompetitionCategory.CreateAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CompetitionCategory.UpdateAt" class="control-label"></label>
-                <input asp-for="CompetitionCategory.UpdateAt" class="form-control" />
-                <span asp-validation-for="CompetitionCategory.UpdateAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CompetitionCategory.DeleteAt" class="control-label"></label>
-                <input asp-for="CompetitionCategory.DeleteAt" class="form-control" />
-                <span asp-validation-for="CompetitionCategory.DeleteAt" class="text-danger"></span>
-            </div> *@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

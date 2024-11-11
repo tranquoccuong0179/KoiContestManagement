@@ -18,12 +18,11 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
         private readonly ICategoryService _categoryService;
         private readonly ICompetitionService _competitionService;
 
-        public EditModel(ICompetitionCategoryService ccService, ICategoryService categoryService, ICompetitionService competitionService, CompetitionCategory competitionCategory)
+        public EditModel(ICompetitionCategoryService ccService, ICategoryService categoryService, ICompetitionService competitionService)
         {
             _ccService = ccService;
             _categoryService = categoryService;
             _competitionService = competitionService;
-            CompetitionCategory = competitionCategory;
         }
 
         [BindProperty]
@@ -42,8 +41,8 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
                 return NotFound();
             }
             CompetitionCategory = competitioncategory;
-           ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Id");
-           ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Id");
+            ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Name");
+            ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Name");
             return Page();
         }
 

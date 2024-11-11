@@ -14,11 +14,11 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CompetitionCategory.CompetitionId" class="control-label"></label>
+                <label class="control-label">Competition</label>
                 <select asp-for="CompetitionCategory.CompetitionId" class ="form-control" asp-items="ViewBag.CompetitionId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="CompetitionCategory.CategoryId" class="control-label"></label>
+                <label class="control-label">Category</label>
                 <select asp-for="CompetitionCategory.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
 @*             <div class="form-group">

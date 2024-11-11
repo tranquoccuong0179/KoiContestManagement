@@ -26,8 +26,8 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 
         public IActionResult OnGet()
         {
-        ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Id");
-        ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Id");
+        ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Name");
+        ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Name");
             return Page();
         }
 
