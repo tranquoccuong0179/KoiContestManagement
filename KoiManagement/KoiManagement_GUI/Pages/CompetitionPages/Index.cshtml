@@ -53,8 +53,8 @@
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> |
-                <a href="@Url.Page("./CompetitionCategoryPages/Index", null, new { competitionId = item.Id }, null)">Competition Categories</a>
-                </td>
+                <a asp-page="../CompetitionCategoryPages/Index" asp-route-competitionId="@item.Id">Competition Categories</a>
+            </td>
         </tr>
 }
     </tbody>

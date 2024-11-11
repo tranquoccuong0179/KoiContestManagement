@@ -95,12 +95,18 @@ namespace KoiManagement_DAO
         {
             return context.Competitions
                 .Include(c => c.CompetitionCategories)
-                .ThenInclude(cc => cc.Category).Where(c => !string.IsNullOrWhiteSpace(competitionId) && c.Id == competitionId)
-                .ToList()
-                .ToDictionary(
-                    competition => competition,
-                    competition => competition.CompetitionCategories.Select(cc => cc.Category).ToList()
-                );
+                .ThenInclude(cc => cc.Category)
+            .Where(c => string.IsNullOrWhiteSpace(competitionId) || c.Id == competitionId)
+            .Select(c => new
+            {
+                Competition = c,
+                Categories = c.CompetitionCategories.Select(cc => cc.Category).ToList()
+            })
+            .ToList()
+            .ToDictionary(
+                x => x.Competition,
+                x => x.Categories
+            );
         }
     }
 }

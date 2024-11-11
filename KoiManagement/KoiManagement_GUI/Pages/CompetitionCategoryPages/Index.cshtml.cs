@@ -20,11 +20,7 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 
         public void OnGet(string? competitionId)
         {
-            if (!string.IsNullOrEmpty(competitionId))
-            {
-                CompetitionsWithCategories = _competitionService.GetCompetitionsWithCategories(competitionId);
-            }
-            CompetitionsWithCategories = _competitionService.GetCompetitionsWithCategories(null);
+            CompetitionsWithCategories = _competitionService.GetCompetitionsWithCategories(competitionId);
         }
     }
 }
