@@ -9,19 +9,19 @@ using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.MarkPages
+namespace KoiManagement_GUI.Pages.ResultPages
 {
     public class DeleteModel : PageModel
     {
-        private readonly IMarkService markService;
+        private readonly IResultService resultService;
 
-        public DeleteModel(IMarkService markService)
+        public DeleteModel(IResultService resultService)
         {
-            this.markService = markService;
+            this.resultService = resultService;
         }
 
         [BindProperty]
-        public Mark Mark { get; set; } = default!;
+        public Result Result { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -30,15 +30,15 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return NotFound();
             }
 
-            var mark = markService.GetMarkById(id);
+            var result = resultService.GetResultById(id);
 
-            if (mark == null)
+            if (result == null)
             {
                 return NotFound();
             }
             else
             {
-                Mark = mark;
+                Result = result;
             }
             return Page();
         }
@@ -50,11 +50,11 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return NotFound();
             }
 
-            var mark = markService.GetMarkById(id);
-            if (mark != null)
+            var result = resultService.GetResultById(id);
+            if (result != null)
             {
-                Mark = mark;
-                markService.DeleteMark(Mark);
+                Result = result;
+                resultService.DeleteResult(Result);
             }
 
             return RedirectToPage("./Index");

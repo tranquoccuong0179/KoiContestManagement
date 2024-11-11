@@ -9,21 +9,27 @@ using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
+using KoiManagement_Services.KoiServices;
+using Microsoft.EntityFrameworkCore.Internal;
+using KoiManagement_Services.Service;
 
-namespace KoiManagement_GUI.Pages.MarkPages
+namespace KoiManagement_GUI.Pages.ResultPages
 {
     public class EditModel : PageModel
     {
-        private readonly IMarkService markService;
-        private readonly ICompetitionRoundService competitionRoundService;
-        public EditModel(IMarkService markService, ICompetitionRoundService competitionRoundService)
+        private readonly IResultService resultService;
+        private readonly IKoiService koiService;
+        private readonly IRegistrationService registrationService;
+
+        public EditModel(IResultService resultService, IKoiService koiService, IRegistrationService registrationService)
         {
-            this.markService = markService;
-            this.competitionRoundService = competitionRoundService;
+            this.resultService = resultService;
+            this.koiService = koiService;
+            this.registrationService = registrationService;
         }
 
         [BindProperty]
-        public Mark Mark { get; set; } = default!;
+        public Result Result { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -32,13 +38,14 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return NotFound();
             }
 
-            var mark =  markService.GetMarkById(id);
-            if (mark == null)
+            var result =  resultService.GetResultById(id);
+            if (result == null)
             {
                 return NotFound();
             }
-            Mark = mark;
-           ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
+            Result = result;
+            //ViewData["KoiId"] = new SelectList(koiService.GetAll(), "Id", "Id");
+            ViewData["RegistrationId"] = new SelectList(registrationService.GetRegistrations(), "Id", "Id");
             return Page();
         }
 
@@ -51,12 +58,13 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return Page();
             }
 
-            bool updateSuccess = markService.UpdateMark(Mark);
+            bool updateSuccess = resultService.UpdateResult(Result);
+
 
             if (!updateSuccess)
             {
                 // Kiểm tra nếu CandidateProfile không tồn tại
-                if (!MarkExists(Mark.Id))
+                if (!ResultExists(Result.Id))
                 {
                     return NotFound();
                 }
@@ -70,9 +78,9 @@ namespace KoiManagement_GUI.Pages.MarkPages
             return RedirectToPage("./Index");
         }
 
-        private bool MarkExists(string id)
+        private bool ResultExists(string id)
         {
-            return markService.GetMarkById(id) != null;
+            return resultService.GetResultById(id) != null;
         }
     }
 }

@@ -9,21 +9,21 @@ using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
+using KoiManagement_Services.Service;
 
-namespace KoiManagement_GUI.Pages.MarkPages
+namespace KoiManagement_GUI.Pages.RegistrationPages
 {
     public class EditModel : PageModel
     {
-        private readonly IMarkService markService;
-        private readonly ICompetitionRoundService competitionRoundService;
-        public EditModel(IMarkService markService, ICompetitionRoundService competitionRoundService)
+        private readonly IRegistrationService registrationService;
+
+        public EditModel(IRegistrationService registrationService)
         {
-            this.markService = markService;
-            this.competitionRoundService = competitionRoundService;
+            this.registrationService = registrationService;
         }
 
         [BindProperty]
-        public Mark Mark { get; set; } = default!;
+        public Registration Registration { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -32,13 +32,14 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return NotFound();
             }
 
-            var mark =  markService.GetMarkById(id);
-            if (mark == null)
+            var registration =  registrationService.GetRegistrationById(id);
+            if (registration == null)
             {
                 return NotFound();
             }
-            Mark = mark;
-           ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
+            Registration = registration;
+           //ViewData["CompetitionCategoryId"] = new SelectList(_context.CompetitionCategories, "Id", "Id");
+           //ViewData["KoiId"] = new SelectList(_context.Kois, "Id", "Id");
             return Page();
         }
 
@@ -51,12 +52,13 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return Page();
             }
 
-            bool updateSuccess = markService.UpdateMark(Mark);
+            bool updateSuccess = registrationService.UpdateRegistration(Registration);
+
 
             if (!updateSuccess)
             {
                 // Kiểm tra nếu CandidateProfile không tồn tại
-                if (!MarkExists(Mark.Id))
+                if (!RegistrationExists(Registration.Id))
                 {
                     return NotFound();
                 }
@@ -70,9 +72,9 @@ namespace KoiManagement_GUI.Pages.MarkPages
             return RedirectToPage("./Index");
         }
 
-        private bool MarkExists(string id)
+        private bool RegistrationExists(string id)
         {
-            return markService.GetMarkById(id) != null;
+            return registrationService.GetRegistrationById(id) != null;
         }
     }
 }

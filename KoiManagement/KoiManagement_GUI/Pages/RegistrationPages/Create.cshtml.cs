@@ -9,27 +9,26 @@ using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.MarkPages
+namespace KoiManagement_GUI.Pages.RegistrationPages
 {
     public class CreateModel : PageModel
     {
-        private readonly IMarkService markService;
-        private readonly ICompetitionRoundService competitionRoundService;
+        private readonly IRegistrationService registrationService;
 
-        public CreateModel(IMarkService markService, ICompetitionRoundService competitionRoundService)
+        public CreateModel(IRegistrationService registrationService)
         {
-            this.markService = markService;
-            this.competitionRoundService = competitionRoundService;
+            this.registrationService = registrationService;
         }
 
         public IActionResult OnGet()
         {
-            ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
+        //ViewData["CompetitionCategoryId"] = new SelectList(_context.CompetitionCategories, "Id", "Id");
+        //ViewData["KoiId"] = new SelectList(_context.Kois, "Id", "Id");
             return Page();
         }
 
         [BindProperty]
-        public Mark Mark { get; set; } = default!;
+        public Registration Registration { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -39,7 +38,7 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return Page();
             }
 
-            markService.AddMark(Mark);
+           registrationService.AddRegistration(Registration);
 
             return RedirectToPage("./Index");
         }
