@@ -9,27 +9,25 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
     public class CreateModel : PageModel
     {
-        private readonly ICompetitionCategoryService _ccService;
-        private readonly ICategoryService _categoryService;
         private readonly ICompetitionService _competitionService;
+        private readonly ICategoryService _categoryService;
+        private readonly ICompetitionCategoryService _ccService;
 
-        public CreateModel(ICompetitionCategoryService ccService, ICategoryService categoryService, ICompetitionService competitionService)
+        public CreateModel(ICompetitionService competitionService, ICategoryService categoryService, ICompetitionCategoryService ccService)
         {
-            _ccService = ccService;
-            _categoryService = categoryService;
             _competitionService = competitionService;
+            _categoryService = categoryService;
+            _ccService = ccService;
         }
 
-        public string CompetitionName { get; set; } = default!;
-        public string CompetitionId { get; set; } = default!;
-
-        // List of categories for checkboxes
-        public List<Category> Categories { get; set; } = default!;
-
-        // Holds selected category IDs when submitting
         [BindProperty]
-        public List<string> SelectedCategoryIds { get; set; } = new();
-        public List<bool> IsActive { get; set; } = new();
+        public string CompetitionId { get; set; }
+
+        public string CompetitionName { get; set; }
+        public List<Category> Categories { get; set; }
+        [BindProperty]
+        public List<string> SelectedCategoryIds { get; set; } = new List<string>(); // Store selected category IDs
+
         public void OnGet(string competitionId)
         {
             // Get competition by ID and assign the name to display
@@ -53,7 +51,7 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
             {
                 var competitionCategory = new CompetitionCategory
                 {
-                    CompetitionId = CompetitionId, // Bound from the hidden field
+                    CompetitionId = CompetitionId,
                     CategoryId = categoryId,
                     Active = true // Or set based on your requirements
                 };
@@ -61,7 +59,9 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
                 // Add to context (assuming _context is available)
                 _ccService.AddCompetitionCategory(competitionCategory);
             }
+
             return RedirectToPage("/CompetitionCategoryPages/Index");
         }
     }
+
 }
