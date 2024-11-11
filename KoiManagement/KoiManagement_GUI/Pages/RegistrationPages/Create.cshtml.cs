@@ -16,16 +16,18 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
     {
         private readonly IRegistrationService registrationService;
         private readonly IKoiService koiService;
+        private readonly ICompetitionCategoryService competitionCategoryService;
 
-        public CreateModel(IRegistrationService registrationService, IKoiService koiService)
+        public CreateModel(IRegistrationService registrationService, IKoiService koiService, ICompetitionCategoryService competitionCategoryService)
         {
             this.registrationService = registrationService;
             this.koiService = koiService;
+            this.competitionCategoryService = competitionCategoryService;
         }
 
         public async Task<IActionResult> OnGet()
         {
-            //ViewData["CompetitionCategoryId"] = new SelectList(_context.CompetitionCategories, "Id", "Id");
+            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategoryService.GetCompetitionCategories(), "Id", "Id");
             Task<List<Koi>> koiTask = koiService.GetAll();
             List<Koi> koiList = await koiTask;
             ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");

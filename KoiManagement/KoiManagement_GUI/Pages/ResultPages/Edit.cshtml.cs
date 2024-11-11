@@ -44,7 +44,9 @@ namespace KoiManagement_GUI.Pages.ResultPages
                 return NotFound();
             }
             Result = result;
-            //ViewData["KoiId"] = new SelectList(koiService.GetAll(), "Id", "Id");
+            Task<List<Koi>> koiTask = koiService.GetAll();
+            List<Koi> koiList = await koiTask;
+            ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");
             ViewData["RegistrationId"] = new SelectList(registrationService.GetRegistrations(), "Id", "Id");
             return Page();
         }

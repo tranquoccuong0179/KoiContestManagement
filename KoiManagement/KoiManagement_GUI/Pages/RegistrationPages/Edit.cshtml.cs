@@ -16,10 +16,13 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
     public class EditModel : PageModel
     {
         private readonly IRegistrationService registrationService;
-
-        public EditModel(IRegistrationService registrationService)
+        private readonly IKoiService koiService;
+        private readonly ICompetitionCategoryService competitionCategoryService;
+        public EditModel(IRegistrationService registrationService, IKoiService koiService, ICompetitionCategoryService competitionCategoryService)
         {
             this.registrationService = registrationService;
+            this.koiService = koiService;
+            this.competitionCategoryService = competitionCategoryService;
         }
 
         [BindProperty]
@@ -38,8 +41,10 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 return NotFound();
             }
             Registration = registration;
-           //ViewData["CompetitionCategoryId"] = new SelectList(_context.CompetitionCategories, "Id", "Id");
-           //ViewData["KoiId"] = new SelectList(_context.Kois, "Id", "Id");
+            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategoryService.GetCompetitionCategories(), "Id", "Id");
+            Task<List<Koi>> koiTask = koiService.GetAll();
+            List<Koi> koiList = await koiTask;
+            ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");
             return Page();
         }
 

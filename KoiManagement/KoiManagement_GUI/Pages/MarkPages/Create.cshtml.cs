@@ -2,6 +2,7 @@
 using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace KoiManagement_GUI.Pages.MarkPages
 {

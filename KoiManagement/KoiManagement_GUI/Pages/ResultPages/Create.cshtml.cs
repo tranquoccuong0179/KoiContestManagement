@@ -26,9 +26,11 @@ namespace KoiManagement_GUI.Pages.ResultPages
             this.registrationService = registrationService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            //ViewData["KoiId"] = new SelectList(_context.Kois, "Id", "Id");
+            Task<List<Koi>> koiTask = koiService.GetAll();
+            List<Koi> koiList = await koiTask;
+            ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");
             ViewData["RegistrationId"] = new SelectList(registrationService.GetRegistrations(), "Id", "Id");
             return Page();
         }
