@@ -1,0 +1,67 @@
+﻿@page
+@model KoiManagement_GUI.Pages.ResultPages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Result</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result.FinalMark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result.FinalMark)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result.Ranking)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result.Ranking)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result.Koi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result.Koi.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result.Registration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result.Registration.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result.Active)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result.Active)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result.CreateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result.CreateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result.UpdateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result.UpdateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result.DeleteAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result.DeleteAt)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Result.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

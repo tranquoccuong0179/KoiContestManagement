@@ -21,25 +21,30 @@ builder.Services.ConfigureBlobService(builder.Configuration);
 builder.Services.AddScoped<IMarkRepository, MarkRepository>();
 builder.Services.AddScoped<IMarkService, MarkService>();
 builder.Services.AddScoped<ICriteriaService, CriteriaService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICompetitionService, CompetitionService>();
+builder.Services.AddScoped<ICompetitionCategoryService, CompetitionCategoryService>();
+builder.Services.AddScoped<IRoundService, RoundService>();
+
 builder.Services.AddScoped<ICriteriaRepository, CriteriaRepository>();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
-	options.Password.RequireDigit = false;
-	options.Password.RequiredLength = 5;
-	options.Password.RequireNonAlphanumeric = false;
-	options.Password.RequireUppercase = false;
-	options.Password.RequireLowercase = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 5;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
 })
-	.AddEntityFrameworkStores<KoiManagementContext>();
+    .AddEntityFrameworkStores<KoiManagementContext>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-	app.UseExceptionHandler("/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-	app.UseHsts();
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();

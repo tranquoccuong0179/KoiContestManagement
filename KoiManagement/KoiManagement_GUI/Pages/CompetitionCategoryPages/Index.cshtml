@@ -1,0 +1,45 @@
+﻿@page
+@model KoiManagement_GUI.Pages.CompetitionCategoryPages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Competitions and Categories</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Competition</th>
+            <th>Categories</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var competition in Model.CompetitionsWithCategories)
+        {
+            <tr>
+                <td>
+                    <strong>@competition.Key.Name</strong>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var category in competition.Value)
+                        {
+                            <li>@category.Name</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@competition.Key.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@competition.Key.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@competition.Key.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

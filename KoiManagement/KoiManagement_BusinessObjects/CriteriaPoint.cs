@@ -9,6 +9,6 @@ public partial class CriteriaPoint
     public DateTime CreateAt { get; set; } = DateTime.Now;
     public DateTime? UpdateAt { get; set; }
     public DateTime? DeleteAt { get; set; }
-    public virtual Criteria? Criteria { get; set; } 
-    public virtual RefereeMark? RefereeMark { get; set; } 
+    public virtual Criteria? Criteria { get; set; }
+    public virtual RefereeMark? RefereeMark { get; set; }
 }

@@ -1,9 +1,4 @@
 using KoiManagement_BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoiManagement_DAO
 {
@@ -28,7 +23,7 @@ namespace KoiManagement_DAO
         }
         public List<Round> GetRounds()
         {
-            return context.Rounds.ToList();
+            return context.Rounds.OrderByDescending(c => c.CreateAt).ToList();
         }
 
         public Round? GetRound(string id)

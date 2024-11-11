@@ -1,11 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Repositories.IRepository;
 using KoiManagement_Services.IService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoiManagement_Services.Service
 {
@@ -20,27 +15,27 @@ namespace KoiManagement_Services.Service
 
         public bool AddMark(Mark mark)
         {
-            throw new NotImplementedException();
+            return markRepository.AddMark(mark);
         }
 
         public bool DeleteMark(Mark mark)
         {
-            throw new NotImplementedException();
+            return markRepository.DeleteMark(mark);
         }
 
         public Mark GetMarkById(string id)
         {
-            throw new NotImplementedException();
+            return markRepository.GetMarkById(id);
         }
 
         public List<Mark> GetMarks()
         {
-            throw new NotImplementedException();
+            return markRepository.GetMarks();
         }
 
         public bool UpdateMark(Mark mark)
         {
-            throw new NotImplementedException();
+            return markRepository.UpdateMark(mark);
         }
     }
 }

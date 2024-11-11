@@ -1,9 +1,4 @@
 ﻿using KoiManagement_BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoiManagement_DAO
 {
@@ -14,15 +9,15 @@ namespace KoiManagement_DAO
 
         public CompetitionRoundDAO()
         {
-            context = new KoiManagementContext();   
+            context = new KoiManagementContext();
         }
         public static CompetitionRoundDAO Instance
-        { 
-            get 
+        {
+            get
             {
-                if(instance == null)
+                if (instance == null)
                     instance = new CompetitionRoundDAO();
-                return instance; 
+                return instance;
             }
         }
         public List<CompetitionRound> GetAll()
@@ -31,7 +26,7 @@ namespace KoiManagement_DAO
         }
         public CompetitionRound? GetById(string id)
         {
-            return context.CompetitionRounds.SingleOrDefault(c =>c.Id.Equals(id));
+            return context.CompetitionRounds.SingleOrDefault(c => c.Id.Equals(id));
         }
         public bool AddCompetitionRound(CompetitionRound competitionRound)
         {

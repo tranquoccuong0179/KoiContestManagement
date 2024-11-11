@@ -1,0 +1,80 @@
+﻿@page
+@model KoiManagement_GUI.Pages.CompetitionPages.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Competition</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Competition.Name" class="control-label"></label>
+                <input asp-for="Competition.Name" class="form-control" />
+                <span asp-validation-for="Competition.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Competition.Location" class="control-label"></label>
+                <input asp-for="Competition.Location" class="form-control" />
+                <span asp-validation-for="Competition.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Competition.StartDate" class="control-label"></label>
+                <input asp-for="Competition.StartDate" class="form-control" />
+                <span asp-validation-for="Competition.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Competition.EndDate" class="control-label"></label>
+                <input asp-for="Competition.EndDate" class="form-control" />
+                <span asp-validation-for="Competition.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Competition.MaxApplication" class="control-label"></label>
+                <input asp-for="Competition.MaxApplication" class="form-control" />
+                <span asp-validation-for="Competition.MaxApplication" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Competition.Status" class="control-label"></label>
+                <input asp-for="Competition.Status" class="form-control" />
+                <span asp-validation-for="Competition.Status" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Competition.Id" />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Competition.Active" /> @Html.DisplayNameFor(model => model.Competition.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Competition.CreateAt" class="control-label"></label>
+                <input asp-for="Competition.CreateAt" class="form-control" />
+                <span asp-validation-for="Competition.CreateAt" class="text-danger"></span>
+            </div>
+@*             <div class="form-group">
+                <label asp-for="Competition.UpdateAt" class="control-label"></label>
+                <input asp-for="Competition.UpdateAt" class="form-control" />
+                <span asp-validation-for="Competition.UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Competition.DeleteAt" class="control-label"></label>
+                <input asp-for="Competition.DeleteAt" class="form-control" />
+                <span asp-validation-for="Competition.DeleteAt" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

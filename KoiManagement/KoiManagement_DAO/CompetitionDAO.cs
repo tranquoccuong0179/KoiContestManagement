@@ -1,9 +1,5 @@
 using KoiManagement_BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_DAO
 {
@@ -28,7 +24,7 @@ namespace KoiManagement_DAO
         }
         public List<Competition> GetCompetitions()
         {
-            return context.Competitions.ToList();
+            return context.Competitions.OrderByDescending(c => c.CreateAt).ToList();
         }
 
         public Competition? GetCompetition(string id)
@@ -93,6 +89,24 @@ namespace KoiManagement_DAO
                 //Log
             }
             return result;
+        }
+
+        public Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories(string? competitionId)
+        {
+            return context.Competitions
+                .Include(c => c.CompetitionCategories)
+                .ThenInclude(cc => cc.Category)
+            .Where(c => string.IsNullOrWhiteSpace(competitionId) || c.Id == competitionId)
+            .Select(c => new
+            {
+                Competition = c,
+                Categories = c.CompetitionCategories.Select(cc => cc.Category).ToList()
+            })
+            .ToList()
+            .ToDictionary(
+                x => x.Competition,
+                x => x.Categories
+            );
         }
     }
 }

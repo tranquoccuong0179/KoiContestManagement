@@ -2,16 +2,16 @@
 
 namespace KoiManagement_Repositories.Repository
 {
-	public class RepositoryManager : IRepositoryManager
-	{
-		private readonly Lazy<IKoiRepository> koiRepository;
+    public class RepositoryManager : IRepositoryManager
+    {
+        private readonly Lazy<IKoiRepository> koiRepository;
 
-		public RepositoryManager()
-		{
-			koiRepository = new Lazy<IKoiRepository>(() => new KoiRepository());
-		}
+        public RepositoryManager()
+        {
+            koiRepository = new Lazy<IKoiRepository>(() => new KoiRepository());
+        }
 
-		public IKoiRepository KoiRepository => koiRepository.Value;
+        public IKoiRepository KoiRepository => koiRepository.Value;
 
-	}
+    }
 }
