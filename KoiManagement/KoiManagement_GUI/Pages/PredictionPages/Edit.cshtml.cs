@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,21 +8,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.CriteriaPage
+namespace KoiManagement_GUI.Pages.PredictionPages
 {
     public class EditModel : PageModel
     {
-        private readonly ICriteriaService criteriaService;
+        private readonly KoiManagement_DAO.KoiManagementContext _context;
 
-        public EditModel(ICriteriaService criteriaService)
+        public EditModel(KoiManagement_DAO.KoiManagementContext context)
         {
-            this.criteriaService = criteriaService;
+            _context = context;
         }
 
         [BindProperty]
-        public Criteria Criteria { get; set; } = default!;
+        public Prediction Prediction { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -31,12 +30,14 @@ namespace KoiManagement_GUI.Pages.CriteriaPage
                 return NotFound();
             }
 
-            var criteria =  criteriaService.GetCriteria(id);
-            if (criteria == null)
+            var prediction =  await _context.Predictions.FirstOrDefaultAsync(m => m.Id == id);
+            if (prediction == null)
             {
                 return NotFound();
             }
-            Criteria = criteria;
+            Prediction = prediction;
+           ViewData["CompetitionRoundId"] = new SelectList(_context.CompetitionRounds, "Id", "Id");
+           ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
             return Page();
         }
 
@@ -49,29 +50,30 @@ namespace KoiManagement_GUI.Pages.CriteriaPage
                 return Page();
             }
 
-            bool updateSuccess = criteriaService.UpdateCriteria(Criteria);
-            //Lỗi dưới DAO à , đợi chút xíu nhé
+            _context.Attach(Prediction).State = EntityState.Modified;
 
-            if (!updateSuccess)
+            try
             {
-                // Kiểm tra nếu CandidateProfile không tồn tại
-                if (!CriteriaExists(Criteria.Id))
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PredictionExists(Prediction.Id))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    // Throw exception hoặc ghi log nếu cần thiết
-                    throw new DbUpdateConcurrencyException();
+                    throw;
                 }
             }
 
             return RedirectToPage("./Index");
         }
 
-        private bool CriteriaExists(string id)
+        private bool PredictionExists(string id)
         {
-            return criteriaService.GetCriteria(id) != null;
+            return _context.Predictions.Any(e => e.Id == id);
         }
     }
 }
