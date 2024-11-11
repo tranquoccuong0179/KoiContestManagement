@@ -3,6 +3,7 @@ using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
@@ -19,26 +20,48 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
             _competitionService = competitionService;
         }
 
-        public IActionResult OnGet()
+        public string CompetitionName { get; set; } = default!;
+        public string CompetitionId { get; set; } = default!;
+
+        // List of categories for checkboxes
+        public List<Category> Categories { get; set; } = default!;
+
+        // Holds selected category IDs when submitting
+        [BindProperty]
+        public List<string> SelectedCategoryIds { get; set; } = new();
+        public List<bool> IsActive { get; set; } = new();
+        public void OnGet(string competitionId)
         {
-            ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Name");
-            ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Name");
-            return Page();
+            // Get competition by ID and assign the name to display
+            var competition = _competitionService.GetCompetition(competitionId);
+            CompetitionId = competitionId;
+            CompetitionName = competition.Name;
+
+            // Load categories for checkbox selection
+            Categories = _categoryService.GetCategories().ToList();
         }
 
-        [BindProperty]
-        public CompetitionCategory CompetitionCategory { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _ccService.AddCompetitionCategory(CompetitionCategory);
-            return RedirectToPage("./Index");
+            // Create CompetitionCategory entries for each selected category
+            foreach (var categoryId in SelectedCategoryIds)
+            {
+                var competitionCategory = new CompetitionCategory
+                {
+                    CompetitionId = CompetitionId, // Bound from the hidden field
+                    CategoryId = categoryId,
+                    Active = true // Or set based on your requirements
+                };
+
+                // Add to context (assuming _context is available)
+                _ccService.AddCompetitionCategory(competitionCategory);
+            }
+            return RedirectToPage("/CompetitionCategoryPages/Index");
         }
     }
 }

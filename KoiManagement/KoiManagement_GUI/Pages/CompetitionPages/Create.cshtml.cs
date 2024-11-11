@@ -32,7 +32,9 @@ namespace KoiManagement_GUI.Pages.CompetitionPages
             _context.Competitions.Add(Competition);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            // Assuming Competition.Id has been generated after saving
+            return RedirectToPage("/CompetitionCategoryPages/Create", new { competitionId = Competition.Id });
         }
+
     }
 }
