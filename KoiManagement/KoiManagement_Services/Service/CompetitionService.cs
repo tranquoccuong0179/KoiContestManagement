@@ -18,6 +18,6 @@ namespace KoiManagement_Services.Service
         public bool UpdateCompetition(Competition competition) => _competitionRepository.UpdateCompetition(competition);
         public bool DeleteCompetition(Competition competition) => _competitionRepository.DeleteCompetition(competition);
 
-        public Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories() => _competitionRepository.GetCompetitionsWithCategories();
+        public Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories(string? competitionId) => _competitionRepository.GetCompetitionsWithCategories(competitionId);
     }
 }

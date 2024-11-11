@@ -24,7 +24,7 @@ namespace KoiManagement_DAO
         }
         public List<Competition> GetCompetitions()
         {
-            return context.Competitions.ToList();
+            return context.Competitions.OrderByDescending(c => c.CreateAt).ToList();
         }
 
         public Competition? GetCompetition(string id)
@@ -91,11 +91,11 @@ namespace KoiManagement_DAO
             return result;
         }
 
-        public Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories()
+        public Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories(string? competitionId)
         {
             return context.Competitions
                 .Include(c => c.CompetitionCategories)
-                .ThenInclude(cc => cc.Category)
+                .ThenInclude(cc => cc.Category).Where(c => !string.IsNullOrWhiteSpace(competitionId) && c.Id == competitionId)
                 .ToList()
                 .ToDictionary(
                     competition => competition,

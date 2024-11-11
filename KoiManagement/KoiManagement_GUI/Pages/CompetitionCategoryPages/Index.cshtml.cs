@@ -18,9 +18,13 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
         public IList<CompetitionCategory> CompetitionCategory { get; set; } = default!;
         public Dictionary<Competition, List<Category?>> CompetitionsWithCategories { get; set; } = default!;
 
-        public void OnGet()
+        public void OnGet(string? competitionId)
         {
-            CompetitionsWithCategories = _competitionService.GetCompetitionsWithCategories();
+            if (!string.IsNullOrEmpty(competitionId))
+            {
+                CompetitionsWithCategories = _competitionService.GetCompetitionsWithCategories(competitionId);
+            }
+            CompetitionsWithCategories = _competitionService.GetCompetitionsWithCategories(null);
         }
     }
 }

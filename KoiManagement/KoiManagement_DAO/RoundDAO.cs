@@ -23,7 +23,7 @@ namespace KoiManagement_DAO
         }
         public List<Round> GetRounds()
         {
-            return context.Rounds.ToList();
+            return context.Rounds.OrderByDescending(c => c.CreateAt).ToList();
         }
 
         public Round? GetRound(string id)

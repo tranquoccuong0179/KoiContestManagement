@@ -24,7 +24,7 @@ namespace KoiManagement_DAO
         }
         public List<CompetitionCategory> GetCompetitionCategories()
         {
-            return context.CompetitionCategories.Include(c => c.Category).Include(c => c.Competition).ToList();
+            return context.CompetitionCategories.Include(c => c.Category).Include(c => c.Competition).OrderByDescending(c => c.CreateAt).ToList();
         }
 
         public CompetitionCategory? GetCompetitionCategory(string id)

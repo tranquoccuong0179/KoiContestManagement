@@ -9,6 +9,6 @@ namespace KoiManagement_Services.IService
         bool AddCompetition(Competition competition);
         bool UpdateCompetition(Competition competition);
         bool DeleteCompetition(Competition competition);
-        Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories();
+        Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories(string? competitionId);
     }
 }

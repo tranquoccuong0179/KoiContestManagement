@@ -11,7 +11,7 @@ namespace KoiManagement_Repositories.Repository
         public Competition? GetCompetition(string id) => CompetitionDAO.Instance.GetCompetition(id);
         public List<Competition> GetCompetitions() => CompetitionDAO.Instance.GetCompetitions();
 
-        public Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories() => CompetitionDAO.Instance.GetCompetitionsWithCategories();
+        public Dictionary<Competition, List<Category?>> GetCompetitionsWithCategories(string? competitionId) => CompetitionDAO.Instance.GetCompetitionsWithCategories(competitionId);
 
         public bool UpdateCompetition(Competition competition) => CompetitionDAO.Instance.UpdateCompetition(competition);
     }

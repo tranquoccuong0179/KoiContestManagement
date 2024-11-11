@@ -23,7 +23,7 @@ namespace KoiManagement_DAO
         }
         public List<Category> GetCategories()
         {
-            return context.Categories.ToList();
+            return context.Categories.OrderByDescending(c => c.CreateAt).ToList();
         }
 
         public Category? GetCategory(string id)
