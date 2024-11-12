@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace KoiManagement_DAO.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -504,6 +506,7 @@ namespace KoiManagement_DAO.Migrations
                     CriteriaId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RefereeMarkId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Point = table.Column<double>(type: "float", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -524,6 +527,17 @@ namespace KoiManagement_DAO.Migrations
                         principalTable: "RefereeMarks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "0e780a94-deaa-4121-a85b-21d7671e7ef4", null, "Contestant", "CONTESTANT" },
+                    { "27930916-6f0c-412c-8132-3237471bd429", null, "Admin", "ADMIN" },
+                    { "4618859b-7b20-41a2-902c-590ed218961e", null, "Manager", "MANAGER" },
+                    { "bc486616-3de0-4a99-9be3-ea67be6dff98", null, "Referee", "REFEREE" }
                 });
 
             migrationBuilder.CreateIndex(

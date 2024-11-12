@@ -1,0 +1,56 @@
+﻿@page
+@model KoiManagement_GUI.Pages.CriteriaPointPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CriteriaPoint</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CriteriaPoint.CriteriaId" />
+            <input type="hidden" asp-for="CriteriaPoint.RefereeMarkId" />
+            <div class="form-group">
+                <label asp-for="CriteriaPoint.Point" class="control-label"></label>
+                <input asp-for="CriteriaPoint.Point" class="form-control" />
+                <span asp-validation-for="CriteriaPoint.Point" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CriteriaPoint.Active" /> @Html.DisplayNameFor(model => model.CriteriaPoint.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="CriteriaPoint.CreateAt" class="control-label"></label>
+                <input asp-for="CriteriaPoint.CreateAt" class="form-control" />
+                <span asp-validation-for="CriteriaPoint.CreateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CriteriaPoint.UpdateAt" class="control-label"></label>
+                <input asp-for="CriteriaPoint.UpdateAt" class="form-control" />
+                <span asp-validation-for="CriteriaPoint.UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CriteriaPoint.DeleteAt" class="control-label"></label>
+                <input asp-for="CriteriaPoint.DeleteAt" class="form-control" />
+                <span asp-validation-for="CriteriaPoint.DeleteAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

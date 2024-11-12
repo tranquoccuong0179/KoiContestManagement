@@ -8,33 +8,37 @@ using System.Threading.Tasks;
 
 namespace KoiManagement_DAO
 {
-    public class CriteriaDAO
+    public class RefereeMarkDAO
     {
         private KoiManagementContext context;
-        private static CriteriaDAO instance;
-        public CriteriaDAO()
+        private static RefereeMarkDAO instance;
+
+        public RefereeMarkDAO()
         {
             context = new KoiManagementContext();
         }
-        public static CriteriaDAO Instance
+
+        public static RefereeMarkDAO Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new CriteriaDAO();
+                    instance = new RefereeMarkDAO();
                 }
                 return instance;
             }
         }
-        public List<Criteria> GetCriterias()
+
+        public List<RefereeMark> GetRefereeMarks()
         {
-            return context.Criteria.Where(c => c.Active == true).ToList();
+            return context.RefereeMarks.Where(r => r.Active == true).ToList();
         }
 
-        public Criteria? GetCriteria(string id)
+        public RefereeMark GetRefereeMark(string id)
         {
-            var entity = context.Criteria.SingleOrDefault(m => m.Id.Equals(id) && m.Active == true);
+
+            var entity = context.RefereeMarks.SingleOrDefault(m => m.Id.Equals(id) && m.Active == true);
             if (entity != null)
             {
                 context.Entry(entity).State = EntityState.Detached;
@@ -42,62 +46,61 @@ namespace KoiManagement_DAO
             return entity;
         }
 
-        public bool AddCriteria(Criteria criteria)
+        public bool AddRefereeMark(RefereeMark refereeMarkNew)
         {
             bool result = false;
-            Criteria? existedCriteria = GetCriteria(criteria.Id);
+            RefereeMark refereeMark = GetRefereeMark(refereeMarkNew.Id);
             try
             {
-                if (existedCriteria == null)
+                if (refereeMark == null)
                 {
-                    context.Criteria.Add(criteria);
+                    context.RefereeMarks.Add(refereeMarkNew);
                     context.SaveChanges();
                     result = true;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                //Log
             }
             return result;
         }
-        public bool UpdateCriteria(Criteria criteria)
+        public bool UpdateRefereeMark(RefereeMark refereeMarkUpdate)
         {
             bool result = false;
-            Criteria? existedCriteria = GetCriteria(criteria.Id);
+            RefereeMark refereeMark = GetRefereeMark(refereeMarkUpdate.Id);
             try
             {
-                if (existedCriteria != null)
+                if (refereeMark != null)
                 {
-                    context.Entry<Criteria>(criteria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    context.Entry<RefereeMark>(refereeMarkUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     context.SaveChanges();
                     result = true;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                //Log
             }
             return result;
         }
-
-        public bool DeleteCriteria(Criteria criteria)
+        public bool DeleteRefereeMark(RefereeMark refereeMarkDelete)
         {
             bool result = false;
-            Criteria? existedCriteria = GetCriteria(criteria.Id);
+            RefereeMark? existedRefereeMark = GetRefereeMark(refereeMarkDelete.Id);
             try
             {
-                if (existedCriteria != null)
+                if (existedRefereeMark != null)
                 {
-                    existedCriteria.Active = false;
-                    context.Entry<Criteria>(existedCriteria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    existedRefereeMark.Active = false;
+                    context.Entry<RefereeMark>(existedRefereeMark).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     context.SaveChanges();
                     result = true;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                //Log
             }
             return result;
         }

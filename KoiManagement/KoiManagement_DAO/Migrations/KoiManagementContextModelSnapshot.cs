@@ -259,6 +259,9 @@ namespace KoiManagement_DAO.Migrations
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Point")
                         .HasColumnType("float");
 
@@ -562,25 +565,25 @@ namespace KoiManagement_DAO.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "54b67350-2edd-4c73-90ab-f785c2c93c79",
+                            Id = "27930916-6f0c-412c-8132-3237471bd429",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "494893fd-8ca2-4e83-976c-9e4eeb01970e",
-                            Name = "Constestant",
-                            NormalizedName = "CONSTESTANT"
+                            Id = "0e780a94-deaa-4121-a85b-21d7671e7ef4",
+                            Name = "Contestant",
+                            NormalizedName = "CONTESTANT"
                         },
                         new
                         {
-                            Id = "ac435c21-2bef-4dc6-8fe5-6f24a5ddcd69",
+                            Id = "bc486616-3de0-4a99-9be3-ea67be6dff98",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
-                            Id = "81cd559a-76b5-4f15-96ef-2b6bca5737ad",
+                            Id = "4618859b-7b20-41a2-902c-590ed218961e",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });

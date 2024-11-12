@@ -60,8 +60,9 @@ public partial class KoiManagementContext : IdentityDbContext
 			.SetBasePath(Directory.GetCurrentDirectory())
 			.AddJsonFile("appsettings.json", true, true)
 			.Build();
-		return configuration.GetConnectionString("KoiManagementConnection");
-	}
+		return "Server=DESKTOP-2I4K8I6\\SQLEXPRESS;uid=sa;pwd=12345;database=KoiManagement;Trusted_Connection=True;TrustServerCertificate=True;";
+
+    }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

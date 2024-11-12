@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoiManagement_DAO.Migrations
 {
     [DbContext(typeof(KoiManagementContext))]
-    [Migration("20241017145836_Init")]
-    partial class Init
+    [Migration("20241111124437_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -261,6 +261,9 @@ namespace KoiManagement_DAO.Migrations
 
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Point")
                         .HasColumnType("float");
@@ -561,6 +564,32 @@ namespace KoiManagement_DAO.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "27930916-6f0c-412c-8132-3237471bd429",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "0e780a94-deaa-4121-a85b-21d7671e7ef4",
+                            Name = "Contestant",
+                            NormalizedName = "CONTESTANT"
+                        },
+                        new
+                        {
+                            Id = "bc486616-3de0-4a99-9be3-ea67be6dff98",
+                            Name = "Referee",
+                            NormalizedName = "REFEREE"
+                        },
+                        new
+                        {
+                            Id = "4618859b-7b20-41a2-902c-590ed218961e",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

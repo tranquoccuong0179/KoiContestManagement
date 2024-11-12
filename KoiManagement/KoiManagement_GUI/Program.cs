@@ -22,6 +22,10 @@ builder.Services.AddScoped<IMarkRepository, MarkRepository>();
 builder.Services.AddScoped<IMarkService, MarkService>();
 builder.Services.AddScoped<ICriteriaService, CriteriaService>();
 builder.Services.AddScoped<ICriteriaRepository, CriteriaRepository>();
+builder.Services.AddScoped<IRefereeMarkRepository, RefereeMarkRepository>();
+builder.Services.AddScoped<IRefereeMarkService, RefereeMarkService>();
+builder.Services.AddScoped<ICriteriaPointRepository, CriteriaPointRepository>();
+builder.Services.AddScoped<ICriteriaPointService, CriteriaPointService>();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
 	options.Password.RequireDigit = false;
