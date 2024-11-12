@@ -1,45 +1,48 @@
 ﻿@page
 @model KoiManagement_GUI.Pages.CompetitionCategoryPages.EditModel
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Competition Categories";
 }
 
-<h1>Edit</h1>
+<h1>Edit Competition Categories</h1>
 
-<h4>CompetitionCategory</h4>
+<h4>Competition: @Model.CompetitionName</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" asp-page-handler="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Competition</label>
-                <select asp-for="CompetitionCategory.CompetitionId" class="form-control" asp-items="ViewBag.CompetitionId"></select>
-                <span asp-validation-for="CompetitionCategory.CompetitionId" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="CompetitionId" />
+
             <div class="form-group">
                 <label class="control-label">Category</label>
-                <select asp-for="CompetitionCategory.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="CompetitionCategory.CategoryId" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="CompetitionCategory.Id" />
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="CompetitionCategory.Active" /> @Html.DisplayNameFor(model => model.CompetitionCategory.Active)
-                </label>
+                @foreach (var category in Model.Categories)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="SelectedCategoryIds" value="@category.Id"
+                        @(Model.SelectedCategoryIds.Contains(category.Id) ? "checked" : "") />
+                        <label class="form-check-label">@category.Name</label>
+                    </div>
+                }
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
             </div>
+        </form>
+
+        <form method="post" asp-page-handler="Delete">
+            <input type="hidden" asp-for="CompetitionId" />
+            <button type="submit" class="btn btn-danger">Delete All Categories</button>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

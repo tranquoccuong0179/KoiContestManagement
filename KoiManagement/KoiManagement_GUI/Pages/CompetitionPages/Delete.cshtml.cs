@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,24 +8,24 @@ namespace KoiManagement_GUI.Pages.CompetitionPages
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICompetitionService _competitionService;
 
-        public DeleteModel(KoiManagement_DAO.KoiManagementContext context)
+        public DeleteModel(ICompetitionService competitionService)
         {
-            _context = context;
+            _competitionService = competitionService;
         }
 
         [BindProperty]
         public Competition Competition { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public IActionResult OnGet(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var competition = await _context.Competitions.FirstOrDefaultAsync(m => m.Id == id);
+            var competition = _competitionService.GetCompetition(id);
 
             if (competition == null)
             {
@@ -37,21 +38,19 @@ namespace KoiManagement_GUI.Pages.CompetitionPages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public IActionResult OnPost(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var competition = await _context.Competitions.FindAsync(id);
+            var competition = _competitionService.GetCompetition(id);
             if (competition != null)
             {
                 Competition = competition;
-                _context.Competitions.Remove(Competition);
-                await _context.SaveChangesAsync();
+                _competitionService.DeleteCompetition(competition);
             }
-
             return RedirectToPage("./Index");
         }
     }
