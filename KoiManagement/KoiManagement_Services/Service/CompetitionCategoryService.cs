@@ -20,5 +20,7 @@ namespace KoiManagement_Services.Service
         public bool AddCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.AddCompetitionCategory(competitionCategory);
         public bool UpdateCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.UpdateCompetitionCategory(competitionCategory);
         public bool DeleteCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.DeleteCompetitionCategory(competitionCategory);
+        public void DeleteAllCategoriesForCompetition(string competitionId) => _competitionCategoryRepository.DeleteAllCategoriesForCompetition(competitionId);
+        public void UpdateCompetitionCategories(string competitionId, List<string> selectedCategoryIds) => _competitionCategoryRepository.UpdateCompetitionCategories(competitionId, selectedCategoryIds);
     }
 }

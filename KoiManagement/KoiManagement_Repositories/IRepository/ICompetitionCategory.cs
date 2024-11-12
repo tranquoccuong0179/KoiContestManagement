@@ -9,5 +9,7 @@ namespace KoiManagement_Repositories.IRepository
         bool AddCompetitionCategory(CompetitionCategory competitionCategory);
         bool UpdateCompetitionCategory(CompetitionCategory competitionCategory);
         bool DeleteCompetitionCategory(CompetitionCategory competitionCategory);
+        void DeleteAllCategoriesForCompetition(string competitionId);
+        void UpdateCompetitionCategories(string competitionId, List<string> selectedCategoryIds);
     }
 }

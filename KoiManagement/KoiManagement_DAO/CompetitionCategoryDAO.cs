@@ -90,5 +90,33 @@ namespace KoiManagement_DAO
             }
             return result;
         }
+        public void DeleteAllCategoriesForCompetition(string competitionId)
+        {
+            var competitionCategories = context.CompetitionCategories
+                                                .Where(cc => cc.CompetitionId == competitionId)
+                                                .ToList();
+            context.CompetitionCategories.RemoveRange(competitionCategories);
+            context.SaveChanges();
+        }
+        public void UpdateCompetitionCategories(string competitionId, List<string> selectedCategoryIds)
+        {
+            var existingCategories = context.CompetitionCategories
+                                              .Where(cc => cc.CompetitionId == competitionId)
+                                              .ToList();
+
+            var categoriesToAdd = selectedCategoryIds.Except(existingCategories.Select(cc => cc.CategoryId)).ToList();
+            var categoriesToRemove = existingCategories.Where(cc => !selectedCategoryIds.Contains(cc.CategoryId)).ToList();
+
+            // Add new categories
+            foreach (var categoryId in categoriesToAdd)
+            {
+                context.CompetitionCategories.Add(new CompetitionCategory { CompetitionId = competitionId, CategoryId = categoryId, Active = true });
+            }
+
+            // Remove unselected categories
+            context.CompetitionCategories.RemoveRange(categoriesToRemove);
+            context.SaveChanges();
+        }
+
     }
 }

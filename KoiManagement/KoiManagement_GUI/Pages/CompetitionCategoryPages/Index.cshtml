@@ -4,12 +4,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Competitions and Categories</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 
 <table class="table">
     <thead>
@@ -35,10 +30,10 @@
                     </ul>
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@competition.Key.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@competition.Key.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@competition.Key.Id">Delete</a>
-                </td>
+                    @*  <a asp-page="./Edit" asp-route-competitionId="@competition.Key.Id">Edit</a> | *@
+                    <a asp-page="./Details" asp-route-competitionId="@competition.Key.Id">Details</a>
+@*                     <a asp-page="./Delete" asp-route-competitionId="@competition.Key.Id">Delete</a>
+ *@                </td>
             </tr>
         }
     </tbody>

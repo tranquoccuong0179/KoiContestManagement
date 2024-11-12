@@ -28,7 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Competition[0].MaxApplication)
             </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -50,9 +50,9 @@
                 @Html.DisplayFor(modelItem => item.MaxApplication)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> 
+@*                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+ *@                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> 
                 <a asp-page="../CompetitionCategoryPages/Index" asp-route-competitionId="@item.Id">Competition Categories</a>
             </td>
         </tr>

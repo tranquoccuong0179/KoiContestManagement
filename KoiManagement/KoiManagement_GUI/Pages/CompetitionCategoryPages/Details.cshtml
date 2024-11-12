@@ -1,51 +1,48 @@
 ﻿@page
-@model KoiManagement_GUI.Pages.CompetitionCategoryPages.DetailsModel
-
+@model KoiManagement_GUI.Pages.CompetitionCategoryPages.EditModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Edit Competition Categories";
 }
 
-<h1>Details</h1>
+<h1>Edit Competition Categories</h1>
+
+<h4>Competition: @Model.CompetitionName</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-page-handler="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CompetitionId" />
+
+            <div class="form-group">
+                <label class="control-label">Category</label>
+                @foreach (var category in Model.Categories)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="SelectedCategoryIds" value="@category.Id"
+                        @(Model.SelectedCategoryIds.Contains(category.Id) ? "checked" : "") />
+                        <label class="form-check-label">@category.Name</label>
+                    </div>
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <form method="post" asp-page-handler="Delete">
+            <input type="hidden" asp-for="CompetitionId" />
+            <button type="submit" class="btn btn-danger">Delete All Categories</button>
+        </form>
+    </div>
+</div>
 
 <div>
-    <h4>CompetitionCategory</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Category</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionCategory.Category.Name)
-        </dd>
-        <dt class="col-sm-2">Competition</dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionCategory.Competition.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionCategory.Active)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionCategory.Active)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionCategory.CreateAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionCategory.CreateAt)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionCategory.UpdateAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionCategory.UpdateAt)
-        </dd>
-@*         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionCategory.DeleteAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionCategory.DeleteAt)
-        </dd> *@
-    </dl>
+    <a asp-page="Index">Back to List</a>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.CompetitionCategory.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
