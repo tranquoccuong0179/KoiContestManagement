@@ -10,19 +10,19 @@ using Microsoft.Extensions.Configuration;
 
 namespace KoiManagement_Service.Service
 {
-	public class ServiceManager : IServiceManager
-	{
-		private readonly Lazy<IAuthenticationService> _authenticationService;
-		private readonly Lazy<IKoiService> _koiService;
+    public class ServiceManager : IServiceManager
+    {
+        private readonly Lazy<IAuthenticationService> _authenticationService;
+        private readonly Lazy<IKoiService> _koiService;
 
-		public ServiceManager(IRepositoryManager repositoryManager, IConfiguration configuration, IMapper mapper, UserManager<User> userManager, IBlobService blobService)
-		{
-			_authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper));
-			_koiService = new Lazy<IKoiService>(() => new KoiService(repositoryManager, mapper, blobService));
-		}
+        public ServiceManager(IRepositoryManager repositoryManager, IConfiguration configuration, IMapper mapper, UserManager<User> userManager, IBlobService blobService)
+        {
+            _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper));
+            _koiService = new Lazy<IKoiService>(() => new KoiService(repositoryManager, mapper, blobService));
+        }
 
-		public IAuthenticationService AuthenticationService => _authenticationService.Value;
+        public IAuthenticationService AuthenticationService => _authenticationService.Value;
 
-		public IKoiService KoiService => _koiService.Value;
-	}
+        public IKoiService KoiService => _koiService.Value;
+    }
 }

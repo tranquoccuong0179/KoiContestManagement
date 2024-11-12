@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.MarkPages
 {
     public class EditModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
-
-        public EditModel(KoiManagement_DAO.KoiManagementContext context)
+        private readonly IMarkService markService;
+        private readonly ICompetitionRoundService competitionRoundService;
+        public EditModel(IMarkService markService, ICompetitionRoundService competitionRoundService)
         {
-            _context = context;
+            this.markService = markService;
+            this.competitionRoundService = competitionRoundService;
         }
 
         [BindProperty]
@@ -30,13 +29,13 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return NotFound();
             }
 
-            var mark =  await _context.Marks.FirstOrDefaultAsync(m => m.Id == id);
+            var mark =  markService.GetMarkById(id);
             if (mark == null)
             {
                 return NotFound();
             }
             Mark = mark;
-           ViewData["CompetitionRoundId"] = new SelectList(_context.CompetitionRounds, "Id", "Id");
+           ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
             return Page();
         }
 
@@ -49,21 +48,19 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return Page();
             }
 
-            _context.Attach(Mark).State = EntityState.Modified;
+            bool updateSuccess = markService.UpdateMark(Mark);
 
-            try
+            if (!updateSuccess)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
+                // Kiểm tra nếu CandidateProfile không tồn tại
                 if (!MarkExists(Mark.Id))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    // Throw exception hoặc ghi log nếu cần thiết
+                    throw new DbUpdateConcurrencyException();
                 }
             }
 
@@ -72,7 +69,7 @@ namespace KoiManagement_GUI.Pages.MarkPages
 
         private bool MarkExists(string id)
         {
-            return _context.Marks.Any(e => e.Id == id);
+            return markService.GetMarkById(id) != null;
         }
     }
 }

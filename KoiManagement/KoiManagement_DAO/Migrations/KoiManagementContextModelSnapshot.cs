@@ -566,24 +566,31 @@ namespace KoiManagement_DAO.Migrations
                         new
                         {
                             Id = "27930916-6f0c-412c-8132-3237471bd429",
+                            Id = "add7ba94-19b0-4413-ae9d-1fa105f93324",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
+
                             Id = "0e780a94-deaa-4121-a85b-21d7671e7ef4",
+
+                            Id = "30b9341a-5eb7-40fa-8012-09820367504e",
+
                             Name = "Contestant",
                             NormalizedName = "CONTESTANT"
                         },
                         new
                         {
                             Id = "bc486616-3de0-4a99-9be3-ea67be6dff98",
+                            Id = "ab9ba915-b62c-4d6c-ae67-96a96df839bf",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
                             Id = "4618859b-7b20-41a2-902c-590ed218961e",
+                            Id = "ea9b3cf4-d4a9-4921-80b8-3ffd40f37df3",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
