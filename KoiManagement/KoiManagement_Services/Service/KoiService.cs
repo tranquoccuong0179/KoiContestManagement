@@ -7,7 +7,7 @@ using KoiManagement_Services.KoiServices.DTO;
 
 namespace KoiManagement_Services.Service
 {
-    internal sealed class KoiService : IKoiService
+    public class KoiService : IKoiService
     {
         private readonly IRepositoryManager repositoryManager;
         private readonly IMapper mapper;

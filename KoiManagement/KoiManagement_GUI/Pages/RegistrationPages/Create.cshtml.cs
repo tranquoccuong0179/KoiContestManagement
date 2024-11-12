@@ -25,12 +25,12 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
             this.competitionCategoryService = competitionCategoryService;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(string? competitionId)
         {
             ViewData["CompetitionCategoryId"] = new SelectList(competitionCategoryService.GetCompetitionCategories(), "Id", "Id");
             Task<List<Koi>> koiTask = koiService.GetAll();
             List<Koi> koiList = await koiTask;
-            ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");
+            ViewData["KoiId"] = new SelectList(koiList, "Id", "Name");
             return Page();
         }
 
@@ -38,7 +38,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
         public Registration Registration { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
@@ -46,8 +46,8 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
             }
 
            registrationService.AddRegistration(Registration);
-
-            return RedirectToPage("./Index");
+            //trả về trang user get all đăng kí của mình 
+           return RedirectToPage("../CompetitionPages/Index");
         }
     }
 }

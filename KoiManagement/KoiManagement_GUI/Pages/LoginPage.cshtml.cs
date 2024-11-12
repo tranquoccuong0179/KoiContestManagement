@@ -47,7 +47,7 @@ namespace KoiManagement_GUI.Pages
 				{
 					HttpContext.Session.SetString("Role", Role.Contestant);
 				}
-				return Redirect("~/ProfilePages");
+				return Redirect("~/CompetitionPages");
 			}
 			else
 			{
