@@ -13,11 +13,7 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <!-- Hidden field for CompetitionId -->
             <input type="hidden" asp-for="CompetitionId" />
-
-            <!-- Display checkboxes for categories -->
             <div class="form-group">
                 <label class="control-label">Category</label>
                 @foreach (var category in Model.Categories)
@@ -26,10 +22,6 @@
                         <input class="form-check-input" type="checkbox" name="SelectedCategoryIds" value="@category.Id" />
                         <label class="form-check-label">@category.Name</label>
                     </div>
-@*                     <label class="form-check-label">
-                        <input class="form-check-input" asp-for="@category.CompetitionCategories." />
-                        @Html.DisplayNameFor(model => model.CompetitionCategory.Active)
-                    </label> *@
                 }
             </div>
             <div class="form-group">

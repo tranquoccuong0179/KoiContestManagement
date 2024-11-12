@@ -9,69 +9,57 @@ namespace KoiManagement_GUI.Pages.CompetitionCategoryPages
 {
     public class EditModel : PageModel
     {
-        private readonly ICompetitionCategoryService _ccService;
-        private readonly ICategoryService _categoryService;
         private readonly ICompetitionService _competitionService;
+        private readonly ICategoryService _categoryService;
+        private readonly ICompetitionCategoryService _ccService;
 
-        public EditModel(ICompetitionCategoryService ccService, ICategoryService categoryService, ICompetitionService competitionService)
+        public EditModel(ICompetitionService competitionService, ICategoryService categoryService, ICompetitionCategoryService ccService)
         {
-            _ccService = ccService;
-            _categoryService = categoryService;
             _competitionService = competitionService;
+            _categoryService = categoryService;
+            _ccService = ccService;
         }
 
         [BindProperty]
-        public CompetitionCategory CompetitionCategory { get; set; } = default!;
+        public string CompetitionId { get; set; }
 
-        public IActionResult OnGet(string id)
+        public string CompetitionName { get; set; }
+
+        [BindProperty]
+        public List<string> SelectedCategoryIds { get; set; } = new List<string>();
+
+        public List<Category> Categories { get; set; } = new List<Category>();
+
+        public void OnGet(string competitionId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var competition = _competitionService.GetCompetition(competitionId);
+            CompetitionId = competitionId;
+            CompetitionName = competition.Name;
 
-            var competitioncategory = _ccService.GetCompetitionCategory(id);
-            if (competitioncategory == null)
-            {
-                return NotFound();
-            }
-            CompetitionCategory = competitioncategory;
-            ViewData["CategoryId"] = new SelectList(_categoryService.GetCategories(), "Id", "Name");
-            ViewData["CompetitionId"] = new SelectList(_competitionService.GetCompetitions(), "Id", "Name");
-            return Page();
+            // Get all categories
+            Categories = _categoryService.GetCategories().ToList();
+
+            // Load selected categories
+            SelectedCategoryIds = _competitionService.GetCompetitionsWithCategories(competitionId).SelectMany(c => c.Value).Where(category => category != null).Select(category => category!.Id).ToList();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public IActionResult OnPost()
+        public IActionResult OnPostEditAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            try
-            {
-                _ccService.UpdateCompetitionCategory(CompetitionCategory);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CompetitionCategoryExists(CompetitionCategory.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            // Update competition categories
+            _ccService.UpdateCompetitionCategories(CompetitionId, SelectedCategoryIds);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("Index");
         }
 
-        private bool CompetitionCategoryExists(string id)
+        public IActionResult OnPostDeleteAsync()
         {
-            return _ccService.GetCompetitionCategory(id) != null;
+            _ccService.DeleteAllCategoriesForCompetition(CompetitionId);
+            return RedirectToPage("Index");
         }
     }
 }

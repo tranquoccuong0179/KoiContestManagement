@@ -56,7 +56,7 @@ public partial class KoiManagementContext : IdentityDbContext
 
 	private string GetConnectionString()
 	{
-        return "Server=DESKTOP-2I4K8I6\\SQLEXPRESS;uid=sa;pwd=12345;database=KoiManagement;Trusted_Connection=True;TrustServerCertificate=True;";
+        return "Server=(local);uid=sa;pwd=12345678;database=KoiManagement;Trusted_Connection=True;TrustServerCertificate=True;";
    //     IConfiguration configuration = new ConfigurationBuilder()
 			//.SetBasePath(Directory.GetCurrentDirectory())
 			//.AddJsonFile("appsettings.json", true, true)

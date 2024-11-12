@@ -33,6 +33,11 @@ builder.Services.AddScoped<IRefereeMarkService, RefereeMarkService>();
 builder.Services.AddScoped<ICriteriaPointRepository, CriteriaPointRepository>();
 builder.Services.AddScoped<ICriteriaPointService, CriteriaPointService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+builder.Services.AddScoped<IResultService, ResultService>();
+builder.Services.AddScoped<IResultRepository, ResultRepository>();
+builder.Services.AddScoped<IKoiService, KoiService>();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = false;

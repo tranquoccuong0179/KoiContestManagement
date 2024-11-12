@@ -32,7 +32,7 @@ namespace KoiManagement_DAO
 
         public List<Registration> GetRegistrations()
         {
-            return context.Registrations.Include(x => x.Koi).ToList();
+            return context.Registrations.Include(x => x.Koi).Include(x => x.CompetitionCategory).ToList();
         }
 
         public Registration GetRegistration(string id)
