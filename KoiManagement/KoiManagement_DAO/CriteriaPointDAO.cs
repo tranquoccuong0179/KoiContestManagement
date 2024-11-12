@@ -8,33 +8,37 @@ using System.Threading.Tasks;
 
 namespace KoiManagement_DAO
 {
-    public class CriteriaDAO
+    public class CriteriaPointDAO
     {
         private KoiManagementContext context;
-        private static CriteriaDAO instance;
-        public CriteriaDAO()
+        private static CriteriaPointDAO instance;
+
+        public CriteriaPointDAO()
         {
             context = new KoiManagementContext();
         }
-        public static CriteriaDAO Instance
+
+        public static CriteriaPointDAO Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new CriteriaDAO();
+                    instance = new CriteriaPointDAO();
                 }
                 return instance;
             }
         }
-        public List<Criteria> GetCriterias()
+
+        public List<CriteriaPoint> GetCriteriaPoints()
         {
-            return context.Criteria.Where(c => c.Active == true).ToList();
+            return context.CriteriaPoints.Where(m => m.Active == true).ToList();
         }
 
-        public Criteria? GetCriteria(string id)
+        public CriteriaPoint GetCriteriaPoint(string id)
         {
-            var entity = context.Criteria.SingleOrDefault(m => m.Id.Equals(id) && m.Active == true);
+
+            var entity = context.CriteriaPoints.SingleOrDefault(m => m.Id.Equals(id) && m.Active == true);
             if (entity != null)
             {
                 context.Entry(entity).State = EntityState.Detached;
@@ -42,62 +46,61 @@ namespace KoiManagement_DAO
             return entity;
         }
 
-        public bool AddCriteria(Criteria criteria)
+        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew)
         {
             bool result = false;
-            Criteria? existedCriteria = GetCriteria(criteria.Id);
+            CriteriaPoint candidateProfile = GetCriteriaPoint(criteriaPointNew.Id);
             try
             {
-                if (existedCriteria == null)
+                if (candidateProfile == null)
                 {
-                    context.Criteria.Add(criteria);
+                    context.CriteriaPoints.Add(criteriaPointNew);
                     context.SaveChanges();
                     result = true;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                //Log
             }
             return result;
         }
-        public bool UpdateCriteria(Criteria criteria)
+        public bool UpdateCriteriaPoint(CriteriaPoint criteriaPointUpdate)
         {
             bool result = false;
-            Criteria? existedCriteria = GetCriteria(criteria.Id);
+            CriteriaPoint criteriaPoint = GetCriteriaPoint(criteriaPointUpdate.Id);
             try
             {
-                if (existedCriteria != null)
+                if (criteriaPoint != null)
                 {
-                    context.Entry<Criteria>(criteria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    context.Entry<CriteriaPoint>(criteriaPointUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     context.SaveChanges();
                     result = true;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                //Log
             }
             return result;
         }
-
-        public bool DeleteCriteria(Criteria criteria)
+        public bool DeleteCriteriaPoint(CriteriaPoint criteriaPointDelete)
         {
             bool result = false;
-            Criteria? existedCriteria = GetCriteria(criteria.Id);
+            CriteriaPoint? existedCriteriaPoint = GetCriteriaPoint(criteriaPointDelete.Id);
             try
             {
-                if (existedCriteria != null)
+                if (existedCriteriaPoint != null)
                 {
-                    existedCriteria.Active = false;
-                    context.Entry<Criteria>(existedCriteria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    existedCriteriaPoint.Active = false;
+                    context.Entry<CriteriaPoint>(existedCriteriaPoint).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     context.SaveChanges();
                     result = true;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                //Log
             }
             return result;
         }

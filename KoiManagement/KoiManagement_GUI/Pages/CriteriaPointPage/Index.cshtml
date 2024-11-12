@@ -1,0 +1,72 @@
+﻿@page
+@model KoiManagement_GUI.Pages.CriteriaPointPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CriteriaPoint[0].Point)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriteriaPoint[0].Active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriteriaPoint[0].CreateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriteriaPoint[0].UpdateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriteriaPoint[0].DeleteAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriteriaPoint[0].Criteria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriteriaPoint[0].RefereeMark)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CriteriaPoint) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Point)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeleteAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Criteria.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RefereeMark.Id)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
