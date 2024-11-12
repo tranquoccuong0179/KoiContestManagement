@@ -20,13 +20,13 @@ namespace KoiManagement_DAO
 
         }
 
-        public async Task<List<Koi>> GetAll()
-        {
-            using (var context = new KoiManagementContext())
-            {
-                return await context.Kois.ToListAsync();
-            }
-        }
+		public async Task<List<Koi>> GetAll()
+		{
+			using (var context = new KoiManagementContext())
+			{
+				return await context.Kois.Include(c => c.User).ToListAsync();
+			}
+		}
 
         public async Task<List<Koi>> GetByUserIdActive(string userId)
         {

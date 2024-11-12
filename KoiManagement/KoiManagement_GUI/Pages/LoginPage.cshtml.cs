@@ -24,36 +24,37 @@ namespace KoiManagement_GUI.Pages
             }
         }
 
-        public async Task<IActionResult> OnPost()
-        {
-            var user = await serviceManager.AuthenticationService.AuthenticateUser(UserForAuthenticationDto);
-            if (user is not null)
-            {
-                HttpContext.Session.SetString("Id", user.Id);
-                HttpContext.Session.SetString("FullName", user.FullName);
-                if (user.Roles.Contains(Role.Admin))
-                {
-                    HttpContext.Session.SetString("Role", Role.Admin);
-                }
-                else if (user.Roles.Contains(Role.Manager))
-                {
-                    HttpContext.Session.SetString("Role", Role.Manager);
-                }
-                else if (user.Roles.Contains(Role.Referee))
-                {
-                    HttpContext.Session.SetString("Role", Role.Referee);
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Role", Role.Constestant);
-                }
-                return Redirect("~/ProfilePages");
-            }
-            else
-            {
-                ViewData["LoginResult"] = "Invalid username or password";
-                return Page();
-            }
-        }
-    }
+		public async Task<IActionResult> OnPost()
+		{
+			var user = await serviceManager.AuthenticationService.AuthenticateUser(UserForAuthenticationDto);
+			if (user is not null)
+			{
+				HttpContext.Session.SetString("Id", user.Id);
+				HttpContext.Session.SetString("FullName", user.FullName);
+				if (user.Roles.Contains(Role.Admin))
+				{
+					HttpContext.Session.SetString("Role", Role.Admin);
+				}
+				else if (user.Roles.Contains(Role.Manager))
+				{
+					HttpContext.Session.SetString("Role", Role.Manager);
+				}
+				else if (user.Roles.Contains(Role.Referee))
+				{
+					HttpContext.Session.SetString("Role", Role.Referee);
+				}
+				else if (user.Roles.Contains(Role.Contestant))
+				{
+					HttpContext.Session.SetString("Role", Role.Contestant);
+				}
+				return Redirect("~/ProfilePages");
+			}
+			else
+			{
+				ViewData["LoginResult"] = "Invalid username or password";
+				return Page();
+			}
+		}
+	}
+
 }

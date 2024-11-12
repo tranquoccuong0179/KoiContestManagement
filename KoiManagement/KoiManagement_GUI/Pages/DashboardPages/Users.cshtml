@@ -1,0 +1,124 @@
+﻿@page
+@using KoiManagement_BusinessObjects.Constants
+@model KoiManagement_GUI.Pages.DashboardPages.UsersModel
+@{
+}
+
+<head>
+	<link id="pagestyle" href="~/css/Dashboard.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<div class="container-xxl position-relative bg-white d-flex p-0">
+	<!-- Sidebar Start -->
+	<div class="sidebar pe-4 pb-3">
+		<nav class="navbar bg-light navbar-light">
+			<a href="index.html" class="navbar-brand mx-4 mb-3">
+				<h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+			</a>
+			<div class="d-flex align-items-center ms-4 mb-4">
+				<div class="position-relative">
+					<img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+					<div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+				</div>
+				<div class="ms-3">
+					<h6 class="mb-0">@HttpContext.Session.GetString("FullName")</h6>
+					<span>@HttpContext.Session.GetString("Role")</span>
+				</div>
+			</div>
+			<div class="navbar-nav w-100">
+				<a asp-page="/DashboardPages/Index" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Kois</a>
+				<a asp-page="/DashboardPages/Users" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Users</a>
+			</div>
+		</nav>
+	</div>
+	<!-- Sidebar End -->
+	<!-- Content Start -->
+	<div class="content">
+		<!-- Table Start -->
+		<div class="container-fluid pt-4 px-4">
+			<div class="row g-4">
+				<div class="col-12">
+					<div class="bg-light rounded h-100 p-4">
+						<h3 class="mb-4">User Management</h3>
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Fullname</th>
+										<th scope="col">UserName</th>
+										<th scope="col">Active</th>
+										<th scope="col">Role</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									@{
+										for (int i = 0; i < Model.Users.Count; i++)
+										{
+											var user = Model.Users[i];
+											<tr>
+												<th scope="row">@(i + 1)</th>
+												<td>@user.FullName</td>
+												<td>@user.UserName</td>
+												<td>
+													@{
+														if (user.Active)
+														{
+															<span class="badge rounded-pill bg-success">Active</span>
+														}
+														else
+														{
+															<span class="badge rounded-pill bg-danger">Inactive</span>
+														}
+													}
+												</td>
+												<td>
+													@{
+														if (@user.Roles.Contains(Role.Admin))
+														{
+															@Html.Raw(Role.Admin)
+														}
+														else if (user.Roles.Contains(Role.Manager))
+														{
+															@Html.Raw(Role.Manager)
+														}
+														else if (user.Roles.Contains(Role.Referee))
+														{
+															@Html.Raw(Role.Referee)
+														}
+														else if (user.Roles.Contains(Role.Contestant))
+														{
+															@Html.Raw(Role.Contestant)
+														}
+													}
+												</td>
+												<td>
+													<form method="post">
+														<input type="hidden" name="id" value="@user.Id" />
+														@{
+															if (user.Active)
+															{
+																<input type="submit" class="btn btn-danger" value="Deactive" />
+															}
+															else
+															{
+																<input type="submit" class="btn btn-primary" value="Active" />
+															}
+														}
+													</form>
+												</td>
+											</tr>
+										}
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Table End -->
+	</div>
+	<!-- Content End -->
+</div>

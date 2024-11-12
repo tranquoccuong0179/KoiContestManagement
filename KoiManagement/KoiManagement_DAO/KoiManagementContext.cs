@@ -135,8 +135,8 @@ public partial class KoiManagementContext : IdentityDbContext
 				},
 				new IdentityRole
 				{
-					Name = Role.Constestant,
-					NormalizedName = Role.Constestant.ToUpper()
+					Name = Role.Contestant,
+					NormalizedName = Role.Contestant.ToUpper()
 				},
 				new IdentityRole
 				{
