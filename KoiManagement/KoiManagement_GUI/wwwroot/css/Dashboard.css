@@ -69,11 +69,11 @@
 /*** Layout ***/
 .sidebar {
     position: fixed;
-    top: 30px;
+    top: 60px;
     left: 0;
-    bottom: 30px;
+    bottom: 90px;
     width: 250px;
-    height: 100vh;
+    height: 83vh;
     overflow-y: auto;
     background: var(--light);
     transition: 0.5s;
@@ -82,9 +82,10 @@
 
 .content {
     margin-left: 250px;
-    min-height: 100vh;
+    height: 83vh;
     background: #FFFFFF;
     transition: 0.5s;
+    overflow: scroll;
 }
 
 @media (min-width: 992px) {
@@ -134,9 +135,9 @@
 
     .sidebar .navbar .navbar-nav .nav-link:hover,
     .sidebar .navbar .navbar-nav .nav-link.active {
-        color: var(--primary);
-        background: #FFFFFF;
-        border-color: var(--primary);
+        color: #3b5d50;
+        background: var(--primary;
+        border-color: #3b5d50;
     }
 
     .sidebar .navbar .navbar-nav .nav-link i {
@@ -151,7 +152,7 @@
 
     .sidebar .navbar .navbar-nav .nav-link:hover i,
     .sidebar .navbar .navbar-nav .nav-link.active i {
-        background: var(--light);
+        background: #3b5d50;
     }
 
 .sidebar .navbar .dropdown-toggle::after {

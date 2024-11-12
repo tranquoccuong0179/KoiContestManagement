@@ -42,10 +42,10 @@
 									string role = Context.Session.GetString("Role");
 									if (role == Role.Admin)
 									{
+										<li class="nav-item">
+											<a class="nav-link text-white" asp-area="" asp-page="/DashboardPages/Index">Dashboard</a>
+										</li>
 									}
-									<li class="nav-item">
-										<a class="nav-link text-white" asp-area="" asp-page="/DashboardPages/Index">Privacy</a>
-									</li>
 								}
 							</ul>
 							<div class="btn-group">

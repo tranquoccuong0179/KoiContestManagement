@@ -24,7 +24,7 @@ namespace KoiManagement_DAO
 		{
 			using (var context = new KoiManagementContext())
 			{
-				return await context.Kois.ToListAsync();
+				return await context.Kois.Include(c => c.User).ToListAsync();
 			}
 		}
 

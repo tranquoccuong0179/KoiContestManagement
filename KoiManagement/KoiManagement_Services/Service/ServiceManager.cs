@@ -2,7 +2,6 @@
 using KoiManagement_BusinessObjects;
 using KoiManagement_Repositories.IRepository;
 using KoiManagement_Service.IService;
-using KoiManagement_Services.AuthenticationServices;
 using KoiManagement_Services.IService;
 using KoiManagement_Services.Service;
 using Microsoft.AspNetCore.Identity;
@@ -15,9 +14,9 @@ namespace KoiManagement_Service.Service
 		private readonly Lazy<IAuthenticationService> _authenticationService;
 		private readonly Lazy<IKoiService> _koiService;
 
-		public ServiceManager(IRepositoryManager repositoryManager, IConfiguration configuration, IMapper mapper, UserManager<User> userManager, IBlobService blobService)
+		public ServiceManager(IRepositoryManager repositoryManager, IConfiguration configuration, IMapper mapper, UserManager<User> userManager, IBlobService blobService, RoleManager<IdentityRole> roleManager)
 		{
-			_authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper));
+			_authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper, roleManager));
 			_koiService = new Lazy<IKoiService>(() => new KoiService(repositoryManager, mapper, blobService));
 		}
 

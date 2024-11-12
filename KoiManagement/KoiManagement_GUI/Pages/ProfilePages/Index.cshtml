@@ -41,7 +41,7 @@
 						<a asp-page="UpdateProfilePage" class="btn btn-primary me-2">Edit profile</a>
 						<a asp-page="UpdatePasswordPage" class="btn btn-primary me-2">Change password</a>
 						@{
-							if (role == Role.Constestant)
+							if (role == Role.Contestant)
 							{
 								<a asp-page="/KoiPages/Index" class="btn btn-primary animate__animated animate__rotateInUpRight">Manage your kois</a>
 							}

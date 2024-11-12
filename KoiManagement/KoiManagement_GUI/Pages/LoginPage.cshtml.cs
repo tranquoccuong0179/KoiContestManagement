@@ -43,9 +43,9 @@ namespace KoiManagement_GUI.Pages
 				{
 					HttpContext.Session.SetString("Role", Role.Referee);
 				}
-				else
+				else if (user.Roles.Contains(Role.Contestant))
 				{
-					HttpContext.Session.SetString("Role", Role.Constestant);
+					HttpContext.Session.SetString("Role", Role.Contestant);
 				}
 				return Redirect("~/ProfilePages");
 			}
