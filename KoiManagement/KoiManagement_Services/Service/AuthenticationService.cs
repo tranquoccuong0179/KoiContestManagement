@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_Services.Service
 {
-	internal sealed class AuthenticationService : IAuthenticationService
+	public sealed class AuthenticationService : IAuthenticationService
 	{
 		private readonly UserManager<User> userManager;
 		private readonly IMapper mapper;
@@ -68,24 +68,21 @@ namespace KoiManagement_Services.Service
 		}
 
 
-        public async Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistrationDto)
-        {
-            var user = mapper.Map<User>(userForRegistrationDto);
-            user.Active = true;
-            user.CreateAt = DateTime.Now;
+		public async Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistrationDto)
+		{
+			var user = mapper.Map<User>(userForRegistrationDto);
+			user.Active = true;
+			user.CreateAt = DateTime.Now;
 
-            var result = await userManager.CreateAsync(user, userForRegistrationDto.Password);
+			var result = await userManager.CreateAsync(user, userForRegistrationDto.Password);
 			if (result.Succeeded)
 			{
 				await userManager.AddToRoleAsync(user, Role.Contestant);
 			}
 
-            return result;
-        }
+			return result;
+		}
 
-        public async Task<IdentityResult> UpdateUser(string userId, UserForUpdateProfileDto userForUpdateProfile)
-        {
-            var user = await userManager.FindByIdAsync(userId);
 
 		public async Task<IdentityResult> UpdateActiveStatus(string userId)
 		{

@@ -32,7 +32,7 @@ namespace KoiManagement_DAO
 
         public List<CriteriaPoint> GetCriteriaPoints()
         {
-            return context.CriteriaPoints.Where(m => m.Active == true).ToList();
+            return context.CriteriaPoints.Where(m => m.Active == true).Include(m => m.Criteria).Include(m => m.RefereeMark).ThenInclude(rf => rf.User).ToList();
         }
 
         public CriteriaPoint GetCriteriaPoint(string id)

@@ -24,13 +24,14 @@ builder.Services.AddScoped<ICriteriaService, CriteriaService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICompetitionService, CompetitionService>();
 builder.Services.AddScoped<ICompetitionCategoryService, CompetitionCategoryService>();
+builder.Services.AddScoped<ICompetitionRoundService, CompetitionRoundService>();
 builder.Services.AddScoped<IRoundService, RoundService>();
-
 builder.Services.AddScoped<ICriteriaRepository, CriteriaRepository>();
 builder.Services.AddScoped<IRefereeMarkRepository, RefereeMarkRepository>();
 builder.Services.AddScoped<IRefereeMarkService, RefereeMarkService>();
 builder.Services.AddScoped<ICriteriaPointRepository, CriteriaPointRepository>();
 builder.Services.AddScoped<ICriteriaPointService, CriteriaPointService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = false;

@@ -13,19 +13,19 @@ namespace KoiManagement_GUI.Pages.CriteriaPointPage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICriteriaPointService _criteriaPointService;
         private readonly ICriteriaService _criteriaService;
         private readonly IRefereeMarkService _refereeMarkService;
-        public CreateModel(KoiManagement_DAO.KoiManagementContext context, ICriteriaService criteriaService, IRefereeMarkService refereeMarkService)
+        public CreateModel(ICriteriaPointService criteriaPointService, ICriteriaService criteriaService, IRefereeMarkService refereeMarkService)
         {
-            _context = context;
+            _criteriaPointService = criteriaPointService;
             _criteriaService = criteriaService;
             _refereeMarkService = refereeMarkService;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["CriteriaId"] = new SelectList(_criteriaService.GetCriterias(), "Id", "Id");
+        ViewData["CriteriaId"] = new SelectList(_criteriaService.GetCriterias(), "Id", "Name");
         ViewData["RefereeMarkId"] = new SelectList(_refereeMarkService.GetRefereeMarks(), "Id", "Id");
             return Page();
         }
@@ -41,8 +41,7 @@ namespace KoiManagement_GUI.Pages.CriteriaPointPage
                 return Page();
             }
 
-            _context.CriteriaPoints.Add(CriteriaPoint);
-            await _context.SaveChangesAsync();
+            _criteriaPointService.AddCriteriaPoint(CriteriaPoint);
 
             return RedirectToPage("./Index");
         }

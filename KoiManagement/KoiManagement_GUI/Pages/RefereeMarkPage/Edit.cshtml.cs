@@ -8,16 +8,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
+using KoiManagement_Services.Service;
 
 namespace KoiManagement_GUI.Pages.RefereeMarkPage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICompetitionRoundService competitionRoundService;
+        private readonly IMarkService markService;
+        private readonly IAuthenticationService authenticationService;
+        private readonly IRefereeMarkService refereeMarkService;
 
-        public EditModel(KoiManagement_DAO.KoiManagementContext context)
+        public EditModel(ICompetitionRoundService competitionRoundService, IMarkService markService, IAuthenticationService authenticationService, IRefereeMarkService refereeMarkService)
         {
-            _context = context;
+            this.competitionRoundService = competitionRoundService;
+            this.markService = markService;
+            this.authenticationService = authenticationService;
+            this.refereeMarkService = refereeMarkService;
         }
 
         [BindProperty]
@@ -30,15 +38,15 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPage
                 return NotFound();
             }
 
-            var refereemark =  await _context.RefereeMarks.FirstOrDefaultAsync(m => m.Id == id);
+            var refereemark =  refereeMarkService.GetRefereeMark(id);
             if (refereemark == null)
             {
                 return NotFound();
             }
             RefereeMark = refereemark;
-           ViewData["CompetitionRoundId"] = new SelectList(_context.CompetitionRounds, "Id", "Id");
-           ViewData["MarkId"] = new SelectList(_context.Marks, "Id", "Id");
-           ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
+            ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
+            ViewData["MarkId"] = new SelectList(markService.GetMarks(), "Id", "Point");
+            ViewData["UserId"] = new SelectList(await authenticationService.GetAllUsersExcepAdmin(), "Id", "FullName");
             return Page();
         }
 
@@ -51,13 +59,9 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPage
                 return Page();
             }
 
-            _context.Attach(RefereeMark).State = EntityState.Modified;
+            bool updateSuccess = refereeMarkService.UpdateRefereeMark(RefereeMark);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
+            if (!updateSuccess)
             {
                 if (!RefereeMarkExists(RefereeMark.Id))
                 {
@@ -65,7 +69,8 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPage
                 }
                 else
                 {
-                    throw;
+                    // Throw exception hoặc ghi log nếu cần thiết
+                    throw new DbUpdateConcurrencyException();
                 }
             }
 
@@ -74,7 +79,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPage
 
         private bool RefereeMarkExists(string id)
         {
-            return _context.RefereeMarks.Any(e => e.Id == id);
+            return refereeMarkService.GetRefereeMark(id) != null;
         }
     }
 }

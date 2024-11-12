@@ -7,23 +7,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.RefereeMarkPage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICompetitionRoundService competitionRoundService;
+        private readonly IMarkService markService;
+        private readonly IAuthenticationService authenticationService;
+        private readonly IRefereeMarkService refereeMarkService;
 
-        public CreateModel(KoiManagement_DAO.KoiManagementContext context)
+        public CreateModel(ICompetitionRoundService competitionRoundService, IMarkService markService, IAuthenticationService authenticationService, IRefereeMarkService refereeMarkService)
         {
-            _context = context;
+            this.competitionRoundService = competitionRoundService;
+            this.markService = markService;
+            this.authenticationService = authenticationService;
+            this.refereeMarkService = refereeMarkService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-        ViewData["CompetitionRoundId"] = new SelectList(_context.CompetitionRounds, "Id", "Id");
-        ViewData["MarkId"] = new SelectList(_context.Marks, "Id", "Id");
-        ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
+            ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
+            ViewData["MarkId"] = new SelectList(markService.GetMarks(), "Id", "Point");
+            ViewData["UserId"] = new SelectList(await authenticationService.GetAllUsersExcepAdmin(), "Id", "FullName");
             return Page();
         }
 
@@ -38,8 +45,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPage
                 return Page();
             }
 
-            _context.RefereeMarks.Add(RefereeMark);
-            await _context.SaveChangesAsync();
+            refereeMarkService.AddRefereeMark(RefereeMark);
 
             return RedirectToPage("./Index");
         }

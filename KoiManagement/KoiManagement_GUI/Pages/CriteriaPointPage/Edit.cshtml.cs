@@ -9,18 +9,19 @@ using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
+using KoiManagement_Services.Service;
 
 namespace KoiManagement_GUI.Pages.CriteriaPointPage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICriteriaPointService _criteriaPointService;
         private readonly ICriteriaService _criteriaService;
         private readonly IRefereeMarkService _refereeMarkService;
 
-        public EditModel(KoiManagement_DAO.KoiManagementContext context, ICriteriaService criteriaService, IRefereeMarkService refereeMarkService)
+        public EditModel(ICriteriaPointService criteriaPointService, ICriteriaService criteriaService, IRefereeMarkService refereeMarkService)
         {
-            _context = context;
+            _criteriaPointService = criteriaPointService;
             _criteriaService = criteriaService;
             _refereeMarkService = refereeMarkService;
         }
@@ -35,14 +36,14 @@ namespace KoiManagement_GUI.Pages.CriteriaPointPage
                 return NotFound();
             }
 
-            var criteriapoint =  await _context.CriteriaPoints.FirstOrDefaultAsync(m => m.RefereeMarkId == id);
+            var criteriapoint =  _criteriaPointService.GetCriteriaPoint(id);
             if (criteriapoint == null)
             {
                 return NotFound();
             }
             CriteriaPoint = criteriapoint;
-           ViewData["CriteriaId"] = new SelectList(_criteriaService.GetCriterias(), "Id", "Id");
-           ViewData["RefereeMarkId"] = new SelectList(_refereeMarkService.GetRefereeMarks(), "Id", "Id");
+            ViewData["CriteriaId"] = new SelectList(_criteriaService.GetCriterias(), "Id", "Name");
+            ViewData["RefereeMarkId"] = new SelectList(_refereeMarkService.GetRefereeMarks(), "Id", "Id");
             return Page();
         }
 
@@ -55,21 +56,18 @@ namespace KoiManagement_GUI.Pages.CriteriaPointPage
                 return Page();
             }
 
-            _context.Attach(CriteriaPoint).State = EntityState.Modified;
+            bool updateSuccess = _criteriaPointService.UpdateCriteriaPoint(CriteriaPoint);
 
-            try
+            if (!updateSuccess)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CriteriaPointExists(CriteriaPoint.RefereeMarkId))
+                if (!CriteriaPointExists(CriteriaPoint.Id))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    // Throw exception hoặc ghi log nếu cần thiết
+                    throw new DbUpdateConcurrencyException();
                 }
             }
 
