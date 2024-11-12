@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.RefereeMarkPage
 {
     public class DetailsModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly IRefereeMarkService refereeMarkService;
 
-        public DetailsModel(KoiManagement_DAO.KoiManagementContext context)
+        public DetailsModel(IRefereeMarkService refereeMarkService)
         {
-            _context = context;
+            this.refereeMarkService = refereeMarkService;
         }
 
         public RefereeMark RefereeMark { get; set; } = default!;
@@ -28,7 +29,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPage
                 return NotFound();
             }
 
-            var refereemark = await _context.RefereeMarks.FirstOrDefaultAsync(m => m.Id == id);
+            var refereemark = refereeMarkService.GetRefereeMark(id);
             if (refereemark == null)
             {
                 return NotFound();
