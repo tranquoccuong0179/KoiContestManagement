@@ -9,22 +9,21 @@ using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.PredictionPages
+namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
     public class IndexModel : PageModel
     {
-        private readonly IPredictionService predictionService;
-        public IndexModel(IPredictionService predictionService)
+     private readonly ICompetitionRoundService competitionRoundService;
+        public IndexModel(ICompetitionRoundService competitionRoundService)
         {
-            this.predictionService = predictionService;
-         
+            this.competitionRoundService = competitionRoundService;
         }
 
-        public IList<Prediction> Prediction { get;set; } = default!;
+        public IList<CompetitionRound> CompetitionRound { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Prediction = predictionService.GetAll();
+            CompetitionRound = competitionRoundService.GetAll();
         }
     }
 }

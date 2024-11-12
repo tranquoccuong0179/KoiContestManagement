@@ -8,54 +8,58 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.PredictionPages
+namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
     public class EditModel : PageModel
     {
-private readonly IPredictionService _predictionService;
-        public EditModel(IPredictionService predictionService)
+        private readonly KoiManagement_DAO.KoiManagementContext _context;
+
+        public EditModel(KoiManagement_DAO.KoiManagementContext context)
         {
-            _predictionService = predictionService;
+            _context = context;
         }
 
         [BindProperty]
-        public Prediction Prediction { get; set; } = default!;
+        public CompetitionRound CompetitionRound { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(string id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var prediction = _predictionService.GetById(id);
-            if (prediction == null)
+            var competitionround =  await _context.CompetitionRounds.FirstOrDefaultAsync(m => m.Id == id);
+            if (competitionround == null)
             {
                 return NotFound();
             }
-
-            Prediction = prediction;
+            CompetitionRound = competitionround;
+           ViewData["CompetitionId"] = new SelectList(_context.Competitions, "Id", "Id");
+           ViewData["KoiId"] = new SelectList(_context.Kois, "Id", "Id");
+           ViewData["RoundId"] = new SelectList(_context.Rounds, "Id", "Id");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            _context.Attach(CompetitionRound).State = EntityState.Modified;
+
             try
             {
-                _predictionService.UpdatePrediction(Prediction);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PredictionExists(Prediction.Id))
+                if (!CompetitionRoundExists(CompetitionRound.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +72,9 @@ private readonly IPredictionService _predictionService;
             return RedirectToPage("./Index");
         }
 
-        private bool PredictionExists(string id)
+        private bool CompetitionRoundExists(string id)
         {
-            return _predictionService.GetById(id) != null;
+            return _context.CompetitionRounds.Any(e => e.Id == id);
         }
     }
 }
