@@ -97,10 +97,6 @@ public partial class KoiManagementContext : IdentityDbContext
 				  .WithMany(u => u.RefereeMarks)
 				  .HasForeignKey(p => p.CompetitionRoundId)
 				  .OnDelete(DeleteBehavior.NoAction);
-			entity.HasOne(p => p.Mark)
-				  .WithMany(u => u.RefereeMarks)
-				  .HasForeignKey(p => p.MarkId)
-				  .OnDelete(DeleteBehavior.NoAction);
 		});
 		modelBuilder.Entity<Achievement>(entity =>
 		{

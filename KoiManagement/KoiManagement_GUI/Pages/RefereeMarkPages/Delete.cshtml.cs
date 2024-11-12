@@ -7,17 +7,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
-namespace KoiManagement_GUI.Pages.RefereeMarkPage
+namespace KoiManagement_GUI.Pages.RefereeMarkPages
 {
     public class DeleteModel : PageModel
     {
-        private readonly IRefereeMarkService refereeMarkService;
+        private readonly KoiManagement_DAO.KoiManagementContext _context;
 
-        public DeleteModel(IRefereeMarkService refereeMarkService)
+        public DeleteModel(KoiManagement_DAO.KoiManagementContext context)
         {
-            this.refereeMarkService = refereeMarkService;
+            _context = context;
         }
 
         [BindProperty]
@@ -30,7 +29,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPage
                 return NotFound();
             }
 
-            var refereemark = refereeMarkService.GetRefereeMark(id);
+            var refereemark = await _context.RefereeMarks.FirstOrDefaultAsync(m => m.Id == id);
 
             if (refereemark == null)
             {
@@ -50,11 +49,12 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPage
                 return NotFound();
             }
 
-            var refereemark = refereeMarkService.GetRefereeMark(id);
+            var refereemark = await _context.RefereeMarks.FindAsync(id);
             if (refereemark != null)
             {
                 RefereeMark = refereemark;
-                refereeMarkService.DeleteRefereeMark(refereemark);
+                _context.RefereeMarks.Remove(RefereeMark);
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
