@@ -1,0 +1,70 @@
+﻿@page
+@model KoiManagement_GUI.Pages.RefereeMarkPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>RefereeMark</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RefereeMark.Point)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RefereeMark.Point)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RefereeMark.CompetitionRound)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RefereeMark.CompetitionRound.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RefereeMark.Mark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RefereeMark.Mark.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RefereeMark.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RefereeMark.User.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RefereeMark.Active)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RefereeMark.Active)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RefereeMark.CreateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RefereeMark.CreateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RefereeMark.UpdateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RefereeMark.UpdateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RefereeMark.DeleteAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RefereeMark.DeleteAt)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="RefereeMark.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

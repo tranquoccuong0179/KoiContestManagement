@@ -1,0 +1,61 @@
+﻿@page
+@model KoiManagement_GUI.Pages.CriteriaPointPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CriteriaPoint</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriteriaPoint.Point)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriteriaPoint.Point)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriteriaPoint.Active)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriteriaPoint.Active)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriteriaPoint.CreateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriteriaPoint.CreateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriteriaPoint.UpdateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriteriaPoint.UpdateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriteriaPoint.DeleteAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriteriaPoint.DeleteAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriteriaPoint.Criteria)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriteriaPoint.Criteria.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriteriaPoint.RefereeMark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriteriaPoint.RefereeMark.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-page="./Index">Back to List</a>
+</div>
