@@ -3,10 +3,13 @@
 }
 
 .body-koi-index {
+    margin-bottom: 0;
+    border: 5px solid #3b5d50;
+    padding: 20px;
 }
 
 .card {
-    background: #fad2aa;
+    background: #3b5d50;
     border: 1px solid #dd2476;
     color: rgba(109,200,36);
     margin-bottom: 2rem;
@@ -16,23 +19,3 @@
     .card:hover {
         transform: scale(1.1);
     }
-
-    .card .btn {
-        border: 5px solid;
-        border-image-slice: 1;
-        background: var(--gradient) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        border-image-source: var(--gradient) !important;
-        text-decoration: none;
-        transition: all .4s ease;
-    }
-
-        .card .btn:hover, .btn:focus {
-            background: var(--gradient) !important;
-            -webkit-background-clip: none !important;
-            -webkit-text-fill-color: #fff !important;
-            border: 5px solid #fff !important;
-            box-shadow: #222 1px 0 10px;
-            text-decoration: none;
-        }

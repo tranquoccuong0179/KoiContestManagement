@@ -44,11 +44,9 @@ namespace KoiManagement_GUI.Pages.CriteriaPage
             }
 
             bool updateSuccess = criteriaService.UpdateCriteria(Criteria);
-            //Lỗi dưới DAO à , đợi chút xíu nhé
 
             if (!updateSuccess)
             {
-                // Kiểm tra nếu CandidateProfile không tồn tại
                 if (!CriteriaExists(Criteria.Id))
                 {
                     return NotFound();

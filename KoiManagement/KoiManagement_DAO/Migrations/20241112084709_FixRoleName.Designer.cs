@@ -4,6 +4,7 @@ using KoiManagement_DAO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoiManagement_DAO.Migrations
 {
     [DbContext(typeof(KoiManagementContext))]
-    partial class KoiManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20241112084709_FixRoleName")]
+    partial class FixRoleName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -562,25 +565,25 @@ namespace KoiManagement_DAO.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "add7ba94-19b0-4413-ae9d-1fa105f93324",
+                            Id = "eba17ca2-2a62-4282-b49c-471bd48048f0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "30b9341a-5eb7-40fa-8012-09820367504e",
+                            Id = "9f31dece-fb71-4e8e-804a-11a301b75c73",
                             Name = "Contestant",
                             NormalizedName = "CONTESTANT"
                         },
                         new
                         {
-                            Id = "ab9ba915-b62c-4d6c-ae67-96a96df839bf",
+                            Id = "0c186574-b2b9-434f-9653-e138e12a6817",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
-                            Id = "ea9b3cf4-d4a9-4921-80b8-3ffd40f37df3",
+                            Id = "6c4c0c74-e99b-49ac-a150-429662c85856",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
