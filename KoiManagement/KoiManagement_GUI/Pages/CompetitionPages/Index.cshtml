@@ -1,62 +1,136 @@
 ﻿@page
 @model KoiManagement_GUI.Pages.CompetitionPages.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Competition Home";
+    string? role = HttpContext.Session.GetString("Role");
 }
 
-<h1>Index</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].MaxApplication)
-            </th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Competition) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxApplication)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> 
-@*                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
- *@                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> 
-                <a asp-page="../CompetitionCategoryPages/Index" asp-route-competitionId="@item.Id">Competition Categories</a>
-                    <a asp-page="../RegistrationPages/Create" asp-route-competitionId="@item.Id">Register</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container my-5">
+
+    <!-- Header Section -->
+    <header class="text-center mb-5">
+        <h1 class="display-4">Welcome to the Koi Competition</h1>
+        <p class="lead">Discover the finest koi and celebrate excellence in koi keeping.</p>
+    </header>
+
+    <!-- Competition Introduction Section -->
+    <section id="introduction" class="mb-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>About the Competition</h2>
+                <p>Our competition is a showcase for koi keepers from all over the world. It celebrates the beauty, care, and artistry involved in raising these beautiful creatures.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="https://hocakoimiennam.com.vn/wp-content/uploads/2021/12/Tai-sao-ca-Koi-lai-dat.jpg" class="img-fluid rounded" alt="Koi competition image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="mb-5 bg-light p-4 rounded">
+        <h2 class="text-center">Awards</h2>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/100" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p>Grand Champion</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/100" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p>Best in Show</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/100" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p>People's Choice</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/100" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p>Category-specific Awards</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section id="rules" class="mb-5">
+        <div class="row align-items-center">
+            <div class="col-md-6 order-md-2">
+                <h2>Rules and Regulations</h2>
+                <p>To ensure fair competition, all participants must adhere to these rules:</p>
+                <ul>
+                    <li>All entries must be registered in advance.</li>
+                    <li>Each participant is limited to a certain number of entries.</li>
+                    <li>Respect the decisions of the judges.</li>
+                </ul>
+            </div>
+            <div class="col-md-6 order-md-1">
+                <img src="https://via.placeholder.com/500x300" class="img-fluid rounded" alt="Rules image">
+            </div>
+        </div>
+    </section>
+    <!-- Competition List Table -->
+    <h2>Upcoming Competitions</h2>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Competition[0].Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Competition[0].Location)</th>
+                <th>@Html.DisplayNameFor(model => model.Competition[0].StartDate)</th>
+                <th>@Html.DisplayNameFor(model => model.Competition[0].EndDate)</th>
+                <th>@Html.DisplayNameFor(model => model.Competition[0].MaxApplication)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Competition)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.MaxApplication)</td>
+                    <td>
+                        @if (role != null && (role.Equals("Manager") || role.Equals("Admin")))
+                        {
+                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
+                            <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                        }
+                        <a asp-page="../CompetitionCategoryPages/Index" asp-route-competitionId="@item.Id" class="btn btn-info btn-sm">Categories</a>                      
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Scoring Criteria Section -->
+    <section id="scoring" class="mb-5 bg-light p-4 rounded">
+        <h2 class="text-center">Scoring Criteria</h2>
+        <p class="text-center">Entries are judged based on the following:</p>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h4>Color and Pattern</h4>
+                <img src="https://via.placeholder.com/150" class="img-fluid mb-2" alt="Scoring image">
+            </div>
+            <div class="col-md-4">
+                <h4>Body Shape and Proportion</h4>
+                <img src="https://via.placeholder.com/150" class="img-fluid mb-2" alt="Scoring image">
+            </div>
+            <div class="col-md-4">
+                <h4>Overall Health</h4>
+                <img src="https://via.placeholder.com/150" class="img-fluid mb-2" alt="Scoring image">
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="mb-5">
+        <h2>Latest News</h2>
+        <p>Stay informed with the latest updates and announcements about the competition.</p>
+    </section>
+    </br>
+    </br>
+    </br>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

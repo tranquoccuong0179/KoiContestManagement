@@ -2,39 +2,70 @@
 @model KoiManagement_GUI.Pages.CompetitionCategoryPages.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Competitions and Categories";
+    string? role = HttpContext.Session.GetString("Role");
 }
-<h1>Competitions and Categories</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Competition</th>
-            <th>Categories</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var competition in Model.CompetitionsWithCategories)
-        {
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Competitions and Categories</h1>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
             <tr>
-                <td>
-                    <strong>@competition.Key.Name</strong>
-                </td>
-                <td>
-                    <ul>
-                        @foreach (var category in competition.Value)
-                        {
-                            <li>@category.Name</li>
-                        }
-                    </ul>
-                </td>
-                <td>
-                    @*  <a asp-page="./Edit" asp-route-competitionId="@competition.Key.Id">Edit</a> | *@
-                    <a asp-page="./Details" asp-route-competitionId="@competition.Key.Id">Details</a>
-@*                     <a asp-page="./Delete" asp-route-competitionId="@competition.Key.Id">Delete</a>
- *@                </td>
+                <th scope="col">Competition</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var competition in Model.CompetitionsWithCategories)
+            {
+                    <tr>
+                        <!-- Competition Column -->
+                        <td class="align-middle">
+                            <h5><strong>@competition.Key.Name</strong></h5>
+                            <p class="text-muted">@competition.Key.Location</p>
+                        </td>
+
+                        <!-- Categories Column -->
+                        <td class="align-middle">
+                            <ul class="list-group list-group-flush">
+                            @foreach (var category in competition.Value)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>
+                                        <span class="badge bg-info me-2">🏆</span>@category.Name
+                                    </span>
+                                    @if (role != null && role.Equals("Contestant"))
+                                    {
+                                        <a asp-page="../RegistrationPages/Create" 
+                                        asp-route-competitionId="@competition.Key.Id" 
+                                        asp-route-categoryId="@category.Id" 
+                                        class="btn btn-success btn-sm">
+                                            Register
+                                        </a>
+                                    }
+                                </li>
+                            }
+                            </ul>
+                        </td>
+
+                        <!-- Actions Column -->
+                        <td class="align-middle text-center">
+                        @if (role != null && (role.Equals("Manager") || role.Equals("Admin")))
+                        {
+                            <a asp-page="./Details" asp-route-competitionId="@competition.Key.Id" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-info-circle-fill me-1"></i>Details
+                            </a>
+                        }
+                        </td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
