@@ -52,7 +52,7 @@ namespace KoiManagement_Services.Service
             return await repositoryManager.KoiRepository.GetByUserIdActive(userId);
         }
 
-        public async Task<Koi?> GetById(string koiId, string userId)
+        public async Task<Koi?> GetById(string? koiId, string? userId)
         {
             return await repositoryManager.KoiRepository.GetById(koiId, userId);
 

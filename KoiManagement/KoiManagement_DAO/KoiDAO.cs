@@ -44,11 +44,21 @@ namespace KoiManagement_DAO
             }
         }
 
-        public async Task<Koi?> GetById(string koiId, string userId)
+        public async Task<Koi?> GetById(string? koiId, string? userId)
         {
             using (var context = new KoiManagementContext())
             {
-                return await context.Kois.Include(c => c.User).FirstOrDefaultAsync(c => c.Id.Equals(koiId) && c.UserId.Equals(userId));
+                IQueryable<Koi> query = context.Kois.Include(c => c.User).AsQueryable();
+                if (!string.IsNullOrEmpty(koiId))
+                {
+                    query = query.Where(c => c.Id.Equals(koiId));
+                }
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    query = query.Where(c => c.UserId.Equals(userId));
+
+                }
+                return await query.FirstOrDefaultAsync();
             }
         }
 
