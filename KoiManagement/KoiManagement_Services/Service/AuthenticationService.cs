@@ -36,6 +36,21 @@ namespace KoiManagement_Services.Service
 			return null;
 		}
 
+		public async Task<IdentityResult> CreateAccountByAdmin(UserForRegistrationDto userForRegistrationDto, string role)
+		{
+			var user = mapper.Map<User>(userForRegistrationDto);
+			user.Active = true;
+			user.CreateAt = DateTime.Now;
+
+			var result = await userManager.CreateAsync(user, userForRegistrationDto.Password);
+			if (result.Succeeded)
+			{
+				await userManager.AddToRoleAsync(user, role);
+			}
+
+			return result;
+		}
+
 		public async Task<List<UserForReturnDto>> GetAllUsersExcepAdmin()
 		{
 			var users = await userManager.Users.ToListAsync();
@@ -55,6 +70,11 @@ namespace KoiManagement_Services.Service
 				returnUser[i].Roles = roles.ToList();
 			}
 			return returnUser;
+		}
+
+		public async Task<List<IdentityRole>> GetRoles()
+		{
+			return await roleManager.Roles.Where(c => c.Name != Role.Admin && c.Name != Role.Contestant).ToListAsync();
 		}
 
 		public async Task<UserForReturnDto?> GetUserById(string userId)
@@ -97,16 +117,16 @@ namespace KoiManagement_Services.Service
 			var user = await userManager.FindByIdAsync(userId);
 
 
-            mapper.Map(userForUpdateProfile, user);
-            user.UpdateAt = DateTime.Now;
-            return await userManager.UpdateAsync(user);
-        }
+			mapper.Map(userForUpdateProfile, user);
+			user.UpdateAt = DateTime.Now;
+			return await userManager.UpdateAsync(user);
+		}
 
-        public async Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
-        {
-            var user = await userManager.FindByIdAsync(userId);
-            user.UpdateAt = DateTime.Now;
-            return await userManager.ChangePasswordAsync(user, userForUpdatePasswordDto.OldPassword, userForUpdatePasswordDto.NewPassword);
-        }
-    }
+		public async Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+			user.UpdateAt = DateTime.Now;
+			return await userManager.ChangePasswordAsync(user, userForUpdatePasswordDto.OldPassword, userForUpdatePasswordDto.NewPassword);
+		}
+	}
 }

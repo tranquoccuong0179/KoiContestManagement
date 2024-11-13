@@ -1,11 +1,21 @@
 ﻿@page
 @model KoiManagement_GUI.Pages.SignupPageModel
 @{
+	string signupResult = ViewData["SignupResult"] as string;
 }
 <div class="body" id="authenticate">
 	<div class="wrapper">
 		<form method="post">
 			<h1 class="animate__animated animate__backInDown">Sign up</h1>
+			@{
+				if (!string.IsNullOrEmpty(signupResult))
+				{
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						@Html.Raw(signupResult)
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				}
+			}
 			<div class="input-box animate__animated animate__backInLeft">
 				<input type="text" placeholder="Username" asp-for="UserForRegistration.UserName">
 				<i class='bx bxs-user'></i>
@@ -28,7 +38,7 @@
 			</div>
 			<button type="submit" class="btn animate__animated animate__backInUp">Sign up</button>
 			<div class="register-link animate__animated animate__backInUp">
-				<p>Already had an account? <a href="LoginPage">Register</a></p>
+				<p>Already had an account? <a href="LoginPage">Sign in</a></p>
 			</div>
 		</form>
 	</div>

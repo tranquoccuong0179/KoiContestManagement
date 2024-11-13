@@ -4,7 +4,6 @@ using KoiManagement_DAO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoiManagement_DAO.Migrations
 {
     [DbContext(typeof(KoiManagementContext))]
-    [Migration("20241112084709_FixRoleName")]
-    partial class FixRoleName
+    partial class KoiManagementContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,6 +259,9 @@ namespace KoiManagement_DAO.Migrations
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Point")
                         .HasColumnType("float");
 
@@ -411,10 +411,6 @@ namespace KoiManagement_DAO.Migrations
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("MarkId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<double>("Point")
                         .HasColumnType("float");
 
@@ -428,8 +424,6 @@ namespace KoiManagement_DAO.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompetitionRoundId");
-
-                    b.HasIndex("MarkId");
 
                     b.HasIndex("UserId");
 
@@ -493,6 +487,10 @@ namespace KoiManagement_DAO.Migrations
                     b.Property<double>("FinalMark")
                         .HasColumnType("float");
 
+                    b.Property<string>("KoiId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Ranking")
                         .HasColumnType("int");
 
@@ -504,6 +502,8 @@ namespace KoiManagement_DAO.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("KoiId");
 
                     b.HasIndex("RegistrationId");
 
@@ -565,27 +565,33 @@ namespace KoiManagement_DAO.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eba17ca2-2a62-4282-b49c-471bd48048f0",
+                            Id = "6660f6a9-b1fc-4d21-b54a-3f6c4ffd7309",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9f31dece-fb71-4e8e-804a-11a301b75c73",
+                            Id = "f1088123-effd-4874-b9de-0e0b58c0fce1",
                             Name = "Contestant",
                             NormalizedName = "CONTESTANT"
                         },
                         new
                         {
-                            Id = "0c186574-b2b9-434f-9653-e138e12a6817",
+                            Id = "ff3aa5b6-16c7-4c4b-a7bd-930b1e64caa4",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
-                            Id = "6c4c0c74-e99b-49ac-a150-429662c85856",
+                            Id = "91277025-8118-4e86-933a-8fce57c923ad",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = "095f2868-51bb-44cd-b760-442122ff6c08",
+                            Name = "Staff",
+                            NormalizedName = "STAFF"
                         });
                 });
 
@@ -925,12 +931,6 @@ namespace KoiManagement_DAO.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("KoiManagement_BusinessObjects.Mark", "Mark")
-                        .WithMany("RefereeMarks")
-                        .HasForeignKey("MarkId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("KoiManagement_BusinessObjects.User", "User")
                         .WithMany("RefereeMarks")
                         .HasForeignKey("UserId")
@@ -938,8 +938,6 @@ namespace KoiManagement_DAO.Migrations
                         .IsRequired();
 
                     b.Navigation("CompetitionRound");
-
-                    b.Navigation("Mark");
 
                     b.Navigation("User");
                 });
@@ -965,11 +963,19 @@ namespace KoiManagement_DAO.Migrations
 
             modelBuilder.Entity("KoiManagement_BusinessObjects.Result", b =>
                 {
+                    b.HasOne("KoiManagement_BusinessObjects.Koi", "Koi")
+                        .WithMany()
+                        .HasForeignKey("KoiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("KoiManagement_BusinessObjects.Registration", "Registration")
                         .WithMany("Results")
                         .HasForeignKey("RegistrationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Koi");
 
                     b.Navigation("Registration");
                 });
@@ -1063,11 +1069,6 @@ namespace KoiManagement_DAO.Migrations
                     b.Navigation("CompetitionRounds");
 
                     b.Navigation("Registrations");
-                });
-
-            modelBuilder.Entity("KoiManagement_BusinessObjects.Mark", b =>
-                {
-                    b.Navigation("RefereeMarks");
                 });
 
             modelBuilder.Entity("KoiManagement_BusinessObjects.RefereeMark", b =>
