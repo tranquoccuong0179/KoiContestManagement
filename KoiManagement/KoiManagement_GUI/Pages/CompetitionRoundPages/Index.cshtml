@@ -23,7 +23,7 @@
                     @foreach (var item in Model.CompetitionRoundWithKoi)
                     {
                         <tr>
-                            <td class="align-middle">@item.Key.Competition.Name</td>
+                            <td class="align-middle">@item.Key.CompetitionCategory.Category.Name</td>
                             <td class="align-middle">@item.Key.Round.Name</td>
                             <td>
                                 <ul class="list-unstyled mb-0">
@@ -40,7 +40,7 @@
                             <!-- Delete button to open the modal -->
                             <td class="align-middle">
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                        onclick="setDeleteParams('@item.Key.Competition.Id', '@item.Key.Round.Id')">
+                                        onclick="setDeleteParams('@item.Key.CompetitionCategory.Id', '@item.Key.Round.Id')">
                                     Delete
                                 </button>
                             </td>

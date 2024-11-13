@@ -10,5 +10,4 @@ public partial class Competition : BaseEntity
     public int MaxApplication { get; set; }
     public string Status { get; set; } = string.Empty;
     public virtual ICollection<CompetitionCategory> CompetitionCategories { get; set; } = new List<CompetitionCategory>();
-    public virtual ICollection<CompetitionRound> CompetitionRounds { get; set; } = new List<CompetitionRound>();
 }

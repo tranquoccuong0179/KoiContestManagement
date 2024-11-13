@@ -8,4 +8,5 @@ public partial class CompetitionCategory : BaseEntity
     public virtual Category? Category { get; set; }
     public virtual Competition? Competition { get; set; }
     public virtual ICollection<Registration> Registrations { get; set; } = new List<Registration>();
+    public virtual ICollection<CompetitionRound> CompetitionRounds { get; set; } = new List<CompetitionRound>();
 }

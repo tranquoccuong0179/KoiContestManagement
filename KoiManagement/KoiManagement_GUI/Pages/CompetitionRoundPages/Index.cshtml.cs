@@ -20,7 +20,7 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
             this.competitionRoundService = competitionRoundService;
         }
 
-        public Dictionary<(Competition Competition, Round Round), List<Koi>> CompetitionRoundWithKoi { get; set; } = default!;
+        public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> CompetitionRoundWithKoi { get; set; } = default!;
 
         public void OnGet(string? competitionId, string? roundId)
         {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace KoiManagement_DAO.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStaffRole : Migration
+    public partial class itit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -300,7 +300,7 @@ namespace KoiManagement_DAO.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     KoiId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CompetitionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CompetitionCategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoundId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -311,9 +311,9 @@ namespace KoiManagement_DAO.Migrations
                 {
                     table.PrimaryKey("PK_CompetitionRounds", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CompetitionRounds_Competitions_CompetitionId",
-                        column: x => x.CompetitionId,
-                        principalTable: "Competitions",
+                        name: "FK_CompetitionRounds_CompetitionCategories_CompetitionCategoryId",
+                        column: x => x.CompetitionCategoryId,
+                        principalTable: "CompetitionCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -601,9 +601,9 @@ namespace KoiManagement_DAO.Migrations
                 column: "CompetitionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompetitionRounds_CompetitionId",
+                name: "IX_CompetitionRounds_CompetitionCategoryId",
                 table: "CompetitionRounds",
-                column: "CompetitionId");
+                column: "CompetitionCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompetitionRounds_KoiId",

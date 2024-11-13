@@ -88,22 +88,22 @@ namespace KoiManagement_DAO
             }
             return result;
         }
-        public Dictionary<(Competition Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId)
+        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId)
         {
 
             var competitionRounds = context.CompetitionRounds
-       .Where(cr => (string.IsNullOrWhiteSpace(competitionId) || cr.Competition.Id == competitionId) &&
+       .Where(cr => (string.IsNullOrWhiteSpace(competitionId) || cr.CompetitionCategory.Id == competitionId) &&
                     (string.IsNullOrWhiteSpace(roundId) || cr.Round.Id == roundId))
        .Select(cr => new
        {
-           cr.Competition,
+           cr.CompetitionCategory,
            cr.Round,
            cr.Koi
        })
        .AsEnumerable() 
-       .GroupBy(cr => new { cr.Competition, cr.Round })
+       .GroupBy(cr => new { cr.CompetitionCategory, cr.Round })
        .ToDictionary(
-           g => (g.Key.Competition, g.Key.Round),
+           g => (g.Key.CompetitionCategory, g.Key.Round),
            g => g.Select(cr => cr.Koi).ToList()
        );
             return competitionRounds;
@@ -113,13 +113,13 @@ namespace KoiManagement_DAO
         public bool CheckIfAnotherRoundHasStarted(string competitionId)
         {
             return context.CompetitionRounds
-                .Any(cr => cr.CompetitionId == competitionId && cr.RoundId != "77e3e82e971f48bbb682f17a6ddcaa32");
+                .Any(cr => cr.CompetitionCategoryId == competitionId && cr.RoundId != "77e3e82e971f48bbb682f17a6ddcaa32");
         }
 
         public async Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScoreAsync(string competitionId, string roundId, int top)
         {
             var topCompetitionRounds = await context.RefereeMarks
-                .Where(rm => rm.CompetitionRound.CompetitionId == competitionId && rm.CompetitionRound.RoundId == roundId) 
+                .Where(rm => rm.CompetitionRound.CompetitionCategoryId == competitionId && rm.CompetitionRound.RoundId == roundId) 
                 .GroupBy(rm => rm.CompetitionRoundId) 
                 .Select(group => new
                 {
@@ -165,7 +165,7 @@ namespace KoiManagement_DAO
                 var newCompetitionRound = new CompetitionRound
                 {
                     KoiId = topRecord.KoiId,                 
-                    CompetitionId = topRecord.CompetitionId, 
+                    CompetitionCategoryId = topRecord.CompetitionCategoryId, 
                     RoundId = newRoundId                    
                 };
 

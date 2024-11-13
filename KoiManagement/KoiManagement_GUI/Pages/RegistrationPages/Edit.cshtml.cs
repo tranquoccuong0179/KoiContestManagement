@@ -104,8 +104,8 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 }
                 bool createCompetitionRoundSuccess = competitionRoundService.AddCompetitionRound(new CompetitionRound
                 {
-                    CompetitionId = Registration.CompetitionCategory.CompetitionId,
-                    RoundId = "77e3e82e971f48bbb682f17a6ddcaa32", 
+                    CompetitionCategoryId = Registration.CompetitionCategory.CompetitionId,
+                    RoundId = "f60cef79ba9d481c8f96e89bcdebc74a", 
                     KoiId = Registration.KoiId,
                 });
 
