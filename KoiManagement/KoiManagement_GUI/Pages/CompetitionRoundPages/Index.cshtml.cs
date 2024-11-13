@@ -13,17 +13,30 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
     public class IndexModel : PageModel
     {
-     private readonly ICompetitionRoundService competitionRoundService;
+        private readonly ICompetitionRoundService competitionRoundService;
+
         public IndexModel(ICompetitionRoundService competitionRoundService)
         {
             this.competitionRoundService = competitionRoundService;
         }
 
-        public IList<CompetitionRound> CompetitionRound { get;set; } = default!;
+        public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> CompetitionRoundWithKoi { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet(string? competitionId, string? roundId)
         {
-            CompetitionRound = competitionRoundService.GetAll();
+            CompetitionRoundWithKoi = competitionRoundService.GetCompetitionRoundWithKoi(competitionId, roundId);
         }
+        //public async Task<IActionResult> OnPostDeleteAsync(string competitionId, string roundId)
+        //{
+        //    if (string.IsNullOrEmpty(competitionId) || string.IsNullOrEmpty(roundId))
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    await competitionRoundService.DeleteCompetitionRound(competitionId, roundId);
+
+        //    return RedirectToPage("./Index");
+        //}
     }
 }
+

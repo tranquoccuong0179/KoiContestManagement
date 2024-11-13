@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICompetitionRoundService competitionRoundService;
 
-        public DeleteModel(KoiManagement_DAO.KoiManagementContext context)
+        public DeleteModel(ICompetitionRoundService competitionRoundService)
         {
-            _context = context;
+            this.competitionRoundService = competitionRoundService;
         }
 
         [BindProperty]
@@ -29,7 +30,7 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
                 return NotFound();
             }
 
-            var competitionround = await _context.CompetitionRounds.FirstOrDefaultAsync(m => m.Id == id);
+            var competitionround = competitionRoundService.GetById(id);
 
             if (competitionround == null)
             {
@@ -49,12 +50,11 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
                 return NotFound();
             }
 
-            var competitionround = await _context.CompetitionRounds.FindAsync(id);
+            var competitionround = competitionRoundService.GetById(id);
             if (competitionround != null)
             {
                 CompetitionRound = competitionround;
-                _context.CompetitionRounds.Remove(CompetitionRound);
-                await _context.SaveChangesAsync();
+                competitionRoundService.DeleteCompetitionRound(competitionround);
             }
 
             return RedirectToPage("./Index");

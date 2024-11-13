@@ -2,71 +2,82 @@
 @model KoiManagement_GUI.Pages.CompetitionRoundPages.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Competition Round List";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Danh sách vòng thi đấu</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CompetitionRound[0].Competition)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompetitionRound[0].Koi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompetitionRound[0].Round)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompetitionRound[0].Active)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompetitionRound[0].CreateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompetitionRound[0].UpdateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompetitionRound[0].DeleteAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.CompetitionRound) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Competition.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Koi.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Round.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeleteAt)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Cuộc thi</th>
+                        <th>Vòng</th>
+                        <th>Danh sách Koi</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CompetitionRoundWithKoi)
+                    {
+                        <tr>
+                            <td class="align-middle">@item.Key.CompetitionCategory.Category.Name</td>
+                            <td class="align-middle">@item.Key.Round.Name</td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    @foreach (var koi in item.Value)
+                                    {
+                                        <li class="mb-1">
+                                            <a asp-page="./Details" asp-route-id="@koi.Id" class="text-decoration-none">
+                                                <i class="bi bi-arrow-right-circle me-2"></i>@koi.Name
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </td>
+                            <!-- Delete button to open the modal -->
+                            <td class="align-middle">
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                        onclick="setDeleteParams('@item.Key.CompetitionCategory.Id', '@item.Key.Round.Id')">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete all records for this competition round?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="competitionId" name="competitionId" />
+                    <input type="hidden" id="roundId" name="roundId" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setDeleteParams(competitionId, roundId) {
+        document.getElementById("competitionId").value = competitionId;
+        document.getElementById("roundId").value = roundId;
+    }
+</script>
