@@ -38,12 +38,15 @@
                                     <span>
                                         <span class="badge bg-info me-2">🏆</span>@category.Name
                                     </span>
-                                    <a asp-page="../RegistrationPages/Create" 
+                                    @if (role != null && role.Equals("Contestant"))
+                                    {
+                                        <a asp-page="../RegistrationPages/Create" 
                                         asp-route-competitionId="@competition.Key.Id" 
                                         asp-route-categoryId="@category.Id" 
                                         class="btn btn-success btn-sm">
-                                        Register
-                                    </a>
+                                            Register
+                                        </a>
+                                    }
                                 </li>
                             }
                             </ul>

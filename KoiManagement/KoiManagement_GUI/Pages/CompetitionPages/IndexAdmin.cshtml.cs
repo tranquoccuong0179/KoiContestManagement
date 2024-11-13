@@ -1,15 +1,15 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_GUI.Pages.CompetitionPages
 {
-    public class IndexModel : PageModel
+    public class IndexAdminModel : PageModel
     {
         private readonly ICompetitionService _competitionService;
 
-        public IndexModel(ICompetitionService competitionService)
+        public IndexAdminModel(ICompetitionService competitionService)
         {
             _competitionService = competitionService;
         }
@@ -19,6 +19,15 @@ namespace KoiManagement_GUI.Pages.CompetitionPages
         public void OnGet()
         {
             Competition = _competitionService.GetCompetitions();
+        }
+        public IActionResult OnPostDelete(string id)
+        {
+            var competition = _competitionService.GetCompetition(id);
+            if (competition != null)
+            {
+                _competitionService.DeleteCompetition(competition);
+            }
+            return RedirectToPage(); // After deletion, redirect back to the same page
         }
     }
 }
