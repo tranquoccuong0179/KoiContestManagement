@@ -3,13 +3,18 @@
 
 @{
     ViewData["Title"] = "Index";
+    string? role = HttpContext.Session.GetString("Role");
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+@if(role != null && (role.Equals("Manager") || role.Equals("Admin")))
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -50,11 +55,13 @@
                 @Html.DisplayFor(modelItem => item.MaxApplication)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> 
-@*                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
- *@                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> 
+                @if (role != null && (role.Equals("Manager") || role.Equals("Admin")))
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                }
                 <a asp-page="../CompetitionCategoryPages/Index" asp-route-competitionId="@item.Id">Competition Categories</a>
-                    <a asp-page="../RegistrationPages/Create" asp-route-competitionId="@item.Id">Register</a>
+                <a asp-page="../RegistrationPages/Create" asp-route-competitionId="@item.Id">Register</a>
             </td>
         </tr>
 }

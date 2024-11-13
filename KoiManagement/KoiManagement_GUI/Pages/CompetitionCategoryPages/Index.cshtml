@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    string? role = HttpContext.Session.GetString("Role");
 }
 <h1>Competitions and Categories</h1>
 
@@ -30,10 +31,11 @@
                     </ul>
                 </td>
                 <td>
-                    @*  <a asp-page="./Edit" asp-route-competitionId="@competition.Key.Id">Edit</a> | *@
-                    <a asp-page="./Details" asp-route-competitionId="@competition.Key.Id">Details</a>
-@*                     <a asp-page="./Delete" asp-route-competitionId="@competition.Key.Id">Delete</a>
- *@                </td>
+                    @if (role != null && (role.Equals("Manager") || role.Equals("Admin")))
+                    {
+                        <a asp-page="./Details" asp-route-competitionId="@competition.Key.Id">Details</a>
+                    }
+                </td>
             </tr>
         }
     </tbody>
