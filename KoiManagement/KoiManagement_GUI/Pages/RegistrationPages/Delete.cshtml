@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Delete";
+    var userRole = HttpContext.Session.GetString("Role");
 }
 
 <h1>Delete</h1>
@@ -28,20 +29,23 @@
             @Html.DisplayNameFor(model => model.Registration.CompetitionCategory)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Registration.CompetitionCategory.Id)
+            @Html.DisplayFor(model => model.Registration.CompetitionCategory.Category.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Registration.Koi)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Registration.Koi.Id)
+            @Html.DisplayFor(model => model.Registration.Koi.Name)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Registration.Active)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Registration.Active)
-        </dd>
+        @if (userRole == "Admin")
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Registration.Active)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Registration.Active)
+            </dd>
+        }      
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Registration.CreateAt)
         </dt>
@@ -54,12 +58,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Registration.UpdateAt)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Registration.DeleteAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Registration.DeleteAt)
-        </dd>
+        @if (userRole == "Admin")
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Registration.DeleteAt)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Registration.DeleteAt)
+            </dd>
+        }       
     </dl>
     
     <form method="post">

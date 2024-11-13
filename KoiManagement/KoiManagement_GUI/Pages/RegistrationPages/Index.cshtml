@@ -3,12 +3,13 @@
 
 @{
     ViewData["Title"] = "Index";
+    var userRole = HttpContext.Session.GetString("Role");
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="/CompetitionPages/Index">Sign up for another competition</a>
 </p>
 <table class="table">
     <thead>
@@ -25,18 +26,24 @@
             <th>
                 @Html.DisplayNameFor(model => model.Registration[0].Koi)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registration[0].Active)
-            </th>
+            @if (userRole == "Admin")
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Registration[0].Active)
+                </th>
+            }          
             <th>
                 @Html.DisplayNameFor(model => model.Registration[0].CreateAt)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Registration[0].UpdateAt)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registration[0].DeleteAt)
-            </th>
+            @if (userRole == "Admin")
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Registration[0].DeleteAt)
+                </th>
+            }           
             <th></th>
         </tr>
     </thead>
@@ -50,23 +57,29 @@
                 @Html.DisplayFor(modelItem => item.CheckInTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompetitionCategory.Id)
+                @Html.DisplayFor(modelItem => item.CompetitionCategory.Category.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Koi.Id)
+                @Html.DisplayFor(modelItem => item.Koi.Name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
+                @if (userRole == "Admin")
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Active)
+                    </td>
+                }           
             <td>
                 @Html.DisplayFor(modelItem => item.CreateAt)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UpdateAt)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeleteAt)
-            </td>
+                @if (userRole == "Admin")
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeleteAt)
+                    </td>
+                }
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |

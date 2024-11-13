@@ -28,10 +28,12 @@ namespace KoiManagement_GUI.Pages.ResultPages
 
         public async Task<IActionResult> OnGet()
         {
+            string userId = HttpContext.Session.GetString("Id");
+
             Task<List<Koi>> koiTask = koiService.GetAll();
             List<Koi> koiList = await koiTask;
             ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");
-            ViewData["RegistrationId"] = new SelectList(registrationService.GetRegistrations(), "Id", "Id");
+            ViewData["RegistrationId"] = new SelectList(registrationService.GetRegistrations(userId), "Id", "Id");
             return Page();
         }
 

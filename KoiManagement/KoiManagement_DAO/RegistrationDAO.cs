@@ -30,9 +30,14 @@ namespace KoiManagement_DAO
             context = new KoiManagementContext();
         }
 
-        public List<Registration> GetRegistrations()
+        public List<Registration> GetRegistrations(string userId)
         {
-            return context.Registrations.Include(x => x.Koi).Include(x => x.CompetitionCategory).ToList();
+            return context.Registrations.Include(x => x.Koi).Include(x => x.CompetitionCategory).ThenInclude(x => x.Category).Where(x=>x.Active==true && x.Koi.UserId == userId).ToList();
+        }
+
+        public List<Registration> GetRegistrationsAll()
+        {
+            return context.Registrations.Include(x => x.Koi).Include(x => x.CompetitionCategory).ThenInclude(x => x.Category).ToList();
         }
 
         public Registration GetRegistration(string id)
@@ -73,7 +78,9 @@ namespace KoiManagement_DAO
             {
                 if (newRegistrationE != null)
                 {
-                    context.Registrations.Remove(registrationE);
+                    registrationE.Active = false;
+                    registrationE.DeleteAt = DateTime.Now;
+                    context.Registrations.Update(registrationE);
                     context.SaveChanges();
                     result = true;
                 }
@@ -94,6 +101,7 @@ namespace KoiManagement_DAO
                 if (newregistrationE != null)
                 {
                     context.Entry<Registration>(registrationE).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    registrationE.UpdateAt = DateTime.Now;
                     context.SaveChanges();
                     result = true;
                 }

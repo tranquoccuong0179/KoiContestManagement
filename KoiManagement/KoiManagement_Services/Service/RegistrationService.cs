@@ -39,9 +39,13 @@ namespace KoiManagement_Services.Service
             return registrationRepository.GetRegistrationById(id);
         }
 
-        public List<Registration> GetRegistrations()
+        public List<Registration> GetRegistrations(string u)
         {
-            return registrationRepository.GetRegistrations();
+            return registrationRepository.GetRegistrations(u);
+        }
+        public List<Registration> GetRegistrationsAll()
+        {
+            return registrationRepository.GetRegistrationsAll();
         }
 
         public bool UpdateRegistration(Registration registration)

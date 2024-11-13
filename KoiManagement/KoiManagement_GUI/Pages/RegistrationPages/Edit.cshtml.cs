@@ -56,7 +56,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
             {
                 return Page();
             }
-
+            var ra = Registration;
             bool updateSuccess = registrationService.UpdateRegistration(Registration);
 
 

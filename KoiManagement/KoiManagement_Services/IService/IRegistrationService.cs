@@ -9,7 +9,8 @@ namespace KoiManagement_Services.IService
 {
     public interface IRegistrationService
     {
-        public List<Registration> GetRegistrations();
+        public List<Registration> GetRegistrations(string id);
+        public List<Registration> GetRegistrationsAll();
         public Registration GetRegistrationById(string id);
         public bool AddRegistration(Registration registration);
         public bool DeleteRegistration(Registration registration);

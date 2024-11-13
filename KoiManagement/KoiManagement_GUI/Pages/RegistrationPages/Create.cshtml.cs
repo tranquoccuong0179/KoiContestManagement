@@ -51,7 +51,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
 
            registrationService.AddRegistration(Registration);
             //trả về trang user get all đăng kí của mình 
-           return RedirectToPage("../CompetitionPages/Index");
+           return RedirectToPage("./Index");
         }
     }
 }
