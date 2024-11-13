@@ -13,5 +13,7 @@ namespace KoiManagement_Services.IService
 		public Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto);
 		public Task<IdentityResult> UpdateUser(string userId, UserForUpdateProfileDto userForUpdateProfile);
 		public Task<IdentityResult> UpdateActiveStatus(string userId);
+		public Task<List<IdentityRole>> GetRoles();
+		public Task<IdentityResult> CreateAccountByAdmin(UserForRegistrationDto userForRegistrationDto, string role);
 	}
 }
