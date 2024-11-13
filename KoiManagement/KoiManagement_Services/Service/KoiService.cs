@@ -78,6 +78,6 @@ namespace KoiManagement_Services.Service
             return await repositoryManager.KoiRepository.Update(koi);
         }
 
-        public async Task<List<Koi>> GetAllWithKois(string competitionRoundId) => await repositoryManager.KoiRepository.GetAllWithKois(competitionRoundId);
+        public async Task<Koi> GetAllWithKois(string competitionRoundId) => await repositoryManager.KoiRepository.GetAllWithKois(competitionRoundId);
     }
 }

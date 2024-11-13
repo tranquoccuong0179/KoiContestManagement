@@ -30,12 +30,10 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPages
 
         public async Task<IActionResult> OnGet(string competitionRoundId)
         {
-            ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
+            var koi = await koiService.GetAllWithKois(competitionRoundId);
+            ViewData["CompetitionRoundId"] = new SelectList(new[] { koi }, "Id", "Name");
 
-            Task<List<Koi>> koiTask = koiService.GetAllWithKois(competitionRoundId);
-            List<Koi> koiList = await koiTask;
-            ViewData["KoiId"] = new SelectList(koiList, "Id", "Name");
-            ViewData["UserId"] = new SelectList( await authenticationService.GetAllUsersExcepAdmin(), "Id", "FullName");
+            ViewData["UserId"] = new SelectList(await authenticationService.GetAllUsersExcepAdmin(), "Id", "FullName");
 
             return Page();
         }

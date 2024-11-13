@@ -22,10 +22,6 @@
                 <select asp-for="RefereeMark.CompetitionRoundId" class ="form-control" asp-items="ViewBag.CompetitionRoundId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="RefereeMark.Koi" class="control-label">Koi Name</label>
-                <select asp-for="RefereeMark.CompetitionRound.Koi.Name" class="form-control" asp-items="ViewBag.KoiId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="RefereeMark.Point" class="control-label"></label>
                 <input asp-for="RefereeMark.Point" class="form-control" />
                 <span asp-validation-for="RefereeMark.Point" class="text-danger"></span>
