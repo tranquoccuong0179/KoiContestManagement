@@ -2,73 +2,63 @@
 @model KoiManagement_GUI.Pages.CategoryPages.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Category";
 }
 
-<h1>Create</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Category.Name" class="control-label"></label>
-                <input asp-for="Category.Name" class="form-control" />
-                <span asp-validation-for="Category.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category.Size" class="control-label"></label>
-                <input asp-for="Category.Size" class="form-control" />
-                <span asp-validation-for="Category.Size" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category.Variety" class="control-label"></label>
-                <input asp-for="Category.Variety" class="form-control" />
-                <span asp-validation-for="Category.Variety" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category.Age" class="control-label"></label>
-                <input asp-for="Category.Age" class="form-control" />
-                <span asp-validation-for="Category.Age" class="text-danger"></span>
-            </div>
-@*             <div class="form-group">
-                <label asp-for="Category.Id" class="control-label"></label>
-                <input asp-for="Category.Id" class="form-control" />
-                <span asp-validation-for="Category.Id" class="text-danger"></span>
-            </div> *@
-@*             <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Category.Active" /> @Html.DisplayNameFor(model => model.Category.Active)
-                </label>
-            </div> *@
-           @*  <div class="form-group">
-                <label asp-for="Category.CreateAt" class="control-label"></label>
-                <input asp-for="Category.CreateAt" class="form-control" />
-                <span asp-validation-for="Category.CreateAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category.UpdateAt" class="control-label"></label>
-                <input asp-for="Category.UpdateAt" class="form-control" />
-                <span asp-validation-for="Category.UpdateAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category.DeleteAt" class="control-label"></label>
-                <input asp-for="Category.DeleteAt" class="form-control" />
-                <span asp-validation-for="Category.DeleteAt" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Create New Category</h1>
+    <h4>Category Information</h4>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" class="shadow p-4 rounded bg-light">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Category.Name" class="form-label fw-bold"></label>
+                    <input asp-for="Category.Name" class="form-control" />
+                    <span asp-validation-for="Category.Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Category.Size" class="form-label fw-bold"></label>
+                    <input asp-for="Category.Size" class="form-control" />
+                    <span asp-validation-for="Category.Size" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Category.Variety" class="form-label fw-bold"></label>
+                    <input asp-for="Category.Variety" class="form-control" />
+                    <span asp-validation-for="Category.Variety" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Category.Age" class="form-label fw-bold"></label>
+                    <input asp-for="Category.Age" class="form-control" />
+                    <span asp-validation-for="Category.Age" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle-fill me-1"></i>Create
+                    </button>
+                    <a asp-page="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left-circle me-1"></i>Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
