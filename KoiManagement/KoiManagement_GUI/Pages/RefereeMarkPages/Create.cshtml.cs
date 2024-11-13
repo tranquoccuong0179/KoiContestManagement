@@ -7,24 +7,40 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.Service;
+using KoiManagement_Services.IService;
+
 
 namespace KoiManagement_GUI.Pages.RefereeMarkPages
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
-
-        public CreateModel(KoiManagement_DAO.KoiManagementContext context)
+        private readonly IRefereeMarkService refereeMarkService;
+        private readonly IAuthenticationService authenticationService;
+        private readonly IKoiService koiService;
+        private readonly ICompetitionRoundService competitionRoundService;
+        public CreateModel(IRefereeMarkService refereeMarkService, IAuthenticationService authenticationService, IKoiService koiService, ICompetitionRoundService competitionRoundService)
         {
-            _context = context;
+            this.refereeMarkService = refereeMarkService;
+            this.authenticationService = authenticationService;
+            this.koiService = koiService;
+            this.competitionRoundService = competitionRoundService;
         }
 
-        public IActionResult OnGet()
+
+        public async Task<IActionResult> OnGet(string competitionRoundId)
         {
-        ViewData["CompetitionRoundId"] = new SelectList(_context.CompetitionRounds, "Id", "Id");
-        ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
+            ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
+
+            Task<List<Koi>> koiTask = koiService.GetAllWithKois(competitionRoundId);
+            List<Koi> koiList = await koiTask;
+            ViewData["KoiId"] = new SelectList(koiList, "Id", "Name");
+            ViewData["UserId"] = new SelectList( await authenticationService.GetAllUsersExcepAdmin(), "Id", "FullName");
+
             return Page();
         }
+
+
 
         [BindProperty]
         public RefereeMark RefereeMark { get; set; } = default!;
@@ -37,8 +53,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPages
                 return Page();
             }
 
-            _context.RefereeMarks.Add(RefereeMark);
-            await _context.SaveChangesAsync();
+            refereeMarkService.AddRefereeMark(RefereeMark);
 
             return RedirectToPage("./Index");
         }

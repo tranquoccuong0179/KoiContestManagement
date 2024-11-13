@@ -120,5 +120,19 @@ namespace KoiManagement_DAO
                 return isSuccess;
             }
         }
+
+
+        public async Task<List<Koi>> GetAllWithKois(string competitionRoundId)
+        {
+            using (var context = new KoiManagementContext())
+            {
+                var kois = await context.Kois
+                          .Where(k => k.CompetitionRounds.Any(cr => cr.Id == competitionRoundId))
+                          .ToListAsync();
+                Console.WriteLine(kois);
+                return kois;
+            }
+        }
+
     }
 }

@@ -12,5 +12,6 @@ namespace KoiManagement_Services.IService
         public Task<bool> Create(KoiForCreationDto koiForCreationDto);
         public Task<bool> Update(KoiForUpdateDto koiForUpdateDto);
         public Task<bool> Delete(string userId, string koiId);
+        public Task<List<Koi>> GetAllWithKois(string competitionRoundId);
     }
 }

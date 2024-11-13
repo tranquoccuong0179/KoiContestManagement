@@ -4,6 +4,7 @@ using KoiManagement_BusinessObjects.Constants;
 using KoiManagement_Repositories.IRepository;
 using KoiManagement_Services.IService;
 using KoiManagement_Services.KoiServices.DTO;
+using System.Reflection.Metadata.Ecma335;
 
 namespace KoiManagement_Services.Service
 {
@@ -76,5 +77,7 @@ namespace KoiManagement_Services.Service
             koi.UpdateAt = DateTime.Now;
             return await repositoryManager.KoiRepository.Update(koi);
         }
+
+        public async Task<List<Koi>> GetAllWithKois(string competitionRoundId) => await repositoryManager.KoiRepository.GetAllWithKois(competitionRoundId);
     }
 }
