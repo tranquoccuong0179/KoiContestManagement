@@ -1,4 +1,5 @@
 using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
 using KoiManagement_Repositories.IRepository;
 using KoiManagement_Repositories.Repository;
 using KoiManagement_Services.IService;
@@ -17,6 +18,7 @@ namespace KoiManagement_Services.Service
         public List<CompetitionCategory> GetCompetitionCategories() => _competitionCategoryRepository.GetCompetitionCategories();
 
         public CompetitionCategory? GetCompetitionCategory(string id) => _competitionCategoryRepository.GetCompetitionCategory(id);
+        public List<CompetitionCategoryViewModel> GetCompetitionCategoryByCompetitionId(string id) => _competitionCategoryRepository.GetCompetitionCategoryByCompetitionId(id);
         public bool AddCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.AddCompetitionCategory(competitionCategory);
         public bool UpdateCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.UpdateCompetitionCategory(competitionCategory);
         public bool DeleteCompetitionCategory(CompetitionCategory competitionCategory) => _competitionCategoryRepository.DeleteCompetitionCategory(competitionCategory);

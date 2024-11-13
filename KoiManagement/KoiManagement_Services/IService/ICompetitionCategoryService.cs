@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
 
 namespace KoiManagement_Services.IService
 {
@@ -6,6 +7,7 @@ namespace KoiManagement_Services.IService
     {
         List<CompetitionCategory> GetCompetitionCategories();
         CompetitionCategory? GetCompetitionCategory(string id);
+        List<CompetitionCategoryViewModel> GetCompetitionCategoryByCompetitionId(string id);
         bool AddCompetitionCategory(CompetitionCategory competitionCategory);
         bool UpdateCompetitionCategory(CompetitionCategory competitionCategory);
         bool DeleteCompetitionCategory(CompetitionCategory competitionCategory);

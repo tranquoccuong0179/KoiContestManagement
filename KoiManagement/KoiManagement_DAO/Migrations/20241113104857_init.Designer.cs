@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoiManagement_DAO.Migrations
 {
     [DbContext(typeof(KoiManagementContext))]
-    [Migration("20241113075659_AddStaffRole")]
-    partial class AddStaffRole
+    [Migration("20241113104857_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

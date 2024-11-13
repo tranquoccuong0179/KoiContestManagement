@@ -9,6 +9,7 @@ using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
 using KoiManagement_Repositories.IRepository;
+using System.Security.Claims;
 
 namespace KoiManagement_GUI.Pages.RegistrationPages
 {
@@ -27,8 +28,11 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
 
         public async Task<IActionResult> OnGet(string? competitionId)
         {
-            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategoryService.GetCompetitionCategories(), "Id", "Id");
-            Task<List<Koi>> koiTask = koiService.GetAll();
+            string userId = HttpContext.Session.GetString("Id");
+
+            var competitionCategories = competitionCategoryService.GetCompetitionCategoryByCompetitionId(competitionId);
+            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategories, "Id", "CategoryName");
+            Task<List<Koi>> koiTask = koiService.GetByUserIdActive(userId);
             List<Koi> koiList = await koiTask;
             ViewData["KoiId"] = new SelectList(koiList, "Id", "Name");
             return Page();

@@ -14,48 +14,13 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Registration.KoiId" class="control-label"></label>
+                <label asp-for="Registration.KoiId" class="control-label">Koi Name</label>
                 <select asp-for="Registration.KoiId" class ="form-control" asp-items="ViewBag.KoiId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Registration.CompetitionCategoryId" class="control-label"></label>
+                <label asp-for="Registration.CompetitionCategoryId" class="control-label">Category</label>
                 <select asp-for="Registration.CompetitionCategoryId" class ="form-control" asp-items="ViewBag.CompetitionCategoryId"></select>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Registration.IsCheckIn" /> @Html.DisplayNameFor(model => model.Registration.IsCheckIn)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Registration.CheckInTime" class="control-label"></label>
-                <input asp-for="Registration.CheckInTime" class="form-control" />
-                <span asp-validation-for="Registration.CheckInTime" class="text-danger"></span>
-            </div> 
-@*             <div class="form-group">
-                <label asp-for="Registration.Id" class="control-label"></label>
-                <input asp-for="Registration.Id" class="form-control" />
-                <span asp-validation-for="Registration.Id" class="text-danger"></span>
-            </div> *@
-             <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Registration.Active" /> @Html.DisplayNameFor(model => model.Registration.Active)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Registration.CreateAt" class="control-label"></label>
-                <input asp-for="Registration.CreateAt" class="form-control" />
-                <span asp-validation-for="Registration.CreateAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Registration.UpdateAt" class="control-label"></label>
-                <input asp-for="Registration.UpdateAt" class="form-control" />
-                <span asp-validation-for="Registration.UpdateAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Registration.DeleteAt" class="control-label"></label>
-                <input asp-for="Registration.DeleteAt" class="form-control" />
-                <span asp-validation-for="Registration.DeleteAt" class="text-danger"></span>
-            </div> 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

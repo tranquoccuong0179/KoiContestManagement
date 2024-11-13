@@ -20,6 +20,12 @@ namespace KoiManagement_Services.Service
 
         public bool AddRegistration(Registration registration)
         {
+            registration.Id = Guid.NewGuid().ToString();
+            registration.Active = true;
+            registration.CreateAt = DateTime.Now;
+            registration.UpdateAt = DateTime.Now;
+            registration.IsCheckIn = false;
+            registration.CheckInTime = null;
             return registrationRepository.AddRegistration(registration);
         }
 
