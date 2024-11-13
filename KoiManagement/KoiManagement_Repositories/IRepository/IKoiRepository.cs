@@ -11,5 +11,6 @@ namespace KoiManagement_Repositories.IRepository
         public Task<bool> Create(Koi koi);
         public Task<bool> Update(Koi koi);
         public Task<bool> Delete(Koi koi);
+        public Task<Koi> GetAllWithKois(string competitionRoundId);
     }
 }

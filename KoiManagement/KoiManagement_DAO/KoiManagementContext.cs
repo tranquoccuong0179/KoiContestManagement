@@ -56,12 +56,15 @@ public partial class KoiManagementContext : IdentityDbContext
 
 	private string GetConnectionString()
 	{
-        return "Server=(local);uid=sa;pwd=12345678;database=KoiManagement;Trusted_Connection=True;TrustServerCertificate=True;";
-   //     IConfiguration configuration = new ConfigurationBuilder()
-			//.SetBasePath(Directory.GetCurrentDirectory())
-			//.AddJsonFile("appsettings.json", true, true)
-			//.Build();
-    }
+
+		IConfiguration configuration = new ConfigurationBuilder()
+			.SetBasePath(Directory.GetCurrentDirectory())
+			.AddJsonFile("appsettings.json", true, true)
+			.Build();
+
+		return configuration.GetConnectionString("KoiManagementConnection");
+
+	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -69,6 +72,10 @@ public partial class KoiManagementContext : IdentityDbContext
 		modelBuilder.Entity<CriteriaPoint>(entity =>
 		{
 			entity.HasKey(cp => new { cp.RefereeMarkId, cp.CriteriaId });
+		});
+		modelBuilder.Entity<Result>(entity =>
+		{
+			entity.HasOne(p => p.Registration).WithMany(p => p.Results).HasForeignKey(c => c.RegistrationId).OnDelete(DeleteBehavior.NoAction);
 		});
 		modelBuilder.Entity<Prediction>(entity =>
 		{
@@ -126,23 +133,33 @@ public partial class KoiManagementContext : IdentityDbContext
 			entity.HasData(
 				new IdentityRole
 				{
+					Id = "6660f6a9-b1fc-4d21-b54a-3f6c4ffd7309",
 					Name = Role.Admin,
 					NormalizedName = Role.Admin.ToUpper()
 				},
 				new IdentityRole
 				{
+					Id = "f1088123-effd-4874-b9de-0e0b58c0fce1",
 					Name = Role.Contestant,
 					NormalizedName = Role.Contestant.ToUpper()
 				},
 				new IdentityRole
 				{
+					Id = "ff3aa5b6-16c7-4c4b-a7bd-930b1e64caa4",
 					Name = Role.Referee,
 					NormalizedName = Role.Referee.ToUpper()
 				},
 				new IdentityRole
 				{
+					Id = "91277025-8118-4e86-933a-8fce57c923ad",
 					Name = Role.Manager,
 					NormalizedName = Role.Manager.ToUpper()
+				},
+				new IdentityRole
+				{
+					Id = "095f2868-51bb-44cd-b760-442122ff6c08",
+					Name = Role.Staff,
+					NormalizedName = Role.Staff.ToUpper()
 				});
 		});
 	}
