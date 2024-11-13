@@ -2,63 +2,131 @@
 @model KoiManagement_GUI.Pages.CompetitionRoundPages.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Xóa vòng thi đấu";
 }
 
-<h1>Delete</h1>
+<head>
+    <style>
+        .item-background {
+            background-color: #3b5d50;
+            opacity: 0.85;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>CompetitionRound</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionRound.Competition)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionRound.Competition.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionRound.Koi)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionRound.Koi.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionRound.Round)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionRound.Round.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionRound.Active)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionRound.Active)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionRound.CreateAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionRound.CreateAt)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionRound.UpdateAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionRound.UpdateAt)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionRound.DeleteAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionRound.DeleteAt)
-        </dd>
-    </dl>
-    
-    <form method="post">
+        .container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .delete-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #3b5d50;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .delete-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #dc3545;
+            text-align: center;
+        }
+
+        .info-container {
+            min-height: 300px;
+            position: relative;
+            padding: 20px;
+        }
+
+        .item-info {
+            position: relative;
+            z-index: 1;
+            padding: 1.5rem;
+        }
+
+        .text-white dt {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: #e9ecef;
+        }
+
+        .text-white dd {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-buttons .btn {
+            padding: 8px 25px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .action-buttons .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            padding: 8px 25px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+            color: white;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<div class="container">
+    <h1 class="delete-title animate__animated animate__slideInDown">Xóa vòng thi đấu</h1>
+    <h3 class="delete-subtitle animate__animated animate__fadeIn">Bạn có chắc chắn muốn xóa mục này?</h3>
+
+    <div class="info-container animate__animated animate__fadeIn">
+        <div class="item-background"></div>
+        <dl class="row item-info text-white">
+            <dt class="col-sm-4">Cuộc thi</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.Competition.Id)</dd>
+
+            <dt class="col-sm-4">Koi</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.Koi.Id)</dd>
+
+            <dt class="col-sm-4">Vòng</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.Round.Id)</dd>
+
+            <dt class="col-sm-4">Trạng thái</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.Active)</dd>
+
+            <dt class="col-sm-4">Ngày tạo</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.CreateAt)</dd>
+        </dl>
+    </div>
+
+    <form method="post" class="animate__animated animate__slideInUp">
         <input type="hidden" asp-for="CompetitionRound.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <div class="action-buttons">
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+            <a class="btn-back" asp-page="./Index">Quay lại</a>
+        </div>
     </form>
 </div>

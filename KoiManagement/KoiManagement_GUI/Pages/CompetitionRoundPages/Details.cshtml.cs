@@ -1,42 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Service.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
+using Microsoft.AspNetCore.Http;
 
 namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
     public class DetailsModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly IServiceManager _serviceManager;
 
-        public DetailsModel(KoiManagement_DAO.KoiManagementContext context)
+        public DetailsModel(IServiceManager serviceManager)
         {
-            _context = context;
+            _serviceManager = serviceManager;
         }
 
-        public CompetitionRound CompetitionRound { get; set; } = default!;
+        public Koi Koi { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            // Check if user session exists, redirect to login if not
+            var userId = HttpContext.Session.GetString("Id");
+            if (userId == null)
+            {
+                return RedirectToPage("/LoginPage");
+            }
+
+            if (string.IsNullOrEmpty(id))
             {
                 return NotFound();
             }
 
-            var competitionround = await _context.CompetitionRounds.FirstOrDefaultAsync(m => m.Id == id);
-            if (competitionround == null)
+            // Retrieve Koi details with user ID for access control
+            Koi = await _serviceManager.KoiService.GetById(id, userId);
+            if (Koi == null)
             {
                 return NotFound();
             }
-            else
-            {
-                CompetitionRound = competitionround;
-            }
+
             return Page();
         }
     }
