@@ -19,5 +19,7 @@ namespace KoiManagement_Repositories.Repository
         public async Task<List<Koi>> GetByUserId(string userId) => await KoiDAO.Instance.GetByUserId(userId);
 
         public async Task<bool> Update(Koi koi) => await KoiDAO.Instance.Update(koi);
+
+        public async Task<Koi> GetAllWithKois(string competitionRoundId) => await KoiDAO.Instance.GetAllWithKois(competitionRoundId);
     }
 }

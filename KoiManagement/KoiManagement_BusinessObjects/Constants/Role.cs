@@ -8,5 +8,5 @@
 		public const string Staff = "Staff";
 		public const string Contestant = "Contestant";
 
-    }
+	}
 }

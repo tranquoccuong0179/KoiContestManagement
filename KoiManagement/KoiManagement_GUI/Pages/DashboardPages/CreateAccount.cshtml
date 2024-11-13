@@ -1,0 +1,105 @@
+﻿@page
+@using KoiManagement_BusinessObjects.Constants
+@model KoiManagement_GUI.Pages.DashboardPages.CreateAccountModel
+@{
+	string createAccountSuccess = ViewData["CreateAccountSuccess"] as string;
+	string createAccountFail = ViewData["CreateAccountFail"] as string;
+}
+
+<head>
+	<link id="pagestyle" href="~/css/Dashboard.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<!-- Sidebar Start -->
+<div class="sidebar pe-4 pb-3">
+	<nav class="navbar bg-light navbar-light">
+		<a href="index.html" class="navbar-brand mx-4 mb-3">
+			<h3 class="text-success"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+		</a>
+		<div class="d-flex align-items-center ms-4 mb-4">
+			<div class="position-relative">
+				<img class="rounded-circle" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU=" alt="" style="width: 40px; height: 40px;">
+				<div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+			</div>
+			<div class="ms-3">
+				<h6 class="mb-0">@HttpContext.Session.GetString("FullName")</h6>
+				<span>@HttpContext.Session.GetString("Role")</span>
+			</div>
+		</div>
+		<div class="navbar-nav w-100">
+			<a asp-page="/DashboardPages/Index" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Kois</a>
+			<a asp-page="/DashboardPages/Users" class="nav-item nav-link "><i class="fa fa-table me-2"></i>Users</a>
+			<a asp-page="/DashboardPages/CreateAccount" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Create Accounts</a>
+		</div>
+	</nav>
+</div>
+<!-- Sidebar End -->
+
+<div class="content">
+	<div class="container-fluid pt-4 px-4">
+		<div class="row g-4">
+			<div class="col-12">
+				<div class="bg-light rounded h-100 p-4">
+					<h3 class="mb-4">Create Account</h3>
+					@{
+						if (!string.IsNullOrEmpty(createAccountSuccess))
+						{
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								@Html.Raw(createAccountSuccess)
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+						}
+						if (!string.IsNullOrEmpty(createAccountFail))
+						{
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								@Html.Raw(createAccountFail)
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+						}
+					}
+					<form method="post">
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="floatingInput" asp-for="UserForRegistration.UserName">
+							<label for="floatingInput">Username</label>
+							<span asp-validation-for="UserForRegistration.UserName" class="text-danger"></span>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="floatingInput" asp-for="UserForRegistration.FullName">
+							<label for="floatingInput">Fullname</label>
+							<span asp-validation-for="UserForRegistration.FullName" class="text-danger"></span>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="password" class="form-control" id="floatingPassword" asp-for="UserForRegistration.Password">
+							<label for="floatingPassword">Password</label>
+							<span asp-validation-for="UserForRegistration.Password" class="text-danger"></span>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="password" class="form-control" id="floatingPassword" asp-for="UserForRegistration.ConfirmPassword">
+							<label for="floatingPassword">ConfirmPassword</label>
+							<span asp-validation-for="UserForRegistration.ConfirmPassword" class="text-danger"></span>
+						</div>
+						<div class="form-floating mb-3">
+							<select class="form-select" id="floatingSelect"
+									aria-label="Floating label select example" asp-for="ChosenRole">
+								@{
+									if (Model.Roles is not null)
+									{
+										foreach (var role in Model.Roles)
+										{
+											<option value="@role.Name">@role.Name</option>
+										}
+									}
+								}
+							</select>
+							<label for="floatingSelect">Roles</label>
+						</div>
+						<button type="submit" class="btn btn-primary">Create</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
