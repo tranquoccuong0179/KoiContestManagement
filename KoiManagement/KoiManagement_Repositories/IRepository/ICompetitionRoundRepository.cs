@@ -17,7 +17,7 @@ namespace KoiManagement_Repositories.IRepository
         public bool DeleteCompetitionRound(CompetitionRound competitionRound);
         public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId);
 
-        public bool CheckIfAnotherRoundHasStarted(string competitionId);
+        public bool CheckIfAnotherRoundHasStarted(string competitionId, string id);
 
         public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top);
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top);

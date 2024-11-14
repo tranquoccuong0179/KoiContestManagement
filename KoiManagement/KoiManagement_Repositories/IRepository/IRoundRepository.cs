@@ -10,5 +10,7 @@ namespace KoiManagement_Repositories.IRepository
         bool UpdateRound(Round round);
         bool DeleteRound(Round round);
         public Round? GetRoundByName(string name);
+        public Round? GetFirstRound();
+        public Round? GetNextRound(int currentRoundNumber);
     }
 }

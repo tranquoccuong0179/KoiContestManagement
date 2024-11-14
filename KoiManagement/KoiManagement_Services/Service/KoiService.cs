@@ -80,5 +80,7 @@ namespace KoiManagement_Services.Service
         }
 
         public async Task<KoiCompetitionVM> GetAllWithKois(string competitionRoundId) => await repositoryManager.KoiRepository.GetAllWithKois(competitionRoundId);
+
+        public Koi GetKoiById(string? koiId) => repositoryManager.KoiRepository.GetKoiById(koiId);
     }
 }

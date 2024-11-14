@@ -46,7 +46,7 @@
                                         {
                                             <li class="mb-1">
                                                 <i class="fas fa-fish me-2 text-primary"></i>
-                                                <a href="./Details?koiId=@koi?.Id" class="text-decoration-none">
+                                                <a asp-page="./Details" asp-route-koiId="@koi?.Id" class="text-decoration-none">
                                                     @(koi?.Name ?? "Unknown Koi")
                                                 </a>
                                             </li>
