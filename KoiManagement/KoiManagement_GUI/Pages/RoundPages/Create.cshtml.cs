@@ -1,4 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
+using KoiManagement_Services.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,11 +8,11 @@ namespace KoiManagement_GUI.Pages.RoundPages
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly IRoundService _roundService;
 
-        public CreateModel(KoiManagement_DAO.KoiManagementContext context)
+        public CreateModel(IRoundService roundService)
         {
-            _context = context;
+            _roundService = roundService;
         }
 
         public IActionResult OnGet()
@@ -22,17 +24,19 @@ namespace KoiManagement_GUI.Pages.RoundPages
         public Round Round { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Rounds.Add(Round);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            bool result = _roundService.AddRound(Round);
+            if (result) {
+                return RedirectToPage("./Index");
+            }
+            ViewData["Result"] = "Name or OrderNumber is already existed!";
+            return Page();
         }
     }
 }
