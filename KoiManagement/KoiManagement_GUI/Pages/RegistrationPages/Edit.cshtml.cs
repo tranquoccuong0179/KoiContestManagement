@@ -10,6 +10,7 @@ using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
 using KoiManagement_Services.Service;
+using KoiManagement_BusinessObjects.Constants;
 
 namespace KoiManagement_GUI.Pages.RegistrationPages
 {
@@ -19,12 +20,14 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
         private readonly IKoiService koiService;
         private readonly ICompetitionCategoryService competitionCategoryService;
         private readonly ICompetitionRoundService competitionRoundService;
-        public EditModel(IRegistrationService registrationService, IKoiService koiService, ICompetitionCategoryService competitionCategoryService, ICompetitionRoundService competitionRoundService)
+        private readonly IRoundService roundService;
+        public EditModel(IRegistrationService registrationService, IKoiService koiService, ICompetitionCategoryService competitionCategoryService, ICompetitionRoundService competitionRoundService, IRoundService roundService)
         {
             this.registrationService = registrationService;
             this.koiService = koiService;
             this.competitionCategoryService = competitionCategoryService;
             this.competitionRoundService = competitionRoundService;
+            this.roundService = roundService;
         }
 
         [BindProperty]
@@ -83,6 +86,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
             {
                 // Check if another round has already started (same CompetitionId, different RoundId)
                 bool roundExists = competitionRoundService.CheckIfAnotherRoundHasStarted(Registration.CompetitionCategory.CompetitionId);
+                Round? round = roundService.GetRoundByName(Rounds.Vongloai);
 
                 if (roundExists)
                 {
@@ -105,7 +109,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 bool createCompetitionRoundSuccess = competitionRoundService.AddCompetitionRound(new CompetitionRound
                 {
                     CompetitionId = Registration.CompetitionCategory.CompetitionId,
-                    RoundId = "77e3e82e971f48bbb682f17a6ddcaa32", 
+                    RoundId = round.Id,
                     KoiId = Registration.KoiId,
                 });
 
