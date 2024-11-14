@@ -75,7 +75,7 @@ namespace KoiManagement_DAO
             CompetitionRound? existComperitionRound = GetById(competitionRound.Id);
             try
             {
-                if (existComperitionRound == null)
+                if (existComperitionRound != null)
                 {
                     context.CompetitionRounds.Remove(competitionRound);
                     context.SaveChanges();

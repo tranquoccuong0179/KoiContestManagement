@@ -1,63 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
 using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
     public class DeleteModel : PageModel
     {
-        private readonly ICompetitionRoundService competitionRoundService;
+        private readonly ICompetitionRoundService _competitionRoundService;
 
         public DeleteModel(ICompetitionRoundService competitionRoundService)
         {
-            this.competitionRoundService = competitionRoundService;
+            _competitionRoundService = competitionRoundService;
         }
 
         [BindProperty]
-        public CompetitionRound CompetitionRound { get; set; } = default!;
+        public string CompetitionId { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        [BindProperty]
+        public string RoundId { get; set; }
+
+        public string CompetitionName { get; set; }
+        public string RoundName { get; set; }
+
+        public IActionResult OnGet(string competitionId, string roundId)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(competitionId) || string.IsNullOrEmpty(roundId))
             {
                 return NotFound();
             }
 
-            var competitionround = competitionRoundService.GetById(id);
+            var competitionRound = _competitionRoundService.GetCompetitionRoundWithKoi(competitionId, roundId);
 
-            if (competitionround == null)
+            if (competitionRound == null || !competitionRound.Any())
             {
                 return NotFound();
             }
-            else
-            {
-                CompetitionRound = competitionround;
-            }
+
+            var firstItem = competitionRound.First();
+            CompetitionId = competitionId;
+            RoundId = roundId;
+            CompetitionName = firstItem.Key.Competition.Name;
+            RoundName = firstItem.Key.Round.Name;
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public IActionResult OnPost()
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(CompetitionId) || string.IsNullOrEmpty(RoundId))
             {
                 return NotFound();
             }
 
-            var competitionround = competitionRoundService.GetById(id);
-            if (competitionround != null)
+            var success = _competitionRoundService.DeleteCompetitionRoundByCompetitionIDAndRoundID(
+                CompetitionId,
+                RoundId);
+
+            if (success)
             {
-                CompetitionRound = competitionround;
-                competitionRoundService.DeleteCompetitionRound(competitionround);
+                TempData["SuccessMessage"] = "Xóa vòng thi đấu thành công";
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            ModelState.AddModelError("", "Có lỗi xảy ra khi xóa vòng thi đấu");
+            return Page();
         }
     }
 }

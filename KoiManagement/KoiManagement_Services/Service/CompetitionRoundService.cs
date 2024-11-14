@@ -29,5 +29,27 @@ namespace KoiManagement_Services.Service
 
         public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => _competitionRoundRepository.GetTopCompetitionRoundsByAverageScore(competitionId,roundId,top);
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) => _competitionRoundRepository.AddNewCompetitionRoundBasedOnTopScores(competitionId,roundId,top);
+
+        public bool DeleteCompetitionRoundByCompetitionIDAndRoundID(string competitionId, string roundId)
+        {
+            bool isDeleted = false;
+            var allRounds = GetAll();
+            var roundsToDelete = allRounds
+
+                .Where(cr => cr.CompetitionId == competitionId && cr.RoundId == roundId)
+                .ToList();
+
+            foreach (var round in roundsToDelete)
+            {
+                isDeleted = DeleteCompetitionRound(round);
+                if (!isDeleted)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
     }
 }

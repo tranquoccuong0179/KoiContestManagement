@@ -19,5 +19,7 @@ namespace KoiManagement_Services.IService
         public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top);
 
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top);
+
+        public bool DeleteCompetitionRoundByCompetitionIDAndRoundID(string competitionId, string roundId);
     }
 }

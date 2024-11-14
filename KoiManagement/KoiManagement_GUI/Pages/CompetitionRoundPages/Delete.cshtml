@@ -5,128 +5,90 @@
     ViewData["Title"] = "Xóa vòng thi đấu";
 }
 
-<head>
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-danger text-white py-3">
+            <h4 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Xác nhận xóa vòng thi đấu</h4>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="alert alert-warning" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <strong>Cảnh báo:</strong> Hành động này không thể hoàn tác. Tất cả dữ liệu liên quan đến vòng thi đấu
+                này sẽ bị xóa vĩnh viễn.
+            </div>
+
+            <div class="mt-4">
+                <h5 class="text-secondary mb-3">Thông tin chi tiết:</h5>
+                <div class="bg-light p-3 rounded">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3 text-muted">Cuộc thi:</dt>
+                        <dd class="col-sm-9 fw-bold">@Model.CompetitionName</dd>
+
+                        <dt class="col-sm-3 text-muted">Vòng thi đấu:</dt>
+                        <dd class="col-sm-9 fw-bold">@Model.RoundName</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <form method="post" class="mt-4">
+                <input type="hidden" asp-for="CompetitionId" />
+                <input type="hidden" asp-for="RoundId" />
+
+                @if (!ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                    </div>
+                }
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a asp-page="./Index" class="btn btn-light px-4">
+                        <i class="fas fa-arrow-left me-2"></i>Quay lại
+                    </a>
+                    <button type="submit" class="btn btn-danger px-4">
+                        <i class="fas fa-trash-alt me-2"></i>Xác nhận xóa
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
     <style>
-        .item-background {
-            background-color: #3b5d50;
-            opacity: 0.85;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .delete-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #3b5d50;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .delete-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #dc3545;
-            text-align: center;
-        }
-
-        .info-container {
-            min-height: 300px;
-            position: relative;
-            padding: 20px;
-        }
-
-        .item-info {
-            position: relative;
-            z-index: 1;
-            padding: 1.5rem;
-        }
-
-        .text-white dt {
-            font-weight: bold;
-            font-size: 1rem;
-            margin-bottom: 0.3rem;
-            color: #e9ecef;
-        }
-
-        .text-white dd {
-            font-size: 1rem;
-            margin-bottom: 0.8rem;
-            color: #fff;
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .action-buttons .btn {
-            padding: 8px 25px;
+        .card {
             border-radius: 10px;
-            transition: all 0.3s ease;
         }
 
-        .action-buttons .btn:hover {
-            transform: translateY(-2px);
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
         }
 
-        .btn-back {
-            background-color: #6c757d;
-            color: white;
-            text-decoration: none;
-            padding: 8px 25px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
+        .btn {
+            border-radius: 5px;
+            font-weight: 500;
         }
 
-        .btn-back:hover {
-            background-color: #5a6268;
-            color: white;
-            transform: translateY(-2px);
+        .alert {
+            border-left: 4px solid;
+        }
+
+        .alert-warning {
+            border-left-color: #ffc107;
+        }
+
+        .alert-danger {
+            border-left-color: #dc3545;
         }
     </style>
-</head>
+}
 
-<div class="container">
-    <h1 class="delete-title animate__animated animate__slideInDown">Xóa vòng thi đấu</h1>
-    <h3 class="delete-subtitle animate__animated animate__fadeIn">Bạn có chắc chắn muốn xóa mục này?</h3>
-
-    <div class="info-container animate__animated animate__fadeIn">
-        <div class="item-background"></div>
-        <dl class="row item-info text-white">
-            <dt class="col-sm-4">Cuộc thi</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.Competition.Id)</dd>
-
-            <dt class="col-sm-4">Koi</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.Koi.Id)</dd>
-
-            <dt class="col-sm-4">Vòng</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.Round.Id)</dd>
-
-            <dt class="col-sm-4">Trạng thái</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.Active)</dd>
-
-            <dt class="col-sm-4">Ngày tạo</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.CompetitionRound.CreateAt)</dd>
-        </dl>
-    </div>
-
-    <form method="post" class="animate__animated animate__slideInUp">
-        <input type="hidden" asp-for="CompetitionRound.Id" />
-        <div class="action-buttons">
-            <input type="submit" value="Xóa" class="btn btn-danger" />
-            <a class="btn-back" asp-page="./Index">Quay lại</a>
-        </div>
-    </form>
-</div>
+@section Scripts {
+    <script>
+        // Hiệu ứng fade out cho alert messages
+        setTimeout(function () {
+            $('.alert:not(.alert-warning)').fadeOut('slow');
+        }, 3000);
+    </script>
+}

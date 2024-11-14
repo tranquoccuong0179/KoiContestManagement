@@ -16,7 +16,7 @@
                         <th>Cuộc thi</th>
                         <th>Vòng</th>
                         <th>Danh sách Koi</th>
-                        <th>Actions</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,12 +37,11 @@
                                     }
                                 </ul>
                             </td>
-                            <!-- Delete button to open the modal -->
                             <td class="align-middle">
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                        onclick="setDeleteParams('@item.Key.Competition.Id', '@item.Key.Round.Id')">
+                                <a asp-page="./Delete" asp-route-competitionId="@item.Key.Competition.Id"
+                                    asp-route-roundId="@item.Key.Round.Id" class="btn btn-danger">
                                     Delete
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -51,33 +50,3 @@
         </div>
     </div>
 </div>
-
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete all records for this competition round?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <form method="post" asp-page-handler="Delete">
-                    <input type="hidden" id="competitionId" name="competitionId" />
-                    <input type="hidden" id="roundId" name="roundId" />
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function setDeleteParams(competitionId, roundId) {
-        document.getElementById("competitionId").value = competitionId;
-        document.getElementById("roundId").value = roundId;
-    }
-</script>

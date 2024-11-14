@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
+using KoiManagement_Services.Service;
 
 namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
@@ -26,16 +27,31 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
         {
             CompetitionRoundWithKoi = competitionRoundService.GetCompetitionRoundWithKoi(competitionId, roundId);
         }
-        //public async Task<IActionResult> OnPostDeleteAsync(string competitionId, string roundId)
+
+        //public class DeleteModel
         //{
-        //    if (string.IsNullOrEmpty(competitionId) || string.IsNullOrEmpty(roundId))
+        //    public string CompetitionId { get; set; }
+        //    public string RoundId { get; set; }
+        //}
+
+        //[IgnoreAntiforgeryToken]
+        //public async Task<IActionResult> OnPostDeleteAsync([FromBody] DeleteModel model)
+        //{
+        //    if (string.IsNullOrEmpty(model.CompetitionId) || string.IsNullOrEmpty(model.RoundId))
         //    {
-        //        return BadRequest();
+        //        return BadRequest("Invalid competition or round ID.");
         //    }
 
-        //    await competitionRoundService.DeleteCompetitionRound(competitionId, roundId);
+        //    var success = competitionRoundService.DeleteCompetitionRoundByCompetitionIDAndRoundID(
+        //        model.CompetitionId,
+        //        model.RoundId);
 
-        //    return RedirectToPage("./Index");
+        //    if (success)
+        //    {
+        //        return new JsonResult(new { success = true });
+        //    }
+
+        //    return StatusCode(500, "Error deleting competition rounds.");
         //}
     }
 }
