@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoiManagement_DAO.Migrations
 {
     [DbContext(typeof(KoiManagementContext))]
-    [Migration("20241114112531_init")]
+    [Migration("20241114152004_init")]
     partial class init
     {
         /// <inheritdoc />
