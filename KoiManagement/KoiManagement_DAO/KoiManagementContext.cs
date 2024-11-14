@@ -60,7 +60,7 @@ public partial class KoiManagementContext : IdentityDbContext
 		//	.Build();
 
 		//return configuration.GetConnectionString("KoiManagementConnection");
-		return "Server=(local);uid=sa;pwd=12345678;database=KoiManagement2;Trusted_Connection=True;TrustServerCertificate=True;";
+		return "Server=(local);uid=sa;pwd=12345;database=KoiManagement1;Trusted_Connection=True;TrustServerCertificate=True;";
 
 	}
 
