@@ -1,4 +1,5 @@
 using KoiManagement_BusinessObjects;
+using System.Text;
 
 namespace KoiManagement_DAO
 {
@@ -39,6 +40,10 @@ namespace KoiManagement_DAO
             {
                 if (existedCategory == null)
                 {
+                    if (context.Categories.Any(r => r.Name.Equals(category.Name)))
+                    {
+                        return false;
+                    }
                     context.Categories.Add(category);
                     context.SaveChanges();
                     result = true;
@@ -58,6 +63,12 @@ namespace KoiManagement_DAO
             {
                 if (existedCategory != null)
                 {
+                    bool nameExists = context.Categories.Any(r => r.Name == category.Name && r.Id != category.Id);
+                    if (nameExists)
+                    {
+                        return false;
+                    }
+                    context.Entry(existedCategory).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                     context.Entry<Category>(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified; ;
                     context.SaveChanges();
                     result = true;
