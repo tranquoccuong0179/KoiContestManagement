@@ -9,7 +9,7 @@ namespace KoiManagement_Repositories.IRepository
         public List<CompetitionRound> GetAll();
 
         public CompetitionRound? GetById(string id);
-
+        public string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId);
         public bool AddCompetitionRound(CompetitionRound competitionRound);
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound);

@@ -17,6 +17,8 @@ namespace KoiManagement_Services.Service
 
         public CompetitionRound? GetById(string id) => _competitionRoundRepository.GetById(id);
 
+        public string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId) => _competitionRoundRepository.GetCompetitionRoundId(koiId, roundId, competitionCategoryId);
+
         public bool AddCompetitionRound(CompetitionRound competitionRound) => _competitionRoundRepository.AddCompetitionRound(competitionRound);
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound) => _competitionRoundRepository.UpdateCompetitionRound(competitionRound);

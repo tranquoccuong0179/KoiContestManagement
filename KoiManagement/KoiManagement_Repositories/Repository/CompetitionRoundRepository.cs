@@ -10,6 +10,7 @@ namespace KoiManagement_Repositories.Repository
 
         public CompetitionRound? GetById(string id) => CompetitionRoundDAO.Instance.GetById(id);
 
+        public  string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId) => CompetitionRoundDAO.Instance.GetCompetitionRoundId(koiId, roundId, competitionCategoryId);
         public bool AddCompetitionRound(CompetitionRound competitionRound) => CompetitionRoundDAO.Instance.AddCompetitionRound(competitionRound);
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound) => CompetitionRoundDAO.Instance.UpdateCompetitionRound(competitionRound);

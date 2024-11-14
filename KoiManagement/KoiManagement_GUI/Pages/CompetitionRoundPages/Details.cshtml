@@ -129,8 +129,17 @@
                 </dl>
 
                 <div class="animate__animated animate__slideInUp action-buttons">
+                    <form method="post" asp-page-handler="GoToRefereeMarkPage">
+                        <input type="hidden" asp-for="KoiId" />
+                        <input type="hidden" asp-for="RoundId" />
+                        <input type="hidden" asp-for="CompetitionCategoryId" />
+                        <button type="submit" class="btn btn-primary">
+                            Go to Referee Mark Page
+                        </button>
+                    </form>
                     <a class="btn btn-secondary" asp-page="./Index">Quay lại</a>
                 </div>
+
             </div>
         </div>
     </div>

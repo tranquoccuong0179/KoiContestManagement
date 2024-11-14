@@ -1,5 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.ConstrainedExecution;
 
 namespace KoiManagement_DAO
 {
@@ -47,6 +48,18 @@ namespace KoiManagement_DAO
                 //Log
             }
             return result;
+        }
+
+        public string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId)
+        {
+            var competitionRound = context.CompetitionRounds
+            .FirstOrDefault(cr =>
+                    cr.Koi.Id == koiId &&                
+            cr.Round.Id == roundId &&
+            cr.CompetitionCategory.Id == competitionCategoryId
+                );
+
+            return competitionRound?.Id;
         }
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound)

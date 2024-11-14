@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_BusinessObjects.Constants;
 using KoiManagement_DAO;
 
 namespace KoiManagement_Services.IService
@@ -9,6 +10,7 @@ namespace KoiManagement_Services.IService
         public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId);
         public CompetitionRound? GetById(string id);
 
+        public string GetCompetitionRoundId(string KoiId, string RoundId, string CompetitionCategoryId);
         public bool AddCompetitionRound(CompetitionRound competitionRound);
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound);
@@ -21,5 +23,7 @@ namespace KoiManagement_Services.IService
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top);
 
         public bool DeleteCompetitionRoundByCompetitionIDAndRoundID(string competitionId, string roundId);
+
+
     }
 }
