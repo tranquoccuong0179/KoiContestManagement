@@ -1,0 +1,30 @@
+﻿@page "{competitionCategoryId}/{roundId}"
+@model KoiManagement_GUI.Pages.CompetitionRoundPages.ViewPointsModel
+
+@{
+    ViewData["Title"] = "Current Points for Koi";
+}
+
+<h2 class="text-center">Top Koi by Average Points</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Koi Name</th>
+            <th>Owner</th>
+            <th>Average Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.TopKois.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model.TopKois[i].Koi.Name</td>
+                <td>@Model.TopKois[i].Koi.User.FullName</td>
+                @* <td>@Model.TopKois[i].AverageScore</td> *@
+            </tr>
+        }
+    </tbody>
+</table>

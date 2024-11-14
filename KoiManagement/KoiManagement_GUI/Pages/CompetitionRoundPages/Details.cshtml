@@ -49,8 +49,6 @@
 
         .action-buttons {
             margin-top: 20px;
-            bottom: 15px;
-            left: 2rem;
             position: absolute;
             bottom: 20px;
             left: 50%;
@@ -129,15 +127,17 @@
                 </dl>
 
                 <div class="animate__animated animate__slideInUp action-buttons">
-                    <form method="post" asp-page-handler="GoToRefereeMarkPage">
+                    <form method="post" asp-page-handler="GoToRefereeMarkPage" class="d-inline">
                         <input type="hidden" asp-for="KoiId" />
                         <input type="hidden" asp-for="RoundId" />
                         <input type="hidden" asp-for="CompetitionCategoryId" />
                         <button type="submit" class="btn btn-primary">
-                            Go to Referee Mark Page
+                            <i class="fas fa-star me-2"></i>Chấm điểm
                         </button>
                     </form>
-                    <a class="btn btn-secondary" asp-page="./Index">Quay lại</a>
+                    <a class="btn btn-secondary" asp-page="./Index">
+                        <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách
+                    </a>
                 </div>
 
             </div>

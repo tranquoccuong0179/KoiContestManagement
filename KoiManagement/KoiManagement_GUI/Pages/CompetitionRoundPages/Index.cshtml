@@ -36,6 +36,7 @@
                     {
                         @foreach (var item in Model.CompetitionRoundWithKoi)
                         {
+                            var koiCount = item.Value?.Count ?? 0;
                             <tr>
                                 <td class="align-middle">@(item.Key.CompetitionCategory?.Competition?.Name ?? "N/A")</td>
                                 <td class="align-middle">@(item.Key.CompetitionCategory?.Category?.Name ?? "N/A")</td>
@@ -57,6 +58,13 @@
                                     </ul>
                                 </td>
                                 <td class="align-middle">
+                                    <a asp-page="/CompetitionRoundPages/ViewPoints"
+                                       asp-route-competitionCategoryId="@item.Key.CompetitionCategory?.Id"
+                                       asp-route-roundId="@item.Key.Round?.Id"
+                                       asp-route-koiCount="@koiCount"
+                                       class="btn btn-primary">
+                                        View Top
+                                    </a>
                                     <a asp-page="./Delete" asp-route-competitionCategoryId="@item.Key.CompetitionCategory?.Id"
                                         asp-route-roundId="@item.Key.Round?.Id" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash-alt me-1"></i> Xóa
