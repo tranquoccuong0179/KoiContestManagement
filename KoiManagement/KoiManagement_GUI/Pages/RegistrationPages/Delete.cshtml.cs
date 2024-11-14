@@ -24,7 +24,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 return NotFound();
             }
 
-            var registration = await registrationService.GetRegistrationById(id);
+            var registration = await registrationService.GetRegistrationByIdAsync(id);
 
             if (registration == null)
             {
@@ -44,7 +44,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 return NotFound();
             }
 
-            var registration = await registrationService.GetRegistrationById(id);
+            var registration = await registrationService.GetRegistrationByIdAsync(id);
             if (registration != null)
             {
                 Registration = registration;

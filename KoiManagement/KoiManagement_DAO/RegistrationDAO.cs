@@ -35,7 +35,16 @@ namespace KoiManagement_DAO
             return context.Registrations.Include(x => x.Koi).Include(x => x.CompetitionCategory).ThenInclude(x => x.Category).ToList();
         }
 
-        public async Task<Registration> GetRegistration(string id)
+        public  Registration? GetRegistrationById(string id)
+        {
+            var entity =  context.Registrations.SingleOrDefault(m => m.Id.Equals(id));
+            if (entity != null)
+            {
+                context.Entry(entity).State = EntityState.Detached;
+            }
+            return entity;
+        }
+        public async Task<Registration> GetRegistrationByIdAsync(string id)
         {
             var entity = await context.Registrations.SingleOrDefaultAsync(m => m.Id.Equals(id));
             if (entity != null)
@@ -54,7 +63,7 @@ namespace KoiManagement_DAO
         public async Task<bool> AddRegistration(Registration registrationE)
         {
             bool result = false;
-            Registration newRegistrationE = await GetRegistration(registrationE.Id);
+            Registration newRegistrationE = await GetRegistrationByIdAsync(registrationE.Id);
             try
             {
                 if (newRegistrationE == null)
@@ -73,7 +82,7 @@ namespace KoiManagement_DAO
         public async Task<bool> DeleteRegistration(Registration registrationE)
         {
             bool result = false;
-            Registration newRegistrationE = await GetRegistration(registrationE.Id);
+            Registration newRegistrationE = await GetRegistrationByIdAsync(registrationE.Id);
             try
             {
                 if (newRegistrationE != null)
@@ -96,16 +105,38 @@ namespace KoiManagement_DAO
             return result;
         }
 
-        public async Task<bool> UpdateRegistration(Registration registrationE)
+        public async Task<bool> UpdateRegistrationAsync(Registration registrationE)
         {
             bool result = false;
-            Registration newregistrationE = await GetRegistration(registrationE.Id);
+            Registration newregistrationE = await GetRegistrationByIdAsync(registrationE.Id);
             try
             {
                 if (newregistrationE != null)
                 {
                     context.Entry<Registration>(registrationE).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     registrationE.UpdateAt = DateTime.Now;
+                    context.SaveChanges();
+                    result = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //Log
+            }
+            return result;
+        }
+
+        public bool UpdateRegistration(Registration registration)
+        {
+            bool result = false;
+            Registration? newregistrationE = GetRegistrationById(registration.Id);
+            try
+            {
+                if (newregistrationE != null)
+                {
+                    context.Entry<Registration>(registration).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    registration.UpdateAt = DateTime.Now;
                     context.SaveChanges();
                     result = true;
                 }
