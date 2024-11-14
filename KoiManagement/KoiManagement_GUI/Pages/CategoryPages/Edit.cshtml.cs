@@ -45,7 +45,13 @@ namespace KoiManagement_GUI.Pages.CategoryPages
 
             try
             {
-                _categoryService.UpdateCategory(Category);
+                bool result = _categoryService.UpdateCategory(Category);
+                if (result)
+                {
+                    return RedirectToPage("./Index");
+                }
+                ViewData["Result"] = "Category Name is already existed!";
+                return Page();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -58,7 +64,6 @@ namespace KoiManagement_GUI.Pages.CategoryPages
                     throw;
                 }
             }
-
             return RedirectToPage("./Index");
         }
 
