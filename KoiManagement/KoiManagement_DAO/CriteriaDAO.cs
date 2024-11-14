@@ -45,15 +45,16 @@ namespace KoiManagement_DAO
         public bool AddCriteria(Criteria criteria)
         {
             bool result = false;
-            Criteria? existedCriteria = GetCriteria(criteria.Id);
             try
             {
-                if (existedCriteria == null)
-                {
-                    context.Criteria.Add(criteria);
-                    context.SaveChanges();
-                    result = true;
-                }
+                criteria.Active = true;
+                criteria.Id = Guid.NewGuid().ToString();
+                criteria.CreateAt = DateTime.Now;
+                criteria.UpdateAt = DateTime.Now;
+                context.Criteria.Add(criteria);
+                context.SaveChanges();
+                result = true;
+
             }
             catch (Exception ex)
             {
@@ -90,6 +91,7 @@ namespace KoiManagement_DAO
                 if (existedCriteria != null)
                 {
                     existedCriteria.Active = false;
+                    existedCriteria.DeleteAt = DateTime.Now;
                     context.Entry<Criteria>(existedCriteria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     context.SaveChanges();
                     result = true;
