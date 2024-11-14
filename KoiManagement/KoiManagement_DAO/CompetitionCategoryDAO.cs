@@ -73,6 +73,7 @@ namespace KoiManagement_DAO
             {
                 if (existedcompetitionCategory != null)
                 {
+                    context.Entry(existedcompetitionCategory).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                     context.Entry<CompetitionCategory>(competitionCategory).State = Microsoft.EntityFrameworkCore.EntityState.Modified; ;
                     context.SaveChanges();
                     result = true;
