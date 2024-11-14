@@ -113,10 +113,10 @@ namespace KoiManagement_DAO
         }
 
 
-        public bool CheckIfAnotherRoundHasStarted(string competitionId)
+        public bool CheckIfAnotherRoundHasStarted(string competitionId, string id)
         {
             return context.CompetitionRounds
-                .Any(cr => cr.CompetitionCategoryId == competitionId && cr.RoundId != "77e3e82e971f48bbb682f17a6ddcaa32");
+                .Any(cr => cr.CompetitionCategoryId == competitionId && cr.RoundId == id);
         }
 
         public async Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScoreAsync(string competitionId, string roundId, int top)

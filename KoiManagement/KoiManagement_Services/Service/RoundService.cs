@@ -18,7 +18,9 @@ namespace KoiManagement_Services.Service
         public bool UpdateRound(Round round) => _roundRepository.UpdateRound(round);
         public bool DeleteRound(Round round) => _roundRepository.DeleteRound(round);
 
-        public Round? GetRoundByName(string name) => _roundRepository.GetRoundByName(name); 
+        public Round? GetRoundByName(string name) => _roundRepository.GetRoundByName(name);
+        public Round? GetFirstRound() => _roundRepository.GetFirstRound();
+        public Round? GetNextRound(int currentRoundNumber) => _roundRepository.GetNextRound(currentRoundNumber);
 
     }
 }

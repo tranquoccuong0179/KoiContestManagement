@@ -25,7 +25,7 @@ namespace KoiManagement_Services.Service
 
         public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId) => _competitionRoundRepository.GetCompetitionRoundWithKoi(competitionId, roundId);
 
-        public bool CheckIfAnotherRoundHasStarted(string competitionId) => _competitionRoundRepository.CheckIfAnotherRoundHasStarted(competitionId);
+        public bool CheckIfAnotherRoundHasStarted(string competitionId, string id) => _competitionRoundRepository.CheckIfAnotherRoundHasStarted(competitionId, id);
 
         public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => _competitionRoundRepository.GetTopCompetitionRoundsByAverageScore(competitionId,roundId,top);
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) => _competitionRoundRepository.AddNewCompetitionRoundBasedOnTopScores(competitionId,roundId,top);

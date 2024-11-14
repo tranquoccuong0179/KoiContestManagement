@@ -62,6 +62,15 @@ namespace KoiManagement_DAO
             }
         }
 
+
+        public Koi GetKoiById(string koiId)
+        {
+            using (var context = new KoiManagementContext())
+            {
+                return context.Kois.Include(c => c.User).SingleOrDefault(c => c.Id.Equals(koiId));
+            }
+
+        }
         public async Task<bool> Create(Koi koi)
         {
             using (var context = new KoiManagementContext())

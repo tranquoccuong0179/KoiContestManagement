@@ -10,5 +10,7 @@ namespace KoiManagement_Services.IService
         bool UpdateRound(Round round);
         bool DeleteRound(Round round);
         public Round? GetRoundByName(string name);
+        public Round? GetFirstRound();
+        public Round? GetNextRound(int currentRoundNumber);
     }
 }
