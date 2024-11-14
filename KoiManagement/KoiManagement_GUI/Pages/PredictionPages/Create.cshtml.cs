@@ -13,7 +13,7 @@ namespace KoiManagement_GUI.Pages.PredictionPages
 {
     public class CreateModel : PageModel
     {
-private readonly IPredictionService _predictionService;
+        private readonly IPredictionService _predictionService;
         public CreateModel(IPredictionService predictionService, Prediction prediction)
         {
             _predictionService = predictionService;

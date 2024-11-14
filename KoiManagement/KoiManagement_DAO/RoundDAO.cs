@@ -1,4 +1,5 @@
 using KoiManagement_BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_DAO
 {
@@ -39,6 +40,10 @@ namespace KoiManagement_DAO
             {
                 if (existedRound == null)
                 {
+                    if (context.Rounds.Any(r => r.Name.Equals(round.Name) || r.OrderNumber == round.OrderNumber)) 
+                    {
+                        return false;
+                    }
                     context.Rounds.Add(round);
                     context.SaveChanges();
                     result = true;
@@ -53,24 +58,32 @@ namespace KoiManagement_DAO
         public bool UpdateRound(Round round)
         {
             bool result = false;
-            Round? existedRound = GetRound(round.Id);
+            Round? existingRound = GetRound(round.Id);
             try
             {
-                if (existedRound != null)
+                if (existingRound != null)
                 {
-                    context.Entry<Round>(round).State = Microsoft.EntityFrameworkCore.EntityState.Modified; ;
+                    bool nameExists = context.Rounds.Any(r => r.Name == round.Name && r.Id != round.Id);
+                    bool orderNumberExists = context.Rounds.Any(r => r.OrderNumber == round.OrderNumber && r.Id != round.Id);
+
+                    if (nameExists || orderNumberExists)
+                    {
+                        return false;
+                    }
+                    context.Entry(existingRound).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                    context.Entry(round).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     context.SaveChanges();
                     result = true;
                 }
             }
             catch (Exception ex)
             {
-                //Log
+                // Log the exception (implement logging as needed)
             }
             return result;
         }
 
-        public bool DeleteRound(Round round)
+    public bool DeleteRound(Round round)
         {
             bool result = false;
             Round? existedRound = GetRound(round.Id);
@@ -88,6 +101,15 @@ namespace KoiManagement_DAO
                 //Log
             }
             return result;
+        }
+        public Round? GetFirstRound()
+        {
+            return context.Rounds.OrderBy(r => r.OrderNumber).FirstOrDefault();
+        }
+
+        public Round? GetNextRound(int currentRoundNumber)
+        {
+            return  context.Rounds.Where(r => r.OrderNumber > currentRoundNumber).OrderBy(r => r.OrderNumber).FirstOrDefault();
         }
     }
 }

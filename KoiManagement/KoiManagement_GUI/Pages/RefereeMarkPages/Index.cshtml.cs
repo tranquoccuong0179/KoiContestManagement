@@ -7,25 +7,36 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.RefereeMarkPages
 {
     public class IndexModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly IRefereeMarkService refereeMarkService;
+        private readonly IAuthenticationService authenticationService;
+        private readonly IKoiService koiService;
+        private readonly ICriteriaService criteriaService;
+        private readonly ICriteriaPointService criteriaPointService;
 
-        public IndexModel(KoiManagement_DAO.KoiManagementContext context)
+        public IndexModel(IRefereeMarkService refereeMarkService,
+            IAuthenticationService authenticationService,
+            IKoiService koiService,
+            ICriteriaService criteriaService,
+            ICriteriaPointService criteriaPointService)
         {
-            _context = context;
+            this.refereeMarkService = refereeMarkService;
+            this.authenticationService = authenticationService;
+            this.koiService = koiService;
+            this.criteriaService = criteriaService;
+            this.criteriaPointService = criteriaPointService;
         }
 
         public IList<RefereeMark> RefereeMark { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            RefereeMark = await _context.RefereeMarks
-                .Include(r => r.CompetitionRound)
-                .Include(r => r.User).ToListAsync();
+            RefereeMark = refereeMarkService.GetRefereeMarks();
         }
     }
 }

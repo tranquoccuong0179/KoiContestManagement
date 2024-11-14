@@ -1,5 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
+using KoiManagement_Services.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -29,8 +30,13 @@ namespace KoiManagement_GUI.Pages.CategoryPages
             {
                 return Page();
             }
-            _categoryService.AddCategory(Category);
-            return RedirectToPage("./Index");
+            bool result = _categoryService.AddCategory(Category);
+            if (result)
+            {
+                return RedirectToPage("./Index");
+            }
+            ViewData["Result"] = "Category Name is already existed!";
+            return Page();
         }
     }
 }
