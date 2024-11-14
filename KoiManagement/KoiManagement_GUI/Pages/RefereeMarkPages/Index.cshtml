@@ -5,11 +5,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Referee Mark Page</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -17,22 +14,10 @@
                 @Html.DisplayNameFor(model => model.RefereeMark[0].Point)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RefereeMark[0].CompetitionRound)
+                @Html.DisplayNameFor(model => model.RefereeMark[0].CompetitionRound.Koi.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RefereeMark[0].User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RefereeMark[0].Active)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RefereeMark[0].CreateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RefereeMark[0].UpdateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RefereeMark[0].DeleteAt)
             </th>
             <th></th>
         </tr>
@@ -44,27 +29,13 @@
                 @Html.DisplayFor(modelItem => item.Point)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompetitionRound.Id)
+                @Html.DisplayFor(modelItem => item.CompetitionRound.Koi.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.User.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeleteAt)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
             </td>
         </tr>
 }
