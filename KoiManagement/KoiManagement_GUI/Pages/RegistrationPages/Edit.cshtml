@@ -6,46 +6,94 @@
     var userRole = HttpContext.Session.GetString("Role");
 }
 
-<h1>Edit</h1>
+<style>
+    .content-wrapper {
+        margin: 20px;
+    }
+    /* Định dạng cho container chứa cả hai nút */
+    .button-container {
+        display: flex;
+        justify-content: flex-start; /* Nút nằm cạnh nhau từ bên trái */
+        gap: 10px; /* Khoảng cách giữa các nút */
+        margin-top: 20px;
+    }
 
-<h4>Registration</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Registration.KoiId" class="control-label"></label>
-                <select asp-for="Registration.KoiId" class="form-control" asp-items="ViewBag.KoiId"></select>
-                <span asp-validation-for="Registration.KoiId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Registration.CompetitionCategoryId" class="control-label"></label>
-                <select asp-for="Registration.CompetitionCategoryId" class="form-control" asp-items="ViewBag.CompetitionCategoryId"></select>
-                <span asp-validation-for="Registration.CompetitionCategoryId" class="text-danger"></span>
-            </div>
-            @if (userRole == "Admin")
-            {
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Registration.IsCheckIn" /> @Html.DisplayNameFor(model => model.Registration.IsCheckIn)
-                    </label>
+    /* Định dạng nút "Back to List" */
+    .back-to-list {
+        background-color: #f1f1f1;
+        color: #405c54;
+        border: 1px solid #405c54;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .back-to-list:hover {
+            background-color: #dcdcdc;
+            border-color: #2a4b44;
+            transform: scale(1.05);
+        }
+
+    /* Định dạng nút "Save" */
+    .save-button {
+        background-color: #405c54;
+        color: white;
+        border: 1px solid #405c54;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .save-button:hover {
+            background-color: #2a4b44;
+            border-color: #2a4b44;
+            transform: scale(1.05);
+        }
+</style>
+
+<div class="content-wrapper">
+    <h1>Edit</h1>
+    <hr />
+    <div class="row">
+        <div>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Registration.KoiId" class="control-label">Koi Name</label>
+                    <select asp-for="Registration.KoiId" class="form-control" asp-items="ViewBag.KoiId"></select>
+                    <span asp-validation-for="Registration.KoiId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Registration.CheckInTime" class="control-label"></label>
-                    <input asp-for="Registration.CheckInTime" class="form-control" />
-                    <span asp-validation-for="Registration.CheckInTime" class="text-danger"></span>
+                    <label asp-for="Registration.CompetitionCategoryId" class="control-label">Category</label>
+                    <select asp-for="Registration.CompetitionCategoryId" class="form-control" asp-items="ViewBag.CompetitionCategoryId"></select>
+                    <span asp-validation-for="Registration.CompetitionCategoryId" class="text-danger"></span>
                 </div>
-            }
-            <input type="hidden" asp-for="Registration.Id" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                @if (userRole == "Admin")
+                {
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Registration.IsCheckIn" /> @Html.DisplayNameFor(model => model.Registration.IsCheckIn)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Registration.CheckInTime" class="control-label"></label>
+                        <input asp-for="Registration.CheckInTime" class="form-control" />
+                        <span asp-validation-for="Registration.CheckInTime" class="text-danger"></span>
+                    </div>
+                }
+                <input type="hidden" asp-for="Registration.Id" />
+                <div class="form-group button-container">
+                    <a asp-page="./Index" class="btn back-to-list">Back to List</a>
+                    <input type="submit" value="Save" class="btn save-button" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
 </div>
 

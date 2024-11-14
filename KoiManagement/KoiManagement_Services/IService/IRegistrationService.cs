@@ -11,9 +11,10 @@ namespace KoiManagement_Services.IService
     {
         public List<Registration> GetRegistrations(string id);
         public List<Registration> GetRegistrationsAll();
-        public Registration GetRegistrationById(string id);
-        public bool AddRegistration(Registration registration);
-        public bool DeleteRegistration(Registration registration);
-        public bool UpdateRegistration(Registration registration);
+        public Task<Registration> GetRegistrationById(string id);
+        public Task<bool> AddRegistration(Registration registration);
+        public Task<bool> DeleteRegistration(Registration registration);
+        public Task<bool> UpdateRegistration(Registration registration);
+        public string GetUserIdByKoiId(string koiId);
     }
 }

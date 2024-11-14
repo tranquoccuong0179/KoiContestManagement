@@ -31,24 +31,28 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
         public Registration Registration { get; set; } = default!;
 
         bool wasCheckIn = false;
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id, string competitionid)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var registration =  registrationService.GetRegistrationById(id);
+            var registration = await  registrationService.GetRegistrationById(id);
             wasCheckIn = registration.IsCheckIn;
             if (registration == null)
             {
                 return NotFound();
             }
             Registration = registration;
-            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategoryService.GetCompetitionCategories(), "Id", "Id");
-            Task<List<Koi>> koiTask = koiService.GetAll();
+            
+            string userId = registrationService.GetUserIdByKoiId(registration.KoiId);
+
+            var competitionCategories = competitionCategoryService.GetCompetitionCategoryByCompetitionId(competitionid);
+            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategories, "Id", "CategoryName");
+            Task<List<Koi>> koiTask = koiService.GetByUserIdActive(userId);
             List<Koi> koiList = await koiTask;
-            ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");
+            ViewData["KoiId"] = new SelectList(koiList, "Id", "Name");
             return Page();
         }
 
@@ -60,14 +64,13 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
             {
                 return Page();
             }
-            var ra = Registration;
-            bool updateSuccess = registrationService.UpdateRegistration(Registration);
+            bool updateSuccess = await registrationService.UpdateRegistration(Registration);
 
 
             if (!updateSuccess)
             {
                 // Kiểm tra nếu CandidateProfile không tồn tại
-                if (!RegistrationExists(Registration.Id))
+                if (!await RegistrationExists(Registration.Id))
                 {
                     return NotFound();
                 }
@@ -78,49 +81,49 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 }
             }
 
-            if (!wasCheckIn && Registration.IsCheckIn)
-            {
-                // Check if another round has already started (same CompetitionId, different RoundId)
-                bool roundExists = competitionRoundService.CheckIfAnotherRoundHasStarted(Registration.CompetitionCategory.CompetitionId);
+            //if (!wasCheckIn && Registration.IsCheckIn)
+            //{
+            //    // Check if another round has already started (same CompetitionId, different RoundId)
+            //    bool roundExists = competitionRoundService.CheckIfAnotherRoundHasStarted(Registration.CompetitionCategory.CompetitionId);
 
-                if (roundExists)
-                {
-                    ModelState.AddModelError(string.Empty, "Another round has already started. You cannot check in.");
-                    return NotFound();
-                }
+            //    if (roundExists)
+            //    {
+            //        ModelState.AddModelError(string.Empty, "Another round has already started. You cannot check in.");
+            //        return NotFound();
+            //    }
 
-                // Handle the creation of a new CompetitionRound
-                if (Registration.CompetitionCategory == null || Registration.CompetitionCategory.CompetitionId == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Competition Category or Competition ID is missing.");
-                    return NotFound();
-                }
+            //    // Handle the creation of a new CompetitionRound
+            //    if (Registration.CompetitionCategory == null || Registration.CompetitionCategory.CompetitionId == null)
+            //    {
+            //        ModelState.AddModelError(string.Empty, "Competition Category or Competition ID is missing.");
+            //        return NotFound();
+            //    }
 
-                if (string.IsNullOrEmpty(Registration.KoiId))
-                {
-                    ModelState.AddModelError(string.Empty, "Koi ID is missing.");
-                    return NotFound();
-                }
-                bool createCompetitionRoundSuccess = competitionRoundService.AddCompetitionRound(new CompetitionRound
-                {
-                    CompetitionCategoryId = Registration.CompetitionCategory.CompetitionId,
-                    RoundId = "f60cef79ba9d481c8f96e89bcdebc74a", 
-                    KoiId = Registration.KoiId,
-                });
+            //    if (string.IsNullOrEmpty(Registration.KoiId))
+            //    {
+            //        ModelState.AddModelError(string.Empty, "Koi ID is missing.");
+            //        return NotFound();
+            //    }
+            //    bool createCompetitionRoundSuccess = competitionRoundService.AddCompetitionRound(new CompetitionRound
+            //    {
+            //        CompetitionCategoryId = Registration.CompetitionCategory.CompetitionId,
+            //        RoundId = "f60cef79ba9d481c8f96e89bcdebc74a", 
+            //        KoiId = Registration.KoiId,
+            //    });
 
-                if (!createCompetitionRoundSuccess)
-                {         
-                    ModelState.AddModelError(string.Empty, "Failed to create a new competition round.");
-                    return NotFound();
-                }
-            }
+            //    if (!createCompetitionRoundSuccess)
+            //    {         
+            //        ModelState.AddModelError(string.Empty, "Failed to create a new competition round.");
+            //        return NotFound();
+            //    }
+            //}
 
             return RedirectToPage("./Index");
         }
 
-        private bool RegistrationExists(string id)
+        private async Task<bool> RegistrationExists(string id)
         {
-            return registrationService.GetRegistrationById(id) != null;
+            return await registrationService.GetRegistrationById(id) != null;
         }
     }
 }

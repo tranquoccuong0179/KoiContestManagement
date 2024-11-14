@@ -42,14 +42,14 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
         public Registration Registration { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-           registrationService.AddRegistration(Registration);
+           await registrationService.AddRegistration(Registration);
             //trả về trang user get all đăng kí của mình 
            return RedirectToPage("./Index");
         }

@@ -142,6 +142,5 @@ namespace KoiManagement_DAO
                 return kois;
             }
         }
-
     }
 }

@@ -18,7 +18,7 @@ namespace KoiManagement_Services.Service
             this.registrationRepository = registrationRepository;
         }
 
-        public bool AddRegistration(Registration registration)
+        public Task<bool> AddRegistration(Registration registration)
         {
             registration.Id = Guid.NewGuid().ToString();
             registration.Active = true;
@@ -29,12 +29,12 @@ namespace KoiManagement_Services.Service
             return registrationRepository.AddRegistration(registration);
         }
 
-        public bool DeleteRegistration(Registration registration)
+        public Task<bool> DeleteRegistration(Registration registration)
         {
             return registrationRepository.DeleteRegistration(registration);
         }
 
-        public Registration GetRegistrationById(string id)
+        public Task<Registration> GetRegistrationById(string id)
         {
             return registrationRepository.GetRegistrationById(id);
         }
@@ -48,9 +48,13 @@ namespace KoiManagement_Services.Service
             return registrationRepository.GetRegistrationsAll();
         }
 
-        public bool UpdateRegistration(Registration registration)
+        public Task<bool> UpdateRegistration(Registration registration)
         {
             return registrationRepository.UpdateRegistration(registration);
+        }
+        public string GetUserIdByKoiId(string koiId)
+        {
+            return registrationRepository.GetUserIdByKoiId(koiId);
         }
     }
 }

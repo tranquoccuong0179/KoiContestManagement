@@ -2,90 +2,141 @@
 @model KoiManagement_GUI.Pages.RegistrationPages.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Registration";
+      <!-- Đổi tiêu đề thành Registration -->
     var userRole = HttpContext.Session.GetString("Role");
 }
 
-<h1>Index</h1>
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
 
-<p>
-    <a asp-page="/CompetitionPages/Index">Sign up for another competition</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Registration[0].IsCheckIn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registration[0].CheckInTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registration[0].CompetitionCategory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registration[0].Koi)
-            </th>
-            @if (userRole == "Admin")
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Registration[0].Active)
-                </th>
-            }          
-            <th>
-                @Html.DisplayNameFor(model => model.Registration[0].CreateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registration[0].UpdateAt)
-            </th>
-            @if (userRole == "Admin")
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Registration[0].DeleteAt)
-                </th>
-            }           
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Registration) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsCheckIn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CheckInTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompetitionCategory.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Koi.Name)
-            </td>
+        h1 {
+            color: #405c54; /* Màu chính */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            width: 100%; /* Giữ container ở 100% chiều rộng của trang */
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .table {
+            width: 110%; /* Giữ chiều rộng của bảng là 110% */
+            margin: 0 auto; /* Giữ bảng căn giữa */
+            transform: translateX(-5%); /* Dịch bảng sang bên trái */
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            .table th, .table td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: #405c54; /* Màu chính */
+                color: #fff;
+                font-weight: bold;
+            }
+
+            .table td {
+                background-color: #f9f9f9;
+                color: #333;
+            }
+
+            .table tr:hover {
+                background-color: #f1f1f1;
+                cursor: pointer; /* Thay đổi con trỏ thành bàn tay khi hover */
+            }
+
+        .btn-custom {
+            background-color: #405c54;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .btn-custom:hover {
+                background-color: #2b4038; /* Màu khi hover cho nền */
+                color: #fff; /* Giữ nguyên màu chữ */
+            }
+    </style>
+
+    <script>
+        // Hàm xử lý sự kiện khi nhấn vào hàng
+        function goToDetailsPage(id) {
+            window.location.href = '/RegistrationPages/Details?id=' + id;
+        }
+    </script>
+</head>
+
+<div class="container">
+    <h1>Registration</h1>
+
+    <p style="text-align: right;">
+        <a asp-page="/CompetitionPages/Index" class="btn-custom">Sign up for another competition</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Registration[0].IsCheckIn)</th>
+                <th>@Html.DisplayNameFor(model => model.Registration[0].CheckInTime)</th>
+                <th>@Html.DisplayNameFor(model => model.Registration[0].CompetitionCategory)</th>
+                <th>@Html.DisplayNameFor(model => model.Registration[0].Koi)</th>
                 @if (userRole == "Admin")
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Active)
-                    </td>
-                }           
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateAt)
-            </td>
-                @if (userRole == "Admin")
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DeleteAt)
-                    </td>
+                    <th>@Html.DisplayNameFor(model => model.Registration[0].Active)</th>
                 }
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <th>@Html.DisplayNameFor(model => model.Registration[0].CreateAt)</th>
+                <th>@Html.DisplayNameFor(model => model.Registration[0].UpdateAt)</th>
+                @if (userRole == "Admin")
+                {
+                    <th>@Html.DisplayNameFor(model => model.Registration[0].DeleteAt)</th>
+                }
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Registration)
+            {
+                <tr onclick="goToDetailsPage('@item.Id')">
+                    <td>@Html.DisplayFor(modelItem => item.IsCheckIn)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CheckInTime)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CompetitionCategory.Category.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Koi.Name)</td>
+                    @if (userRole == "Admin")
+                    {
+                        <td>@Html.DisplayFor(modelItem => item.Active)</td>
+                    }
+                    <td>@Html.DisplayFor(modelItem => item.CreateAt)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UpdateAt)</td>
+                    @if (userRole == "Admin")
+                    {
+                        <td>@Html.DisplayFor(modelItem => item.DeleteAt)</td>
+                    }
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-competitionid="@item.CompetitionCategory.CompetitionId">Edit</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

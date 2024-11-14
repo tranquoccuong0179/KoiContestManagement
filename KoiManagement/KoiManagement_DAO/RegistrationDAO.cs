@@ -40,9 +40,9 @@ namespace KoiManagement_DAO
             return context.Registrations.Include(x => x.Koi).Include(x => x.CompetitionCategory).ThenInclude(x => x.Category).ToList();
         }
 
-        public Registration GetRegistration(string id)
+        public async Task<Registration> GetRegistration(string id)
         {
-            var entity = context.Registrations.SingleOrDefault(m => m.Id.Equals(id));
+            var entity = await context.Registrations.SingleOrDefaultAsync(m => m.Id.Equals(id));
             if (entity != null)
             {
                 context.Entry(entity).State = EntityState.Detached;
@@ -50,11 +50,16 @@ namespace KoiManagement_DAO
             return entity;
         }
 
+        public string GetUserIdByKoiId(string koiId)
+        {
+            var koi = context.Kois.SingleOrDefault(m => m.Id.Equals(koiId));
+            return koi.UserId;
+        }
 
-        public bool AddRegistration(Registration registrationE)
+        public async Task<bool> AddRegistration(Registration registrationE)
         {
             bool result = false;
-            Registration newRegistrationE = GetRegistration(registrationE.Id);
+            Registration newRegistrationE = await GetRegistration(registrationE.Id);
             try
             {
                 if (newRegistrationE == null)
@@ -70,18 +75,21 @@ namespace KoiManagement_DAO
             }
             return result;
         }
-        public bool DeleteRegistration(Registration registrationE)
+        public async Task<bool> DeleteRegistration(Registration registrationE)
         {
             bool result = false;
-            Registration newRegistrationE = GetRegistration(registrationE.Id);
+            Registration newRegistrationE = await GetRegistration(registrationE.Id);
             try
             {
                 if (newRegistrationE != null)
                 {
-                    registrationE.Active = false;
-                    registrationE.DeleteAt = DateTime.Now;
-                    context.Registrations.Update(registrationE);
-                    context.SaveChanges();
+                    if (newRegistrationE.Active) {
+                        registrationE.Active = false;
+                        registrationE.DeleteAt = DateTime.Now;
+                        context.Registrations.Update(registrationE);
+                        context.SaveChanges();
+                        result = true;
+                    }
                     result = true;
                 }
             }
@@ -92,10 +100,10 @@ namespace KoiManagement_DAO
             return result;
         }
 
-        public bool UpdateRegistration(Registration registrationE)
+        public async Task<bool> UpdateRegistration(Registration registrationE)
         {
             bool result = false;
-            Registration newregistrationE = GetRegistration(registrationE.Id);
+            Registration newregistrationE = await GetRegistration(registrationE.Id);
             try
             {
                 if (newregistrationE != null)

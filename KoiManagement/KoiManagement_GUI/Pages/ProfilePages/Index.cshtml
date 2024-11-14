@@ -11,6 +11,11 @@
 }
 <head>
 	<link rel="stylesheet" href="~/css/ProfilePageIndex.css" asp-append-version="true" />
+	<style>
+		.item-info {
+			left: 20%
+		}
+	</style>
 </head>
 
 <div id="profile">
@@ -37,13 +42,14 @@
 					<div class="rounded mt-3 date animate__animated animate__rotateInUpRight text-white">
 						Joined: <span class="fw-bold">@Model.User.CreateAt</span>
 					</div>
-					<div class=" d-flex mt-3 animate__animated animate__rotateInUpLeft">
+					<div class="d-flex mt-3 animate__animated animate__rotateInUpLeft">
 						<a asp-page="UpdateProfilePage" class="btn btn-primary me-2">Edit profile</a>
 						<a asp-page="UpdatePasswordPage" class="btn btn-primary me-2">Change password</a>
 						@{
 							if (role == Role.Contestant)
 							{
-								<a asp-page="/KoiPages/Index" class="btn btn-primary animate__animated animate__rotateInUpRight">Manage your kois</a>
+								<a asp-page="/KoiPages/Index" class="btn btn-primary me-2 animate__animated animate__rotateInUpRight">Manage your kois</a>
+								<a asp-page="/RegistrationPages/Index" class="btn btn-primary animate__animated animate__rotateInUpRight">Manage your registrations</a>
 							}
 						}
 					</div>

@@ -30,7 +30,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 return NotFound();
             }
 
-            var registration = registrationService.GetRegistrationById(id);
+            var registration = await registrationService.GetRegistrationById(id);
 
             if (registration == null)
             {
@@ -50,11 +50,11 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 return NotFound();
             }
 
-            var registration = registrationService.GetRegistrationById(id);
+            var registration = await registrationService.GetRegistrationById(id);
             if (registration != null)
             {
                 Registration = registration;
-                registrationService.DeleteRegistration(Registration);
+                await registrationService.DeleteRegistration(Registration);
             }
 
             return RedirectToPage("./Index");
