@@ -9,7 +9,8 @@ namespace KoiManagement_Repositories.IRepository
 {
     public interface IRegistrationRepository
     {
-        public List<Registration> GetRegistrations();
+        public List<Registration> GetRegistrations(string id);
+        public List<Registration> GetRegistrationsAll();
         public Registration GetRegistrationById(string id);
         public bool AddRegistration(Registration registration);
         public bool DeleteRegistration(Registration registration);

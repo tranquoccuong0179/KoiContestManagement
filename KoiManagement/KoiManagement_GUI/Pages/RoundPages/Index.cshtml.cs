@@ -1,4 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,18 +8,26 @@ namespace KoiManagement_GUI.Pages.RoundPages
 {
     public class IndexModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
-
-        public IndexModel(KoiManagement_DAO.KoiManagementContext context)
+        private readonly IRoundService _roundService;
+        public IndexModel(IRoundService roundService)
         {
-            _context = context;
+            _roundService = roundService;
         }
 
         public IList<Round> Round { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            Round = await _context.Rounds.ToListAsync();
+            Round =  _roundService.GetRounds();
+        }
+        public IActionResult OnPostDelete(string id)
+        {
+            var round = _roundService.GetRound(id);
+            if (round != null)
+            {
+                _roundService.DeleteRound(round);
+            }
+            return RedirectToPage(); // After deletion, redirect back to the same page
         }
     }
 }

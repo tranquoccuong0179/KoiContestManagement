@@ -32,7 +32,7 @@ namespace KoiManagement_DAO
 
         public List<Result> GetResults()
         {
-            return context.Results.Include(x => x.Registration).Include(x => x.Koi).ToList();
+            return context.Results.Include(x => x.Registration).ToList();
         }
 
         public Result GetResult(string id)

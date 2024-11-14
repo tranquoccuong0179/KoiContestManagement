@@ -11,7 +11,8 @@ namespace KoiManagement_Repositories.Repository
 {
     public class RegistrationRepository : IRegistrationRepository
     {
-        public List<Registration> GetRegistrations() => RegistrationDAO.Instance.GetRegistrations();
+        public List<Registration> GetRegistrations(string id) => RegistrationDAO.Instance.GetRegistrations(id);
+        public List<Registration> GetRegistrationsAll() => RegistrationDAO.Instance.GetRegistrationsAll();
         public Registration GetRegistrationById(string id) => RegistrationDAO.Instance.GetRegistration(id);
         public bool AddRegistration(Registration registration) => RegistrationDAO.Instance.AddRegistration(registration);
         public bool DeleteRegistration(Registration registration) => RegistrationDAO.Instance.DeleteRegistration(registration);

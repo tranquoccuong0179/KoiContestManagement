@@ -49,15 +49,15 @@ namespace KoiManagement_DAO
         public bool AddRefereeMark(RefereeMark refereeMarkNew)
         {
             bool result = false;
-            RefereeMark refereeMark = GetRefereeMark(refereeMarkNew.Id);
+            refereeMarkNew.Id = Guid.NewGuid().ToString();
+            refereeMarkNew.Active = true;
             try
             {
-                if (refereeMark == null)
-                {
-                    context.RefereeMarks.Add(refereeMarkNew);
-                    context.SaveChanges();
-                    result = true;
-                }
+
+                context.RefereeMarks.Add(refereeMarkNew);
+                context.SaveChanges();
+                result = true;
+
             }
             catch (Exception ex)
             {

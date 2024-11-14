@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KoiManagement_DAO.Migrations
 {
     [DbContext(typeof(KoiManagementContext))]
-    [Migration("20241113075659_AddStaffRole")]
-    partial class AddStaffRole
+    [Migration("20241114014545_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,44 +24,6 @@ namespace KoiManagement_DAO.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("KoiManagement_BusinessObjects.Achievement", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeleteAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("KoiId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResultId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KoiId");
-
-                    b.HasIndex("ResultId");
-
-                    b.ToTable("Achievements");
-                });
 
             modelBuilder.Entity("KoiManagement_BusinessObjects.Category", b =>
                 {
@@ -184,7 +146,7 @@ namespace KoiManagement_DAO.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<string>("CompetitionId")
+                    b.Property<string>("CompetitionCategoryId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -207,7 +169,7 @@ namespace KoiManagement_DAO.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompetitionId");
+                    b.HasIndex("CompetitionCategoryId");
 
                     b.HasIndex("KoiId");
 
@@ -490,10 +452,6 @@ namespace KoiManagement_DAO.Migrations
                     b.Property<double>("FinalMark")
                         .HasColumnType("float");
 
-                    b.Property<string>("KoiId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Ranking")
                         .HasColumnType("int");
 
@@ -505,8 +463,6 @@ namespace KoiManagement_DAO.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("KoiId");
 
                     b.HasIndex("RegistrationId");
 
@@ -801,25 +757,6 @@ namespace KoiManagement_DAO.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
-            modelBuilder.Entity("KoiManagement_BusinessObjects.Achievement", b =>
-                {
-                    b.HasOne("KoiManagement_BusinessObjects.Koi", "Koi")
-                        .WithMany("Achievements")
-                        .HasForeignKey("KoiId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KoiManagement_BusinessObjects.Result", "Result")
-                        .WithMany("Achievements")
-                        .HasForeignKey("ResultId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Koi");
-
-                    b.Navigation("Result");
-                });
-
             modelBuilder.Entity("KoiManagement_BusinessObjects.CompetitionCategory", b =>
                 {
                     b.HasOne("KoiManagement_BusinessObjects.Category", "Category")
@@ -841,9 +778,9 @@ namespace KoiManagement_DAO.Migrations
 
             modelBuilder.Entity("KoiManagement_BusinessObjects.CompetitionRound", b =>
                 {
-                    b.HasOne("KoiManagement_BusinessObjects.Competition", "Competition")
+                    b.HasOne("KoiManagement_BusinessObjects.CompetitionCategory", "CompetitionCategory")
                         .WithMany("CompetitionRounds")
-                        .HasForeignKey("CompetitionId")
+                        .HasForeignKey("CompetitionCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -859,7 +796,7 @@ namespace KoiManagement_DAO.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Competition");
+                    b.Navigation("CompetitionCategory");
 
                     b.Navigation("Koi");
 
@@ -966,19 +903,11 @@ namespace KoiManagement_DAO.Migrations
 
             modelBuilder.Entity("KoiManagement_BusinessObjects.Result", b =>
                 {
-                    b.HasOne("KoiManagement_BusinessObjects.Koi", "Koi")
-                        .WithMany()
-                        .HasForeignKey("KoiId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("KoiManagement_BusinessObjects.Registration", "Registration")
                         .WithMany("Results")
                         .HasForeignKey("RegistrationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Koi");
 
                     b.Navigation("Registration");
                 });
@@ -1042,12 +971,12 @@ namespace KoiManagement_DAO.Migrations
             modelBuilder.Entity("KoiManagement_BusinessObjects.Competition", b =>
                 {
                     b.Navigation("CompetitionCategories");
-
-                    b.Navigation("CompetitionRounds");
                 });
 
             modelBuilder.Entity("KoiManagement_BusinessObjects.CompetitionCategory", b =>
                 {
+                    b.Navigation("CompetitionRounds");
+
                     b.Navigation("Registrations");
                 });
 
@@ -1067,8 +996,6 @@ namespace KoiManagement_DAO.Migrations
 
             modelBuilder.Entity("KoiManagement_BusinessObjects.Koi", b =>
                 {
-                    b.Navigation("Achievements");
-
                     b.Navigation("CompetitionRounds");
 
                     b.Navigation("Registrations");
@@ -1082,11 +1009,6 @@ namespace KoiManagement_DAO.Migrations
             modelBuilder.Entity("KoiManagement_BusinessObjects.Registration", b =>
                 {
                     b.Navigation("Results");
-                });
-
-            modelBuilder.Entity("KoiManagement_BusinessObjects.Result", b =>
-                {
-                    b.Navigation("Achievements");
                 });
 
             modelBuilder.Entity("KoiManagement_BusinessObjects.Round", b =>

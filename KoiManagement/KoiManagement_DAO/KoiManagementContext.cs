@@ -17,9 +17,6 @@ public partial class KoiManagementContext : IdentityDbContext
 		: base(options)
 	{
 	}
-
-	public virtual DbSet<Achievement> Achievements { get; set; }
-
 	public virtual DbSet<Category> Categories { get; set; }
 
 	public virtual DbSet<Competition> Competitions { get; set; }
@@ -57,12 +54,13 @@ public partial class KoiManagementContext : IdentityDbContext
 	private string GetConnectionString()
 	{
 
-		IConfiguration configuration = new ConfigurationBuilder()
-			.SetBasePath(Directory.GetCurrentDirectory())
-			.AddJsonFile("appsettings.json", true, true)
-			.Build();
+		//IConfiguration configuration = new ConfigurationBuilder()
+		//	.SetBasePath(Directory.GetCurrentDirectory())
+		//	.AddJsonFile("appsettings.json", true, true)
+		//	.Build();
 
-		return configuration.GetConnectionString("KoiManagementConnection");
+		//return configuration.GetConnectionString("KoiManagementConnection");
+		return "Server=DESKTOP-2I4K8I6\\SQLEXPRESS;uid=sa;pwd=12345;database=KoiManagement1;Trusted_Connection=True;TrustServerCertificate=True;";
 
 	}
 
@@ -105,20 +103,20 @@ public partial class KoiManagementContext : IdentityDbContext
 				  .HasForeignKey(p => p.CompetitionRoundId)
 				  .OnDelete(DeleteBehavior.NoAction);
 		});
-		modelBuilder.Entity<Achievement>(entity =>
-		{
-			entity.HasKey(p => p.Id);
+		//modelBuilder.Entity<Achievement>(entity =>
+		//{
+		//	entity.HasKey(p => p.Id);
 
-			entity.HasOne(p => p.Result)
-				  .WithMany(u => u.Achievements)
-				  .HasForeignKey(p => p.ResultId)
-				  .OnDelete(DeleteBehavior.NoAction);
+		//	entity.HasOne(p => p.Result)
+		//		  .WithMany(u => u.Achievements)
+		//		  .HasForeignKey(p => p.ResultId)
+		//		  .OnDelete(DeleteBehavior.NoAction);
 
-			entity.HasOne(p => p.Koi)
-				  .WithMany(cr => cr.Achievements)
-				  .HasForeignKey(p => p.KoiId)
-				  .OnDelete(DeleteBehavior.Cascade);
-		});
+		//	entity.HasOne(p => p.Koi)
+		//		  .WithMany(cr => cr.Achievements)
+		//		  .HasForeignKey(p => p.KoiId)
+		//		  .OnDelete(DeleteBehavior.Cascade);
+		//});
 		modelBuilder.Entity<Mark>(entity =>
 		{
 			entity.HasKey(p => p.Id);

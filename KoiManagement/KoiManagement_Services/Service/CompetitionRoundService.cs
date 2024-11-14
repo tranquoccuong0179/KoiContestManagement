@@ -23,7 +23,7 @@ namespace KoiManagement_Services.Service
 
         public bool DeleteCompetitionRound(CompetitionRound competitionRound) => _competitionRoundRepository.DeleteCompetitionRound(competitionRound);
 
-        public Dictionary<(Competition Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId) => _competitionRoundRepository.GetCompetitionRoundWithKoi(competitionId, roundId);
+        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId) => _competitionRoundRepository.GetCompetitionRoundWithKoi(competitionId, roundId);
 
         public bool CheckIfAnotherRoundHasStarted(string competitionId) => _competitionRoundRepository.CheckIfAnotherRoundHasStarted(competitionId);
 

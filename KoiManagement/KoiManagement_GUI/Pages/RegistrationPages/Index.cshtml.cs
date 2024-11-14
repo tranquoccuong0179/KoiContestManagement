@@ -24,7 +24,17 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
 
         public async Task OnGetAsync()
         {
-            Registration = _registrationService.GetRegistrations();
+            string userId = HttpContext.Session.GetString("Id");
+
+            var userRole = HttpContext.Session.GetString("Role");
+            if (userRole == "Admin")
+            {
+                Registration = _registrationService.GetRegistrationsAll();
+            }
+            else
+            {
+                Registration = _registrationService.GetRegistrations(userId);
+            }
         }
     }
 }

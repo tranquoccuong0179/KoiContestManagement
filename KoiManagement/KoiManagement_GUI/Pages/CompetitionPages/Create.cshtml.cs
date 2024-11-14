@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,11 +7,11 @@ namespace KoiManagement_GUI.Pages.CompetitionPages
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly ICompetitionService _competitionService;
 
-        public CreateModel(KoiManagement_DAO.KoiManagementContext context)
+        public CreateModel(ICompetitionService competitionService)
         {
-            _context = context;
+            _competitionService = competitionService;
         }
 
         public IActionResult OnGet()
@@ -29,8 +30,7 @@ namespace KoiManagement_GUI.Pages.CompetitionPages
                 return Page();
             }
 
-            _context.Competitions.Add(Competition);
-            await _context.SaveChangesAsync();
+            _competitionService.AddCompetition(Competition);
 
             // Assuming Competition.Id has been generated after saving
             return RedirectToPage("/CompetitionCategoryPages/Create", new { competitionId = Competition.Id });

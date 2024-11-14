@@ -16,7 +16,7 @@ namespace KoiManagement_Repositories.Repository
 
         public bool DeleteCompetitionRound(CompetitionRound competitionRound) => CompetitionRoundDAO.Instance.DeleteCompetitionRound(competitionRound);
 
-        public Dictionary<(Competition Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId) => CompetitionRoundDAO.Instance.GetCompetitionRoundWithKoi(competitionId, roundId);
+        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId) => CompetitionRoundDAO.Instance.GetCompetitionRoundWithKoi(competitionId, roundId);
         public bool CheckIfAnotherRoundHasStarted(string competitionId) => CompetitionRoundDAO.Instance.CheckIfAnotherRoundHasStarted(competitionId);
 
         public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.GetTopCompetitionRoundsByAverageScoreAsync(competitionId, roundId, top);

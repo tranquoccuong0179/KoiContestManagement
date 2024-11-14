@@ -32,6 +32,20 @@ namespace KoiManagement_DAO
             return context.CompetitionCategories.SingleOrDefault(m => m.Id.Equals(id));
         }
 
+        public List<CompetitionCategoryViewModel> GetCompetitionCategoryByCompetitionId(string id)
+        {
+            var result = (from cc in context.CompetitionCategories
+                          join c in context.Categories on cc.CategoryId equals c.Id
+                          where cc.CompetitionId == id
+                          select new CompetitionCategoryViewModel
+                          {
+                              Id = cc.Id,                 
+                              CategoryName = c.Name        
+                          }).ToList();
+
+            return result;
+        }
+
         public bool AddCompetitionCategory(CompetitionCategory competitionCategory)
         {
             bool result = false;

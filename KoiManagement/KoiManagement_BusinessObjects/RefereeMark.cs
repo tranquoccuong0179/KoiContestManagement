@@ -6,6 +6,6 @@ public partial class RefereeMark : BaseEntity
     public string CompetitionRoundId { get; set; } = string.Empty;
     public double Point { get; set; }
     public virtual CompetitionRound? CompetitionRound { get; set; }
-    public virtual ICollection<CriteriaPoint> CriteriaPoints { get; set; } = new List<CriteriaPoint>();
+    public virtual List<CriteriaPoint> CriteriaPoints { get; set; } = new List<CriteriaPoint>();
     public virtual User? User { get; set; }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace KoiManagement_DAO.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStaffRole : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -300,7 +300,7 @@ namespace KoiManagement_DAO.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     KoiId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CompetitionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CompetitionCategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoundId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -311,9 +311,9 @@ namespace KoiManagement_DAO.Migrations
                 {
                     table.PrimaryKey("PK_CompetitionRounds", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CompetitionRounds_Competitions_CompetitionId",
-                        column: x => x.CompetitionId,
-                        principalTable: "Competitions",
+                        name: "FK_CompetitionRounds_CompetitionCategories_CompetitionCategoryId",
+                        column: x => x.CompetitionCategoryId,
+                        principalTable: "CompetitionCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -446,7 +446,6 @@ namespace KoiManagement_DAO.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RegistrationId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    KoiId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FinalMark = table.Column<double>(type: "float", nullable: false),
                     Ranking = table.Column<int>(type: "int", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
@@ -457,12 +456,6 @@ namespace KoiManagement_DAO.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Results", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Results_Kois_KoiId",
-                        column: x => x.KoiId,
-                        principalTable: "Kois",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Results_Registrations_RegistrationId",
                         column: x => x.RegistrationId,
@@ -500,35 +493,6 @@ namespace KoiManagement_DAO.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Achievements",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    KoiId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ResultId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Active = table.Column<bool>(type: "bit", nullable: false),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeleteAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Achievements", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Achievements_Kois_KoiId",
-                        column: x => x.KoiId,
-                        principalTable: "Kois",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Achievements_Results_ResultId",
-                        column: x => x.ResultId,
-                        principalTable: "Results",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -540,16 +504,6 @@ namespace KoiManagement_DAO.Migrations
                     { "f1088123-effd-4874-b9de-0e0b58c0fce1", null, "Contestant", "CONTESTANT" },
                     { "ff3aa5b6-16c7-4c4b-a7bd-930b1e64caa4", null, "Referee", "REFEREE" }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Achievements_KoiId",
-                table: "Achievements",
-                column: "KoiId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Achievements_ResultId",
-                table: "Achievements",
-                column: "ResultId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -601,9 +555,9 @@ namespace KoiManagement_DAO.Migrations
                 column: "CompetitionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompetitionRounds_CompetitionId",
+                name: "IX_CompetitionRounds_CompetitionCategoryId",
                 table: "CompetitionRounds",
-                column: "CompetitionId");
+                column: "CompetitionCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompetitionRounds_KoiId",
@@ -661,11 +615,6 @@ namespace KoiManagement_DAO.Migrations
                 column: "KoiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Results_KoiId",
-                table: "Results",
-                column: "KoiId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Results_RegistrationId",
                 table: "Results",
                 column: "RegistrationId");
@@ -674,9 +623,6 @@ namespace KoiManagement_DAO.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Achievements");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

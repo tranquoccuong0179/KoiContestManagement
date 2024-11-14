@@ -20,6 +20,12 @@ namespace KoiManagement_Services.Service
 
         public bool AddRegistration(Registration registration)
         {
+            registration.Id = Guid.NewGuid().ToString();
+            registration.Active = true;
+            registration.CreateAt = DateTime.Now;
+            registration.UpdateAt = DateTime.Now;
+            registration.IsCheckIn = false;
+            registration.CheckInTime = null;
             return registrationRepository.AddRegistration(registration);
         }
 
@@ -33,9 +39,13 @@ namespace KoiManagement_Services.Service
             return registrationRepository.GetRegistrationById(id);
         }
 
-        public List<Registration> GetRegistrations()
+        public List<Registration> GetRegistrations(string u)
         {
-            return registrationRepository.GetRegistrations();
+            return registrationRepository.GetRegistrations(u);
+        }
+        public List<Registration> GetRegistrationsAll()
+        {
+            return registrationRepository.GetRegistrationsAll();
         }
 
         public bool UpdateRegistration(Registration registration)

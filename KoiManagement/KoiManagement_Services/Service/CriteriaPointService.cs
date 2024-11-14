@@ -16,7 +16,7 @@ namespace KoiManagement_Services.Service
         {
             this.pointCriteria = pointRepository;
         }
-        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew) => pointCriteria.AddCriteriaPoint(criteriaPointNew);
+        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew, string refereeMarkId, string criteriaId) =>pointCriteria.AddCriteriaPoint(criteriaPointNew, refereeMarkId, criteriaId);
         public bool DeleteCriteriaPoint(CriteriaPoint criteriaPointDelete) => pointCriteria.DeleteCriteriaPoint(criteriaPointDelete);
 
         public CriteriaPoint GetCriteriaPoint(string id) =>  pointCriteria.GetCriteriaPoint(id);
