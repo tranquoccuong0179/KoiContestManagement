@@ -11,7 +11,7 @@ namespace KoiManagement_Repositories.IRepository
     {
         public List<CriteriaPoint> GetCriteriaPoints();
         public CriteriaPoint GetCriteriaPoint(string id);
-        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew);
+        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew, string refereeMarkId, string criteriaId);
         public bool UpdateCriteriaPoint(CriteriaPoint criteriaPointUpdate);
         public bool DeleteCriteriaPoint(CriteriaPoint criteriaPointDelete);
     }

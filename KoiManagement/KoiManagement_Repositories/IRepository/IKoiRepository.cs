@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
 
 namespace KoiManagement_Repositories.IRepository
 {
@@ -11,6 +12,6 @@ namespace KoiManagement_Repositories.IRepository
         public Task<bool> Create(Koi koi);
         public Task<bool> Update(Koi koi);
         public Task<bool> Delete(Koi koi);
-        public Task<Koi> GetAllWithKois(string competitionRoundId);
+        public Task<KoiCompetitionVM> GetAllWithKois(string competitionRoundId);
     }
 }

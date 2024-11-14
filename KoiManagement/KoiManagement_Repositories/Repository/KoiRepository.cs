@@ -20,6 +20,6 @@ namespace KoiManagement_Repositories.Repository
 
         public async Task<bool> Update(Koi koi) => await KoiDAO.Instance.Update(koi);
 
-        public async Task<Koi> GetAllWithKois(string competitionRoundId) => await KoiDAO.Instance.GetAllWithKois(competitionRoundId);
+        public async Task<KoiCompetitionVM> GetAllWithKois(string competitionRoundId) => await KoiDAO.Instance.GetAllWithKois(competitionRoundId);
     }
 }

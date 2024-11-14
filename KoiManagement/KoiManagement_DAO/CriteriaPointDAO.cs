@@ -46,18 +46,20 @@ namespace KoiManagement_DAO
             return entity;
         }
 
-        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew)
+        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew, string refereeMarkId, string criteriaId)
         {
             bool result = false;
-            CriteriaPoint candidateProfile = GetCriteriaPoint(criteriaPointNew.Id);
+            criteriaPointNew.Id = Guid.NewGuid().ToString();
+            criteriaPointNew.Active = true;
+            criteriaPointNew.RefereeMarkId = refereeMarkId;
+            criteriaPointNew.CriteriaId = criteriaId;
             try
             {
-                if (candidateProfile == null)
-                {
-                    context.CriteriaPoints.Add(criteriaPointNew);
-                    context.SaveChanges();
-                    result = true;
-                }
+
+                context.CriteriaPoints.Add(criteriaPointNew);
+                context.SaveChanges();
+                result = true;
+
             }
             catch (Exception ex)
             {

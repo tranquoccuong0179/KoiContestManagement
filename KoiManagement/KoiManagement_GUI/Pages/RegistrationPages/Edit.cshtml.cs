@@ -103,13 +103,13 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 }
                 bool createCompetitionRoundSuccess = competitionRoundService.AddCompetitionRound(new CompetitionRound
                 {
-                    CompetitionCategoryId = Registration.CompetitionCategory.CompetitionId,
-                    RoundId = "f60cef79ba9d481c8f96e89bcdebc74a", 
+                    CompetitionCategoryId = Registration.CompetitionCategoryId,
+                    RoundId = "136c911f6bfc4c578364f7da965f8f88",
                     KoiId = Registration.KoiId,
                 });
 
                 if (!createCompetitionRoundSuccess)
-                {         
+                {
                     ModelState.AddModelError(string.Empty, "Failed to create a new competition round.");
                     return NotFound();
                 }

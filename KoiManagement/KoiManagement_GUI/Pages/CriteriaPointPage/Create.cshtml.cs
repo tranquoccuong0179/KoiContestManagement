@@ -41,7 +41,7 @@ namespace KoiManagement_GUI.Pages.CriteriaPointPage
                 return Page();
             }
 
-            _criteriaPointService.AddCriteriaPoint(CriteriaPoint);
+            //_criteriaPointService.AddCriteriaPoint(CriteriaPoint);
 
             return RedirectToPage("./Index");
         }
