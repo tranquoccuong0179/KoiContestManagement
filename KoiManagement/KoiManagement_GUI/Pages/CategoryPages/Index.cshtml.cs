@@ -1,6 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
-using KoiManagement_Services.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

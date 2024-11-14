@@ -1,6 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
-using KoiManagement_Services.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -32,7 +31,8 @@ namespace KoiManagement_GUI.Pages.RoundPages
             }
 
             bool result = _roundService.AddRound(Round);
-            if (result) {
+            if (result)
+            {
                 return RedirectToPage("./Index");
             }
             ViewData["Result"] = "Name or OrderNumber is already existed!";

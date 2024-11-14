@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
+﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiManagement_GUI.Pages.CriteriaPointPage
 {
@@ -20,7 +13,7 @@ namespace KoiManagement_GUI.Pages.CriteriaPointPage
             _criteriaPointService = criteriaPointService;
         }
 
-        public IList<CriteriaPoint> CriteriaPoint { get;set; } = default!;
+        public IList<CriteriaPoint> CriteriaPoint { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

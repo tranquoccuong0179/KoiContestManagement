@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KoiManagement_DAO
+﻿namespace KoiManagement_DAO
 {
     public class KoiCompetitionVM
     {

@@ -1,10 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoiManagement_DAO
 {
@@ -32,7 +27,7 @@ namespace KoiManagement_DAO
 
         public List<Registration> GetRegistrations(string userId)
         {
-            return context.Registrations.Include(x => x.Koi).Include(x => x.CompetitionCategory).ThenInclude(x => x.Category).Where(x=>x.Active==true && x.Koi.UserId == userId).ToList();
+            return context.Registrations.Include(x => x.Koi).Include(x => x.CompetitionCategory).ThenInclude(x => x.Category).Where(x => x.Active == true && x.Koi.UserId == userId).ToList();
         }
 
         public List<Registration> GetRegistrationsAll()
@@ -83,7 +78,8 @@ namespace KoiManagement_DAO
             {
                 if (newRegistrationE != null)
                 {
-                    if (newRegistrationE.Active) {
+                    if (newRegistrationE.Active)
+                    {
                         registrationE.Active = false;
                         registrationE.DeleteAt = DateTime.Now;
                         context.Registrations.Update(registrationE);

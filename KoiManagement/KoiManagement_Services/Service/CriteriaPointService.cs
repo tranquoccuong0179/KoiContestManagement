@@ -1,11 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Repositories.IRepository;
 using KoiManagement_Services.IService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoiManagement_Services.Service
 {
@@ -16,10 +11,10 @@ namespace KoiManagement_Services.Service
         {
             this.pointCriteria = pointRepository;
         }
-        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew, string refereeMarkId, string criteriaId) =>pointCriteria.AddCriteriaPoint(criteriaPointNew, refereeMarkId, criteriaId);
+        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew, string refereeMarkId, string criteriaId) => pointCriteria.AddCriteriaPoint(criteriaPointNew, refereeMarkId, criteriaId);
         public bool DeleteCriteriaPoint(CriteriaPoint criteriaPointDelete) => pointCriteria.DeleteCriteriaPoint(criteriaPointDelete);
 
-        public CriteriaPoint GetCriteriaPoint(string id) =>  pointCriteria.GetCriteriaPoint(id);
+        public CriteriaPoint GetCriteriaPoint(string id) => pointCriteria.GetCriteriaPoint(id);
 
         public List<CriteriaPoint> GetCriteriaPoints() => pointCriteria.GetCriteriaPoints();
 

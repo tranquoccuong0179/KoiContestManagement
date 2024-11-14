@@ -1,5 +1,4 @@
 using KoiManagement_BusinessObjects;
-using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_DAO
 {
@@ -45,7 +44,7 @@ namespace KoiManagement_DAO
             {
                 if (existedRound == null)
                 {
-                    if (context.Rounds.Any(r => r.Name.Equals(round.Name) || r.OrderNumber == round.OrderNumber)) 
+                    if (context.Rounds.Any(r => r.Name.Equals(round.Name) || r.OrderNumber == round.OrderNumber))
                     {
                         return false;
                     }
@@ -88,7 +87,7 @@ namespace KoiManagement_DAO
             return result;
         }
 
-    public bool DeleteRound(Round round)
+        public bool DeleteRound(Round round)
         {
             bool result = false;
             Round? existedRound = GetRound(round.Id);
@@ -114,7 +113,7 @@ namespace KoiManagement_DAO
 
         public Round? GetNextRound(int currentRoundNumber)
         {
-            return  context.Rounds.Where(r => r.OrderNumber > currentRoundNumber).OrderBy(r => r.OrderNumber).FirstOrDefault();
+            return context.Rounds.Where(r => r.OrderNumber > currentRoundNumber).OrderBy(r => r.OrderNumber).FirstOrDefault();
         }
     }
 }

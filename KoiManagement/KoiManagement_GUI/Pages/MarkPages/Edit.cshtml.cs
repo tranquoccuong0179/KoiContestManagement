@@ -1,11 +1,9 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.MarkPages
 {
@@ -29,13 +27,13 @@ namespace KoiManagement_GUI.Pages.MarkPages
                 return NotFound();
             }
 
-            var mark =  markService.GetMarkById(id);
+            var mark = markService.GetMarkById(id);
             if (mark == null)
             {
                 return NotFound();
             }
             Mark = mark;
-           ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
+            ViewData["CompetitionRoundId"] = new SelectList(competitionRoundService.GetAll(), "Id", "Id");
             return Page();
         }
 

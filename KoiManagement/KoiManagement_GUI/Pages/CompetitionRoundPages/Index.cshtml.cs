@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
+﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
-using KoiManagement_Services.Service;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
@@ -26,7 +18,7 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
         public void OnGet(string competitionCategoryId, string roundId)
         {
             CompetitionRoundWithKoi = competitionRoundService.GetCompetitionRoundWithKoi(competitionCategoryId, roundId);
-                                      
+
         }
 
 
@@ -54,7 +46,7 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 
         //    return StatusCode(500, "Error deleting competition rounds.");
         //}
-        
+
     }
 }
 

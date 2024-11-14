@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Services.IService;
-using KoiManagement_Services.Service;
-using KoiManagement_BusinessObjects.Constants;
 
 namespace KoiManagement_GUI.Pages.RegistrationPages
 {
@@ -41,14 +34,14 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 return NotFound();
             }
 
-            var registration = await  registrationService.GetRegistrationById(id);
+            var registration = await registrationService.GetRegistrationById(id);
             wasCheckIn = registration.IsCheckIn;
             if (registration == null)
             {
                 return NotFound();
             }
             Registration = registration;
-            
+
             string userId = registrationService.GetUserIdByKoiId(registration.KoiId);
 
             var competitionCategories = competitionCategoryService.GetCompetitionCategoryByCompetitionId(competitionid);

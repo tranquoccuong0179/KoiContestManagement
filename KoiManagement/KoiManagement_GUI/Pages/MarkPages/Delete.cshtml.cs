@@ -1,10 +1,7 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.MarkPages
 {

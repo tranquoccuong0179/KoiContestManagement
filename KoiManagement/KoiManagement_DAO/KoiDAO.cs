@@ -148,10 +148,10 @@ namespace KoiManagement_DAO
                 var koiCompetition = await context.CompetitionRounds
                 .Where(cr => cr.Id == competitionRoundId)
                 .Select(cr => new KoiCompetitionVM()
-            {
-                CompetitionRoundId = cr.Id,
-                KoiName = cr.Koi.Name
-            })
+                {
+                    CompetitionRoundId = cr.Id,
+                    KoiName = cr.Koi.Name
+                })
                 .SingleOrDefaultAsync();
                 return koiCompetition;
             }

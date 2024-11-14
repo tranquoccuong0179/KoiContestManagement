@@ -1,6 +1,4 @@
 ﻿using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Repositories.Repository;
 
 namespace KoiManagement_Repositories.IRepository
 {

@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Services.IService;
-using KoiManagement_Services.KoiServices;
-using Microsoft.EntityFrameworkCore.Internal;
-using KoiManagement_Services.Service;
 
 namespace KoiManagement_GUI.Pages.ResultPages
 {
@@ -38,7 +30,7 @@ namespace KoiManagement_GUI.Pages.ResultPages
                 return NotFound();
             }
 
-            var result =  resultService.GetResultById(id);
+            var result = resultService.GetResultById(id);
             if (result == null)
             {
                 return NotFound();

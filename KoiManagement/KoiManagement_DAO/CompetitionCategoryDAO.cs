@@ -39,8 +39,8 @@ namespace KoiManagement_DAO
                           where cc.CompetitionId == id
                           select new CompetitionCategoryViewModel
                           {
-                              Id = cc.Id,                 
-                              CategoryName = c.Name        
+                              Id = cc.Id,
+                              CategoryName = c.Name
                           }).ToList();
 
             return result;

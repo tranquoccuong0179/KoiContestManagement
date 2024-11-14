@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
+﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiManagement_GUI.Pages.PredictionPages
 {
@@ -17,10 +10,10 @@ namespace KoiManagement_GUI.Pages.PredictionPages
         public IndexModel(IPredictionService predictionService)
         {
             this.predictionService = predictionService;
-         
+
         }
 
-        public IList<Prediction> Prediction { get;set; } = default!;
+        public IList<Prediction> Prediction { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

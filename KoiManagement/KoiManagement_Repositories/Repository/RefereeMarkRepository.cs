@@ -1,11 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Repositories.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoiManagement_Repositories.Repository
 {

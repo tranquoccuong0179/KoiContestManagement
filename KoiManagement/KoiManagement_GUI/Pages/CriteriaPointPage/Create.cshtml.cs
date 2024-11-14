@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.CriteriaPointPage
 {
@@ -25,8 +20,8 @@ namespace KoiManagement_GUI.Pages.CriteriaPointPage
 
         public IActionResult OnGet()
         {
-        ViewData["CriteriaId"] = new SelectList(_criteriaService.GetCriterias(), "Id", "Name");
-        ViewData["RefereeMarkId"] = new SelectList(_refereeMarkService.GetRefereeMarks(), "Id", "Id");
+            ViewData["CriteriaId"] = new SelectList(_criteriaService.GetCriterias(), "Id", "Name");
+            ViewData["RefereeMarkId"] = new SelectList(_refereeMarkService.GetRefereeMarks(), "Id", "Id");
             return Page();
         }
 

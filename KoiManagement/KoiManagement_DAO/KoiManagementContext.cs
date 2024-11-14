@@ -3,162 +3,161 @@ using KoiManagement_BusinessObjects.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace KoiManagement_DAO;
 
 public partial class KoiManagementContext : IdentityDbContext
 {
-	public KoiManagementContext()
-	{
-	}
+    public KoiManagementContext()
+    {
+    }
 
-	public KoiManagementContext(DbContextOptions<KoiManagementContext> options)
-		: base(options)
-	{
-	}
-	public virtual DbSet<Category> Categories { get; set; }
+    public KoiManagementContext(DbContextOptions<KoiManagementContext> options)
+        : base(options)
+    {
+    }
+    public virtual DbSet<Category> Categories { get; set; }
 
-	public virtual DbSet<Competition> Competitions { get; set; }
+    public virtual DbSet<Competition> Competitions { get; set; }
 
-	public virtual DbSet<CompetitionCategory> CompetitionCategories { get; set; }
+    public virtual DbSet<CompetitionCategory> CompetitionCategories { get; set; }
 
-	public virtual DbSet<CompetitionRound> CompetitionRounds { get; set; }
+    public virtual DbSet<CompetitionRound> CompetitionRounds { get; set; }
 
-	public virtual DbSet<CriteriaPoint> CriteriaPoints { get; set; }
+    public virtual DbSet<CriteriaPoint> CriteriaPoints { get; set; }
 
-	public virtual DbSet<Criteria> Criteria { get; set; }
+    public virtual DbSet<Criteria> Criteria { get; set; }
 
-	public virtual DbSet<Koi> Kois { get; set; }
+    public virtual DbSet<Koi> Kois { get; set; }
 
-	public virtual DbSet<Mark> Marks { get; set; }
+    public virtual DbSet<Mark> Marks { get; set; }
 
-	public virtual DbSet<Prediction> Predictions { get; set; }
+    public virtual DbSet<Prediction> Predictions { get; set; }
 
-	public virtual DbSet<RefereeMark> RefereeMarks { get; set; }
+    public virtual DbSet<RefereeMark> RefereeMarks { get; set; }
 
-	public virtual DbSet<Registration> Registrations { get; set; }
+    public virtual DbSet<Registration> Registrations { get; set; }
 
-	public virtual DbSet<Result> Results { get; set; }
+    public virtual DbSet<Result> Results { get; set; }
 
-	public virtual DbSet<Round> Rounds { get; set; }
+    public virtual DbSet<Round> Rounds { get; set; }
 
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	{
-		if (!optionsBuilder.IsConfigured)
-		{
-			optionsBuilder.UseSqlServer(GetConnectionString());
-		}
-	}
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(GetConnectionString());
+        }
+    }
 
-	private string GetConnectionString()
-	{
+    private string GetConnectionString()
+    {
 
-		//IConfiguration configuration = new ConfigurationBuilder()
-		//	.SetBasePath(Directory.GetCurrentDirectory())
-		//	.AddJsonFile("appsettings.json", true, true)
-		//	.Build();
+        //IConfiguration configuration = new ConfigurationBuilder()
+        //	.SetBasePath(Directory.GetCurrentDirectory())
+        //	.AddJsonFile("appsettings.json", true, true)
+        //	.Build();
 
-		//return configuration.GetConnectionString("KoiManagementConnection");
-		return "Server=(local);uid=sa;pwd=12345;database=KoiManagement1;Trusted_Connection=True;TrustServerCertificate=True;";
+        //return configuration.GetConnectionString("KoiManagementConnection");
+        return "Server=(local);uid=sa;pwd=12345;database=KoiManagement1;Trusted_Connection=True;TrustServerCertificate=True;";
 
-	}
+    }
 
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
-	{
-		base.OnModelCreating(modelBuilder);
-		modelBuilder.Entity<CriteriaPoint>(entity =>
-		{
-			entity.HasKey(cp => new { cp.RefereeMarkId, cp.CriteriaId });
-		});
-		modelBuilder.Entity<Result>(entity =>
-		{
-			entity.HasOne(p => p.Registration).WithMany(p => p.Results).HasForeignKey(c => c.RegistrationId).OnDelete(DeleteBehavior.NoAction);
-		});
-		modelBuilder.Entity<Prediction>(entity =>
-		{
-			entity.HasKey(p => p.Id);
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<CriteriaPoint>(entity =>
+        {
+            entity.HasKey(cp => new { cp.RefereeMarkId, cp.CriteriaId });
+        });
+        modelBuilder.Entity<Result>(entity =>
+        {
+            entity.HasOne(p => p.Registration).WithMany(p => p.Results).HasForeignKey(c => c.RegistrationId).OnDelete(DeleteBehavior.NoAction);
+        });
+        modelBuilder.Entity<Prediction>(entity =>
+        {
+            entity.HasKey(p => p.Id);
 
-			entity.HasOne(p => p.User)
-				  .WithMany(u => u.Predictions)
-				  .HasForeignKey(p => p.UserId)
-				  .OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(p => p.User)
+                  .WithMany(u => u.Predictions)
+                  .HasForeignKey(p => p.UserId)
+                  .OnDelete(DeleteBehavior.NoAction);
 
-			entity.HasOne(p => p.CompetitionRound)
-				  .WithMany(cr => cr.Predictions)
-				  .HasForeignKey(p => p.CompetitionRoundId)
-				  .OnDelete(DeleteBehavior.Cascade);
-		});
-		modelBuilder.Entity<RefereeMark>(entity =>
-		{
-			entity.HasKey(p => p.Id);
+            entity.HasOne(p => p.CompetitionRound)
+                  .WithMany(cr => cr.Predictions)
+                  .HasForeignKey(p => p.CompetitionRoundId)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+        modelBuilder.Entity<RefereeMark>(entity =>
+        {
+            entity.HasKey(p => p.Id);
 
-			entity.HasOne(p => p.User)
-				  .WithMany(u => u.RefereeMarks)
-				  .HasForeignKey(p => p.UserId)
-				  .OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(p => p.User)
+                  .WithMany(u => u.RefereeMarks)
+                  .HasForeignKey(p => p.UserId)
+                  .OnDelete(DeleteBehavior.NoAction);
 
-			entity.HasOne(p => p.CompetitionRound)
-				  .WithMany(u => u.RefereeMarks)
-				  .HasForeignKey(p => p.CompetitionRoundId)
-				  .OnDelete(DeleteBehavior.NoAction);
-		});
-		//modelBuilder.Entity<Achievement>(entity =>
-		//{
-		//	entity.HasKey(p => p.Id);
+            entity.HasOne(p => p.CompetitionRound)
+                  .WithMany(u => u.RefereeMarks)
+                  .HasForeignKey(p => p.CompetitionRoundId)
+                  .OnDelete(DeleteBehavior.NoAction);
+        });
+        //modelBuilder.Entity<Achievement>(entity =>
+        //{
+        //	entity.HasKey(p => p.Id);
 
-		//	entity.HasOne(p => p.Result)
-		//		  .WithMany(u => u.Achievements)
-		//		  .HasForeignKey(p => p.ResultId)
-		//		  .OnDelete(DeleteBehavior.NoAction);
+        //	entity.HasOne(p => p.Result)
+        //		  .WithMany(u => u.Achievements)
+        //		  .HasForeignKey(p => p.ResultId)
+        //		  .OnDelete(DeleteBehavior.NoAction);
 
-		//	entity.HasOne(p => p.Koi)
-		//		  .WithMany(cr => cr.Achievements)
-		//		  .HasForeignKey(p => p.KoiId)
-		//		  .OnDelete(DeleteBehavior.Cascade);
-		//});
-		modelBuilder.Entity<Mark>(entity =>
-		{
-			entity.HasKey(p => p.Id);
+        //	entity.HasOne(p => p.Koi)
+        //		  .WithMany(cr => cr.Achievements)
+        //		  .HasForeignKey(p => p.KoiId)
+        //		  .OnDelete(DeleteBehavior.Cascade);
+        //});
+        modelBuilder.Entity<Mark>(entity =>
+        {
+            entity.HasKey(p => p.Id);
 
-			entity.HasOne(p => p.CompetitionRound)
-				  .WithMany(u => u.Marks)
-				  .HasForeignKey(p => p.CompetitionRoundId)
-				  .OnDelete(DeleteBehavior.NoAction);
-		});
-		modelBuilder.Entity<IdentityRole>(entity =>
-		{
-			entity.HasData(
-				new IdentityRole
-				{
-					Id = "6660f6a9-b1fc-4d21-b54a-3f6c4ffd7309",
-					Name = Role.Admin,
-					NormalizedName = Role.Admin.ToUpper()
-				},
-				new IdentityRole
-				{
-					Id = "f1088123-effd-4874-b9de-0e0b58c0fce1",
-					Name = Role.Contestant,
-					NormalizedName = Role.Contestant.ToUpper()
-				},
-				new IdentityRole
-				{
-					Id = "ff3aa5b6-16c7-4c4b-a7bd-930b1e64caa4",
-					Name = Role.Referee,
-					NormalizedName = Role.Referee.ToUpper()
-				},
-				new IdentityRole
-				{
-					Id = "91277025-8118-4e86-933a-8fce57c923ad",
-					Name = Role.Manager,
-					NormalizedName = Role.Manager.ToUpper()
-				},
-				new IdentityRole
-				{
-					Id = "095f2868-51bb-44cd-b760-442122ff6c08",
-					Name = Role.Staff,
-					NormalizedName = Role.Staff.ToUpper()
-				});
-		});
-	}
+            entity.HasOne(p => p.CompetitionRound)
+                  .WithMany(u => u.Marks)
+                  .HasForeignKey(p => p.CompetitionRoundId)
+                  .OnDelete(DeleteBehavior.NoAction);
+        });
+        modelBuilder.Entity<IdentityRole>(entity =>
+        {
+            entity.HasData(
+                new IdentityRole
+                {
+                    Id = "6660f6a9-b1fc-4d21-b54a-3f6c4ffd7309",
+                    Name = Role.Admin,
+                    NormalizedName = Role.Admin.ToUpper()
+                },
+                new IdentityRole
+                {
+                    Id = "f1088123-effd-4874-b9de-0e0b58c0fce1",
+                    Name = Role.Contestant,
+                    NormalizedName = Role.Contestant.ToUpper()
+                },
+                new IdentityRole
+                {
+                    Id = "ff3aa5b6-16c7-4c4b-a7bd-930b1e64caa4",
+                    Name = Role.Referee,
+                    NormalizedName = Role.Referee.ToUpper()
+                },
+                new IdentityRole
+                {
+                    Id = "91277025-8118-4e86-933a-8fce57c923ad",
+                    Name = Role.Manager,
+                    NormalizedName = Role.Manager.ToUpper()
+                },
+                new IdentityRole
+                {
+                    Id = "095f2868-51bb-44cd-b760-442122ff6c08",
+                    Name = Role.Staff,
+                    NormalizedName = Role.Staff.ToUpper()
+                });
+        });
+    }
 }

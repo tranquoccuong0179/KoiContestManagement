@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Services.Service;
-using KoiManagement_Services.IService;
 
 
 namespace KoiManagement_GUI.Pages.RefereeMarkPages
@@ -67,7 +61,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPages
             foreach (var criteriaPoint in RefereeMark.CriteriaPoints)
             {
                 var criteria = criteriaService.GetCriteria(criteriaPoint.CriteriaId);
-                double percent = (criteria.Percent)/100;
+                double percent = (criteria.Percent) / 100;
                 criteriaPoint.Point *= percent;
                 totalPoints += criteriaPoint.Point;
                 criteriaPointService.AddCriteriaPoint(criteriaPoint, RefereeMark.Id, criteriaPoint.CriteriaId);

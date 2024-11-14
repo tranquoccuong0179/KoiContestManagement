@@ -21,6 +21,6 @@ namespace KoiManagement_Repositories.Repository
 
         public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.GetTopCompetitionRoundsByAverageScoreAsync(competitionId, roundId, top);
 
-        public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.AddNewCompetitionRoundBasedOnTopScoresAsync(competitionId,roundId,top);
+        public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.AddNewCompetitionRoundBasedOnTopScoresAsync(competitionId, roundId, top);
     }
 }

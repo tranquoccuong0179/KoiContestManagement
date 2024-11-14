@@ -2,7 +2,6 @@
 using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_GUI.Pages.RoundPages
 {
@@ -18,7 +17,7 @@ namespace KoiManagement_GUI.Pages.RoundPages
 
         public void OnGet()
         {
-            Round =  _roundService.GetRounds();
+            Round = _roundService.GetRounds();
         }
         public IActionResult OnPostDelete(string id)
         {

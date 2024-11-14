@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KoiManagement_BusinessObjects;
-using KoiManagement_DAO;
-using KoiManagement_Services.IService;
-using KoiManagement_Repositories.IRepository;
-using System.Security.Claims;
 
 namespace KoiManagement_GUI.Pages.RegistrationPages
 {
@@ -49,9 +42,9 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 return Page();
             }
 
-           await registrationService.AddRegistration(Registration);
+            await registrationService.AddRegistration(Registration);
             //trả về trang user get all đăng kí của mình 
-           return RedirectToPage("./Index");
+            return RedirectToPage("./Index");
         }
     }
 }

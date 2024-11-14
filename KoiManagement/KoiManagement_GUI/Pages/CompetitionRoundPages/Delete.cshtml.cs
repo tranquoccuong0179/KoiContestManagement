@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KoiManagement_Services.IService;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using KoiManagement_Services.IService;
-using KoiManagement_BusinessObjects;
 
 namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {

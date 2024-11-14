@@ -103,7 +103,7 @@ namespace KoiManagement_DAO
            cr.Round,
            cr.Koi
        })
-       .AsEnumerable() 
+       .AsEnumerable()
        .GroupBy(cr => new { cr.CompetitionCategory, cr.Round })
        .ToDictionary(
            g => (g.Key.CompetitionCategory, g.Key.Round),
@@ -122,18 +122,18 @@ namespace KoiManagement_DAO
         public async Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScoreAsync(string competitionId, string roundId, int top)
         {
             var topCompetitionRounds = await context.RefereeMarks
-                .Where(rm => rm.CompetitionRound.CompetitionCategoryId == competitionId && rm.CompetitionRound.RoundId == roundId) 
-                .GroupBy(rm => rm.CompetitionRoundId) 
+                .Where(rm => rm.CompetitionRound.CompetitionCategoryId == competitionId && rm.CompetitionRound.RoundId == roundId)
+                .GroupBy(rm => rm.CompetitionRoundId)
                 .Select(group => new
                 {
                     CompetitionRoundId = group.Key,
-                    AverageScore = group.Average(rm => rm.Point) 
+                    AverageScore = group.Average(rm => rm.Point)
                 })
-                .OrderByDescending(cr => cr.AverageScore) 
-                .Take(top) 
+                .OrderByDescending(cr => cr.AverageScore)
+                .Take(top)
                 .ToListAsync();
 
-          
+
             var topRounds = await context.CompetitionRounds
                 .Where(cr => topCompetitionRounds.Select(t => t.CompetitionRoundId).Contains(cr.Id))
                 .ToListAsync();
@@ -143,7 +143,7 @@ namespace KoiManagement_DAO
 
         public async Task AddNewCompetitionRoundBasedOnTopScoresAsync(string competitionId, string roundId, int top)
         {
-           
+
             var topCompetitionRounds = await GetTopCompetitionRoundsByAverageScoreAsync(competitionId, roundId, top);
 
             string newRoundId;
@@ -162,17 +162,17 @@ namespace KoiManagement_DAO
                     throw new ArgumentException("Invalid 'top' value. Only 8, 4, or 2 are allowed.");
             }
 
-            
+
             foreach (var topRecord in topCompetitionRounds)
             {
                 var newCompetitionRound = new CompetitionRound
                 {
-                    KoiId = topRecord.KoiId,                 
-                    CompetitionCategoryId = topRecord.CompetitionCategoryId, 
-                    RoundId = newRoundId                    
+                    KoiId = topRecord.KoiId,
+                    CompetitionCategoryId = topRecord.CompetitionCategoryId,
+                    RoundId = newRoundId
                 };
 
-         
+
                 context.CompetitionRounds.Add(newCompetitionRound);
             }
 

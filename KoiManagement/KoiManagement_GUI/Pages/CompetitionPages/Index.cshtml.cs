@@ -1,7 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace KoiManagement_GUI.Pages.CompetitionPages
 {
