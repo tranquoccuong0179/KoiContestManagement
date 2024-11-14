@@ -23,11 +23,11 @@ namespace KoiManagement_DAO
         }
         public List<CompetitionRound> GetAll()
         {
-            return context.CompetitionRounds.ToList();
+            return context.CompetitionRounds.Include(c => c.CompetitionCategory).ThenInclude(c => c.Category).Include(c => c.Koi).Include(c => c.Round).ToList();
         }
         public CompetitionRound? GetById(string id)
         {
-            return context.CompetitionRounds.SingleOrDefault(c => c.Id.Equals(id));
+            return context.CompetitionRounds.Include(c => c.CompetitionCategory).Include(c => c.Koi).Include(c => c.Round).SingleOrDefault(c => c.Id.Equals(id));
         }
         public bool AddCompetitionRound(CompetitionRound competitionRound)
         {
