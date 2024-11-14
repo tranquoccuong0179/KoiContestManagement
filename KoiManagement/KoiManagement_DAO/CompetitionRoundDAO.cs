@@ -23,11 +23,11 @@ namespace KoiManagement_DAO
         }
         public List<CompetitionRound> GetAll()
         {
-            return context.CompetitionRounds.ToList();
+            return context.CompetitionRounds.Include(c => c.CompetitionCategory).ThenInclude(c => c.Category).Include(c => c.Koi).Include(c => c.Round).ToList();
         }
         public CompetitionRound? GetById(string id)
         {
-            return context.CompetitionRounds.SingleOrDefault(c => c.Id.Equals(id));
+            return context.CompetitionRounds.Include(c => c.CompetitionCategory).Include(c => c.Koi).Include(c => c.Round).SingleOrDefault(c => c.Id.Equals(id));
         }
         public bool AddCompetitionRound(CompetitionRound competitionRound)
         {
@@ -75,7 +75,7 @@ namespace KoiManagement_DAO
             CompetitionRound? existComperitionRound = GetById(competitionRound.Id);
             try
             {
-                if (existComperitionRound == null)
+                if (existComperitionRound != null)
                 {
                     context.CompetitionRounds.Remove(competitionRound);
                     context.SaveChanges();
@@ -88,12 +88,15 @@ namespace KoiManagement_DAO
             }
             return result;
         }
-        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId)
+        public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId)
         {
 
             var competitionRounds = context.CompetitionRounds
        .Where(cr => (string.IsNullOrWhiteSpace(competitionId) || cr.CompetitionCategory.Id == competitionId) &&
-                    (string.IsNullOrWhiteSpace(roundId) || cr.Round.Id == roundId))
+                    (string.IsNullOrWhiteSpace(roundId) || cr.Round.Id == roundId)).Include(cr => cr.CompetitionCategory)
+            .ThenInclude(cc => cc.Competition)
+        .Include(cr => cr.CompetitionCategory)
+            .ThenInclude(cc => cc.Category)
        .Select(cr => new
        {
            cr.CompetitionCategory,
@@ -110,10 +113,10 @@ namespace KoiManagement_DAO
         }
 
 
-        public bool CheckIfAnotherRoundHasStarted(string competitionId)
+        public bool CheckIfAnotherRoundHasStarted(string competitionId, string id)
         {
             return context.CompetitionRounds
-                .Any(cr => cr.CompetitionCategoryId == competitionId && cr.RoundId != "77e3e82e971f48bbb682f17a6ddcaa32");
+                .Any(cr => cr.CompetitionCategoryId == competitionId && cr.RoundId == id);
         }
 
         public async Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScoreAsync(string competitionId, string roundId, int top)

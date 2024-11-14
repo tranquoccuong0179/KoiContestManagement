@@ -10,6 +10,7 @@ using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
 using KoiManagement_Services.IService;
 using KoiManagement_Services.Service;
+using KoiManagement_BusinessObjects.Constants;
 
 namespace KoiManagement_GUI.Pages.RegistrationPages
 {
@@ -19,12 +20,14 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
         private readonly IKoiService koiService;
         private readonly ICompetitionCategoryService competitionCategoryService;
         private readonly ICompetitionRoundService competitionRoundService;
-        public EditModel(IRegistrationService registrationService, IKoiService koiService, ICompetitionCategoryService competitionCategoryService, ICompetitionRoundService competitionRoundService)
+        private readonly IRoundService roundService;
+        public EditModel(IRegistrationService registrationService, IKoiService koiService, ICompetitionCategoryService competitionCategoryService, ICompetitionRoundService competitionRoundService, IRoundService roundService)
         {
             this.registrationService = registrationService;
             this.koiService = koiService;
             this.competitionCategoryService = competitionCategoryService;
             this.competitionRoundService = competitionRoundService;
+            this.roundService = roundService;
         }
 
         [BindProperty]

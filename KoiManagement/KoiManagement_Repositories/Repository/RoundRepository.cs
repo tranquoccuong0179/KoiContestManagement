@@ -11,5 +11,10 @@ namespace KoiManagement_Repositories.Repository
         public Round? GetRound(string id) => RoundDAO.Instance.GetRound(id);
         public List<Round> GetRounds() => RoundDAO.Instance.GetRounds();
         public bool UpdateRound(Round round) => RoundDAO.Instance.UpdateRound(round);
+
+        public Round? GetRoundByName(string name) => RoundDAO.Instance.GetRoundByName(name);
+
+        public Round? GetFirstRound() => RoundDAO.Instance.GetFirstRound();
+        public Round? GetNextRound(int currentRoundNumber) => RoundDAO.Instance.GetNextRound(currentRoundNumber);
     }
 }

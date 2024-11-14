@@ -12,6 +12,8 @@ namespace KoiManagement_Repositories.Repository
         public async Task<bool> Delete(Koi koi) => await KoiDAO.Instance.Delete(koi);
 
         public async Task<List<Koi>> GetAll() => await KoiDAO.Instance.GetAll();
+
+        public  Koi GetKoiById(string? koiId) =>  KoiDAO.Instance.GetKoiById(koiId);
         public async Task<List<Koi>> GetByUserIdActive(string userId) => await KoiDAO.Instance.GetByUserIdActive(userId);
 
         public async Task<Koi?> GetById(string? koiId, string? userId) => await KoiDAO.Instance.GetById(koiId, userId);
@@ -20,6 +22,6 @@ namespace KoiManagement_Repositories.Repository
 
         public async Task<bool> Update(Koi koi) => await KoiDAO.Instance.Update(koi);
 
-        public async Task<Koi> GetAllWithKois(string competitionRoundId) => await KoiDAO.Instance.GetAllWithKois(competitionRoundId);
+        public async Task<KoiCompetitionVM> GetAllWithKois(string competitionRoundId) => await KoiDAO.Instance.GetAllWithKois(competitionRoundId);
     }
 }

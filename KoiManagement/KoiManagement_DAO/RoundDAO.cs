@@ -32,6 +32,11 @@ namespace KoiManagement_DAO
             return context.Rounds.SingleOrDefault(m => m.Id.Equals(id));
         }
 
+        public Round? GetRoundByName(string name)
+        {
+            return context.Rounds.SingleOrDefault(m => m.Name.Equals(name));
+        }
+
         public bool AddRound(Round round)
         {
             bool result = false;

@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
 using KoiManagement_Services.KoiServices.DTO;
 
 namespace KoiManagement_Services.IService
@@ -12,6 +13,7 @@ namespace KoiManagement_Services.IService
         public Task<bool> Create(KoiForCreationDto koiForCreationDto);
         public Task<bool> Update(KoiForUpdateDto koiForUpdateDto);
         public Task<bool> Delete(string userId, string koiId);
-        public Task<Koi> GetAllWithKois(string competitionRoundId);
+        public Task<KoiCompetitionVM> GetAllWithKois(string competitionRoundId);
+        Koi GetKoiById(string koiId);
     }
 }

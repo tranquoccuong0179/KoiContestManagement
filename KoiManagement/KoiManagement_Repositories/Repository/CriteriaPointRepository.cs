@@ -11,7 +11,7 @@ namespace KoiManagement_Repositories.Repository
 {
     public class CriteriaPointRepository : ICriteriaPointRepository
     {
-        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew) => CriteriaPointDAO.Instance.AddCriteriaPoint(criteriaPointNew);
+        public bool AddCriteriaPoint(CriteriaPoint criteriaPointNew, string refereeMarkId, string criteriaId) => CriteriaPointDAO.Instance.AddCriteriaPoint(criteriaPointNew, refereeMarkId,criteriaId);
 
         public bool DeleteCriteriaPoint(CriteriaPoint criteriaPointDelete) => CriteriaPointDAO.Instance.DeleteCriteriaPoint(criteriaPointDelete);
 

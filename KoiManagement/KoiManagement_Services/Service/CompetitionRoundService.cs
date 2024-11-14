@@ -23,11 +23,33 @@ namespace KoiManagement_Services.Service
 
         public bool DeleteCompetitionRound(CompetitionRound competitionRound) => _competitionRoundRepository.DeleteCompetitionRound(competitionRound);
 
-        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId) => _competitionRoundRepository.GetCompetitionRoundWithKoi(competitionId, roundId);
+        public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId) => _competitionRoundRepository.GetCompetitionRoundWithKoi(competitionId, roundId);
 
-        public bool CheckIfAnotherRoundHasStarted(string competitionId) => _competitionRoundRepository.CheckIfAnotherRoundHasStarted(competitionId);
+        public bool CheckIfAnotherRoundHasStarted(string competitionId, string id) => _competitionRoundRepository.CheckIfAnotherRoundHasStarted(competitionId, id);
 
         public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => _competitionRoundRepository.GetTopCompetitionRoundsByAverageScore(competitionId,roundId,top);
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) => _competitionRoundRepository.AddNewCompetitionRoundBasedOnTopScores(competitionId,roundId,top);
+
+        public bool DeleteCompetitionRoundByCompetitionIDAndRoundID(string competitionId, string roundId)
+        {
+            bool isDeleted = false;
+            var allRounds = GetAll();
+            var roundsToDelete = allRounds
+
+                .Where(cr => cr.CompetitionCategoryId == competitionId && cr.RoundId == roundId)
+                .ToList();
+
+            foreach (var round in roundsToDelete)
+            {
+                isDeleted = DeleteCompetitionRound(round);
+                if (!isDeleted)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
     }
 }

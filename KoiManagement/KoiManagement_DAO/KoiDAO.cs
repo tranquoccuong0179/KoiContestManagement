@@ -20,13 +20,13 @@ namespace KoiManagement_DAO
 
         }
 
-		public async Task<List<Koi>> GetAll()
-		{
-			using (var context = new KoiManagementContext())
-			{
-				return await context.Kois.Include(c => c.User).ToListAsync();
-			}
-		}
+        public async Task<List<Koi>> GetAll()
+        {
+            using (var context = new KoiManagementContext())
+            {
+                return await context.Kois.Include(c => c.User).ToListAsync();
+            }
+        }
 
         public async Task<List<Koi>> GetByUserIdActive(string userId)
         {
@@ -62,6 +62,15 @@ namespace KoiManagement_DAO
             }
         }
 
+
+        public Koi GetKoiById(string koiId)
+        {
+            using (var context = new KoiManagementContext())
+            {
+                return context.Kois.Include(c => c.User).SingleOrDefault(c => c.Id.Equals(koiId));
+            }
+
+        }
         public async Task<bool> Create(Koi koi)
         {
             using (var context = new KoiManagementContext())
@@ -132,14 +141,19 @@ namespace KoiManagement_DAO
         }
 
 
-        public async Task<Koi> GetAllWithKois(string competitionRoundId)
+        public async Task<KoiCompetitionVM> GetAllWithKois(string competitionRoundId)
         {
             using (var context = new KoiManagementContext())
             {
-                var kois = await context.Kois
-                          .Where(k => k.CompetitionRounds.Any(cr => cr.Id == competitionRoundId))
-                          .SingleOrDefaultAsync();
-                return kois;
+                var koiCompetition = await context.CompetitionRounds
+                .Where(cr => cr.Id == competitionRoundId)
+                .Select(cr => new KoiCompetitionVM()
+            {
+                CompetitionRoundId = cr.Id,
+                KoiName = cr.Koi.Name
+            })
+                .SingleOrDefaultAsync();
+                return koiCompetition;
             }
         }
     }
