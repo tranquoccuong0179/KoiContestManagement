@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using KoiManagement_Services.IService;
+using KoiManagement_BusinessObjects;
 
 namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
@@ -14,56 +15,69 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
         }
 
         [BindProperty]
-        public string CompetitionId { get; set; }
+        public string CompetitionCategoryId { get; set; }
 
         [BindProperty]
         public string RoundId { get; set; }
 
         public string CompetitionName { get; set; }
+        public string CategoryName { get; set; }
         public string RoundName { get; set; }
 
-        public IActionResult OnGet(string competitionId, string roundId)
+        public IActionResult OnGet(string competitionCategoryId, string roundId)
         {
-            if (string.IsNullOrEmpty(competitionId) || string.IsNullOrEmpty(roundId))
+            if (string.IsNullOrEmpty(competitionCategoryId) || string.IsNullOrEmpty(roundId))
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Không tìm thấy thông tin vòng thi đấu";
+                return RedirectToPage("./Index");
             }
 
-            var competitionRound = _competitionRoundService.GetCompetitionRoundWithKoi(competitionId, roundId);
+            var competitionRounds = _competitionRoundService.GetCompetitionRoundWithKoi(competitionCategoryId, roundId);
 
-            if (competitionRound == null || !competitionRound.Any())
+            if (competitionRounds == null || !competitionRounds.Any())
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Không tìm thấy thông tin vòng thi đấu";
+                return RedirectToPage("./Index");
             }
 
-            var firstItem = competitionRound.First();
-            CompetitionId = competitionId;
+            var firstItem = competitionRounds.First();
+            CompetitionCategoryId = competitionCategoryId;
             RoundId = roundId;
-            CompetitionName = firstItem.Key.Competition.Name;
-            RoundName = firstItem.Key.Round.Name;
+            CompetitionName = firstItem.Key.CompetitionCategory?.Competition?.Name;
+            CategoryName = firstItem.Key.CompetitionCategory?.Category.Name;
+            RoundName = firstItem.Key.Round?.Name;
 
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            if (string.IsNullOrEmpty(CompetitionId) || string.IsNullOrEmpty(RoundId))
+            try
             {
-                return NotFound();
+                if (string.IsNullOrEmpty(CompetitionCategoryId) || string.IsNullOrEmpty(RoundId))
+                {
+                    TempData["ErrorMessage"] = "Thông tin không hợp lệ";
+                    return RedirectToPage("./Index");
+                }
+
+                var success = _competitionRoundService.DeleteCompetitionRoundByCompetitionIDAndRoundID(
+                    CompetitionCategoryId,
+                    RoundId);
+
+                if (success)
+                {
+                    TempData["SuccessMessage"] = "Xóa vòng thi đấu thành công";
+                    return RedirectToPage("./Index");
+                }
+
+                ModelState.AddModelError("", "Có lỗi xảy ra khi xóa vòng thi đấu");
+                return Page();
             }
-
-            var success = _competitionRoundService.DeleteCompetitionRoundByCompetitionIDAndRoundID(
-                CompetitionId,
-                RoundId);
-
-            if (success)
+            catch (Exception ex)
             {
-                TempData["SuccessMessage"] = "Xóa vòng thi đấu thành công";
-                return RedirectToPage("./Index");
+                ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+                return Page();
             }
-
-            ModelState.AddModelError("", "Có lỗi xảy ra khi xóa vòng thi đấu");
-            return Page();
         }
     }
 }

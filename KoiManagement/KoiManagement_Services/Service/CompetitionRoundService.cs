@@ -23,7 +23,7 @@ namespace KoiManagement_Services.Service
 
         public bool DeleteCompetitionRound(CompetitionRound competitionRound) => _competitionRoundRepository.DeleteCompetitionRound(competitionRound);
 
-        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId) => _competitionRoundRepository.GetCompetitionRoundWithKoi(competitionId, roundId);
+        public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId) => _competitionRoundRepository.GetCompetitionRoundWithKoi(competitionId, roundId);
 
         public bool CheckIfAnotherRoundHasStarted(string competitionId) => _competitionRoundRepository.CheckIfAnotherRoundHasStarted(competitionId);
 
@@ -36,7 +36,7 @@ namespace KoiManagement_Services.Service
             var allRounds = GetAll();
             var roundsToDelete = allRounds
 
-                .Where(cr => cr.CompetitionId == competitionId && cr.RoundId == roundId)
+                .Where(cr => cr.CompetitionCategoryId == competitionId && cr.RoundId == roundId)
                 .ToList();
 
             foreach (var round in roundsToDelete)

@@ -23,27 +23,28 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 
         public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> CompetitionRoundWithKoi { get; set; } = default!;
 
-        public void OnGet(string? competitionId, string? roundId)
+        public void OnGet(string competitionCategoryId, string roundId)
         {
-            CompetitionRoundWithKoi = competitionRoundService.GetCompetitionRoundWithKoi(competitionId, roundId);
+            CompetitionRoundWithKoi = competitionRoundService.GetCompetitionRoundWithKoi(competitionCategoryId, roundId);
+                                      
         }
+
 
         //public class DeleteModel
         //{
-        //    public string CompetitionId { get; set; }
+        //    public string CompetitionCategoryId { get; set; }
         //    public string RoundId { get; set; }
         //}
 
-        //[IgnoreAntiforgeryToken]
-        //public async Task<IActionResult> OnPostDeleteAsync([FromBody] DeleteModel model)
+        //public IActionResult OnPostDelete([FromBody] DeleteModel model)
         //{
-        //    if (string.IsNullOrEmpty(model.CompetitionId) || string.IsNullOrEmpty(model.RoundId))
+        //    if (string.IsNullOrEmpty(model.CompetitionCategoryId) || string.IsNullOrEmpty(model.RoundId))
         //    {
         //        return BadRequest("Invalid competition or round ID.");
         //    }
 
         //    var success = competitionRoundService.DeleteCompetitionRoundByCompetitionIDAndRoundID(
-        //        model.CompetitionId,
+        //        model.CompetitionCategoryId,
         //        model.RoundId);
 
         //    if (success)
@@ -53,6 +54,7 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 
         //    return StatusCode(500, "Error deleting competition rounds.");
         //}
+        
     }
 }
 

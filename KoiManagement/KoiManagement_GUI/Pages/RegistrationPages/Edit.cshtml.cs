@@ -84,8 +84,8 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
 
             if (!wasCheckIn && Registration.IsCheckIn)
             {
-                // Check if another round has already started (same CompetitionId, different RoundId)
-                bool roundExists = competitionRoundService.CheckIfAnotherRoundHasStarted(Registration.CompetitionCategory.CompetitionId);
+                // Check if another round has already started (same CompetitionCategoryId, different RoundId)
+                bool roundExists = competitionRoundService.CheckIfAnotherRoundHasStarted(Registration.CompetitionCategory.Id);
                 Round? round = roundService.GetRoundByName(Rounds.Vongloai);
 
                 if (roundExists)
@@ -108,7 +108,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 }
                 bool createCompetitionRoundSuccess = competitionRoundService.AddCompetitionRound(new CompetitionRound
                 {
-                    CompetitionId = Registration.CompetitionCategory.CompetitionId,
+                    CompetitionCategoryId = Registration.CompetitionCategory.Id,
                     RoundId = round.Id,
                     KoiId = Registration.KoiId,
                 });

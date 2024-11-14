@@ -15,7 +15,7 @@ namespace KoiManagement_Repositories.IRepository
         public bool UpdateCompetitionRound(CompetitionRound competitionRound);
 
         public bool DeleteCompetitionRound(CompetitionRound competitionRound);
-        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId);
+        public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId);
 
         public bool CheckIfAnotherRoundHasStarted(string competitionId);
 

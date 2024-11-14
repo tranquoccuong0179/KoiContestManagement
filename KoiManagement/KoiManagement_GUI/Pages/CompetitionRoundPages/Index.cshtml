@@ -2,11 +2,22 @@
 @model KoiManagement_GUI.Pages.CompetitionRoundPages.IndexModel
 
 @{
-    ViewData["Title"] = "Competition Round List";
+    ViewData["Title"] = "Danh sách vòng thi đấu";
 }
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Danh sách vòng thi đấu</h1>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-list me-2"></i>Danh sách vòng thi đấu</h2>
+    </div>
 
     <div class="card shadow-sm">
         <div class="card-body">
@@ -14,34 +25,48 @@
                 <thead class="table-light">
                     <tr>
                         <th>Cuộc thi</th>
+                        <th>Hạng mục</th>
                         <th>Vòng</th>
                         <th>Danh sách Koi</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.CompetitionRoundWithKoi)
+                    @if (Model.CompetitionRoundWithKoi?.Any() == true)
+                    {
+                        @foreach (var item in Model.CompetitionRoundWithKoi)
+                        {
+                            <tr>
+                                <td class="align-middle">@(item.Key.CompetitionCategory?.Competition?.Name ?? "N/A")</td>
+                                <td class="align-middle">@(item.Key.CompetitionCategory?.Category?.Name ?? "N/A")</td>
+                                <td class="align-middle">@(item.Key.Round?.Name ?? "N/A")</td>
+                                <td>
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach (var koi in item.Value)
+                                        {
+                                            <li class="mb-1">
+                                                <i class="fas fa-fish me-2 text-primary"></i>
+                                                <a href="./Details?koiId=@koi?.Id" class="text-decoration-none">
+                                                    @(koi?.Name ?? "Unknown Koi")
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td class="align-middle">
+                                    <a asp-page="./Delete" asp-route-competitionCategoryId="@item.Key.CompetitionCategory?.Id"
+                                        asp-route-roundId="@item.Key.Round?.Id" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt me-1"></i> Xóa
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td class="align-middle">@item.Key.Competition.Name</td>
-                            <td class="align-middle">@item.Key.Round.Name</td>
-                            <td>
-                                <ul class="list-unstyled mb-0">
-                                    @foreach (var koi in item.Value)
-                                    {
-                                        <li class="mb-1">
-                                            <a asp-page="./Details" asp-route-id="@koi.Id" class="text-decoration-none">
-                                                <i class="bi bi-arrow-right-circle me-2"></i>@koi.Name
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </td>
-                            <td class="align-middle">
-                                <a asp-page="./Delete" asp-route-competitionId="@item.Key.Competition.Id"
-                                    asp-route-roundId="@item.Key.Round.Id" class="btn btn-danger">
-                                    Delete
-                                </a>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i class="fas fa-info-circle me-2"></i>Chưa có vòng thi đấu nào
                             </td>
                         </tr>
                     }

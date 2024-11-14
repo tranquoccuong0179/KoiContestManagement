@@ -6,7 +6,7 @@ namespace KoiManagement_Services.IService
     public interface ICompetitionRoundService
     {
         public List<CompetitionRound> GetAll();
-        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId);
+        public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId);
         public CompetitionRound? GetById(string id);
 
         public bool AddCompetitionRound(CompetitionRound competitionRound);

@@ -8,31 +8,24 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
 {
     public class DetailsModel : PageModel
     {
-        private readonly IServiceManager _serviceManager;
+        private readonly IKoiService _koiService;
 
-        public DetailsModel(IServiceManager serviceManager)
+        public DetailsModel(IKoiService koiService)
         {
-            _serviceManager = serviceManager;
+            _koiService = koiService;
         }
 
-        public Koi Koi { get; set; } = default!;
+        public Koi Koi { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public IActionResult OnGet(string koiId)
         {
-            // Check if user session exists, redirect to login if not
-            var userId = HttpContext.Session.GetString("Id");
-            if (userId == null)
-            {
-                return RedirectToPage("/LoginPage");
-            }
-
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(koiId))
             {
                 return NotFound();
             }
 
-            // Retrieve Koi details with user ID for access control
-            Koi = await _serviceManager.KoiService.GetById(id, userId);
+            Koi = _koiService.GetKoiById(koiId);
+
             if (Koi == null)
             {
                 return NotFound();

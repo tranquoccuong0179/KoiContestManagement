@@ -88,12 +88,15 @@ namespace KoiManagement_DAO
             }
             return result;
         }
-        public Dictionary<(CompetitionCategory Competition, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string? competitionId, string? roundId)
+        public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId)
         {
 
             var competitionRounds = context.CompetitionRounds
        .Where(cr => (string.IsNullOrWhiteSpace(competitionId) || cr.CompetitionCategory.Id == competitionId) &&
-                    (string.IsNullOrWhiteSpace(roundId) || cr.Round.Id == roundId))
+                    (string.IsNullOrWhiteSpace(roundId) || cr.Round.Id == roundId)).Include(cr => cr.CompetitionCategory)
+            .ThenInclude(cc => cc.Competition)
+        .Include(cr => cr.CompetitionCategory)
+            .ThenInclude(cc => cc.Category)
        .Select(cr => new
        {
            cr.CompetitionCategory,
