@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +8,11 @@ namespace KoiManagement_GUI.Pages.RoundPages
 {
     public class EditModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly IRoundService _roundService;
 
-        public EditModel(KoiManagement_DAO.KoiManagementContext context)
+        public EditModel(IRoundService roundService)
         {
-            _context = context;
+            _roundService = roundService;
         }
 
         [BindProperty]
@@ -24,7 +25,7 @@ namespace KoiManagement_GUI.Pages.RoundPages
                 return NotFound();
             }
 
-            var round = await _context.Rounds.FirstOrDefaultAsync(m => m.Id == id);
+            var round = _roundService.GetRound(id);
             if (round == null)
             {
                 return NotFound();
@@ -42,11 +43,18 @@ namespace KoiManagement_GUI.Pages.RoundPages
                 return Page();
             }
 
-            _context.Attach(Round).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                bool result = _roundService.UpdateRound(Round);
+                if (result)
+                {
+                    return RedirectToPage("./Index"); ;
+                }
+                else
+                {
+                    ViewData["Result"] = "Name or OrderNumber is already existed!";
+                    return Page();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -65,7 +73,7 @@ namespace KoiManagement_GUI.Pages.RoundPages
 
         private bool RoundExists(string id)
         {
-            return _context.Rounds.Any(e => e.Id == id);
+            return _roundService.GetRound(id) != null;
         }
     }
 }
