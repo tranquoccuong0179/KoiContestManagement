@@ -1,6 +1,7 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_BusinessObjects.Constants;
 using KoiManagement_DAO;
+using KoiManagement_DAO.DTO;
 
 namespace KoiManagement_Services.IService
 {
@@ -11,6 +12,7 @@ namespace KoiManagement_Services.IService
         public CompetitionRound? GetById(string id);
 
         public string GetCompetitionRoundId(string KoiId, string RoundId, string CompetitionCategoryId);
+        public List<CompetitionRoundInfoDTO> GetListIDByCompetitionCategoryIdNRoundId(string competitionCategoryId, string roundId);
         public bool AddCompetitionRound(CompetitionRound competitionRound);
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound);
@@ -18,9 +20,9 @@ namespace KoiManagement_Services.IService
         public bool DeleteCompetitionRound(CompetitionRound competitionRound);
 
         public bool CheckIfAnotherRoundHasStarted(string competitionId , string id);
-        public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top);
+  
 
-        public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top);
+        //public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top);
 
         public bool DeleteCompetitionRoundByCompetitionIDAndRoundID(string competitionId, string roundId);
 

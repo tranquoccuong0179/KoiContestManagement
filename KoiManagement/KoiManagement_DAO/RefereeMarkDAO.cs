@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_DAO.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -104,5 +105,79 @@ namespace KoiManagement_DAO
             }
             return result;
         }
+        public List<CompetitionRoundScore> GetTopCompetitionRoundsByAverageScore(
+    List<CompetitionRoundInfoDTO> competitionRoundInfoList, int top)
+        {
+  
+            var competitionRoundIds = competitionRoundInfoList.Select(dto => dto.CompetitionRoundId).ToList();
+
+            var topCompetitionRounds = context.RefereeMarks
+                .Where(rm => competitionRoundIds.Contains(rm.CompetitionRoundId))
+                .GroupBy(rm => rm.CompetitionRoundId)
+                .Select(group => new
+                {
+                    CompetitionRoundId = group.Key,
+                    AveragePoint = group.Average(rm => rm.Point)
+                })
+                .OrderByDescending(cr => cr.AveragePoint)
+                .Take(top)
+                .ToList(); 
+
+            var topCompetitionRoundDTOs = topCompetitionRounds
+                .Join(competitionRoundInfoList,
+                      top => top.CompetitionRoundId,
+                      info => info.CompetitionRoundId,
+                      (top, info) => new CompetitionRoundScore
+                      {
+                          CompetitionRoundId = info.CompetitionRoundId,
+                          KoiId = info.KoiId,
+                          KoiName = info.KoiName,
+                          OwnerName = info.OwnerName,
+                          AveragePoint = top.AveragePoint
+                      })
+                .ToList();
+
+            return topCompetitionRoundDTOs;
+        }
+
+        //    public async Task<List<CompetitionRoundScore>> GetTopCompetitionRoundsByAverageScore(
+        //List<CompetitionRoundInfoDTO> competitionRoundInfoList, int top)
+        //    {
+
+        //        var competitionRoundIds = competitionRoundInfoList.Select(dto => dto.CompetitionRoundId).ToList();
+
+
+        //        var topCompetitionRounds = await context.RefereeMarks
+        //            .Where(rm => competitionRoundIds.Contains(rm.CompetitionRoundId))
+        //            .GroupBy(rm => rm.CompetitionRoundId)
+        //            .Select(group => new
+        //            {
+        //                CompetitionRoundId = group.Key,
+        //                AveragePoint = group.Average(rm => rm.Point)
+        //            })
+        //            .OrderByDescending(cr => cr.AveragePoint)
+        //            .Take(top)
+        //            .ToListAsync();
+
+
+        //        var topCompetitionRoundDTOs = topCompetitionRounds
+        //            .Join(competitionRoundInfoList,
+        //                  top => top.CompetitionRoundId,
+        //                  info => info.CompetitionRoundId,
+        //                  (top, info) => new CompetitionRoundScore
+        //                  {
+        //                      CompetitionRoundId = info.CompetitionRoundId,
+        //                      KoiId = info.KoiId,
+        //                      KoiName = info.KoiName,
+        //                      OwnerName = info.OwnerName,
+        //                      AveragePoint = top.AveragePoint
+        //                  })
+        //            .ToList();
+
+        //        return topCompetitionRoundDTOs;
+        //    }
+
+
     }
 }
+

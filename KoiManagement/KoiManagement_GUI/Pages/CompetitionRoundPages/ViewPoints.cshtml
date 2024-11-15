@@ -1,30 +1,47 @@
-﻿@page "{competitionCategoryId}/{roundId}"
+﻿@page
 @model KoiManagement_GUI.Pages.CompetitionRoundPages.ViewPointsModel
 
 @{
-    ViewData["Title"] = "Current Points for Koi";
+    ViewData["Title"] = "Điểm số hiện tại của Koi";
 }
 
-<h2 class="text-center">Top Koi by Average Points</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Top Koi theo điểm trung bình</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Rank</th>
-            <th>Koi Name</th>
-            <th>Owner</th>
-            <th>Average Points</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < Model.TopKois.Count; i++)
-        {
-            <tr>
-                <td>@(i + 1)</td>
-                <td>@Model.TopKois[i].Koi.Name</td>
-                <td>@Model.TopKois[i].Koi.User.FullName</td>
-                @* <td>@Model.TopKois[i].AverageScore</td> *@
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th>Thứ hạng</th>
+                        <th>Tên Koi</th>
+                        <th>Chủ sở hữu</th>
+                        <th>Điểm trung bình</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.TopKois?.Any() == true)
+                    {
+                        @for (int i = 0; i < Model.TopKois.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@Model.TopKois[i].KoiName</td>
+                                <td>@Model.TopKois[i].OwnerName</td>
+                                <td>@Model.TopKois[i].AveragePoint.ToString("F2")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-3">
+                                <i class="fas fa-info-circle me-2"></i>Chưa có dữ liệu điểm số
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_DAO.DTO;
 using KoiManagement_Repositories.Repository;
 
 namespace KoiManagement_Repositories.IRepository
@@ -10,6 +11,7 @@ namespace KoiManagement_Repositories.IRepository
 
         public CompetitionRound? GetById(string id);
         public string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId);
+        public List<CompetitionRoundInfoDTO> GetListIDByCompetitionCategoryIdNRoundId(string competitionCategoryId, string roundId);
         public bool AddCompetitionRound(CompetitionRound competitionRound);
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound);
@@ -19,7 +21,6 @@ namespace KoiManagement_Repositories.IRepository
 
         public bool CheckIfAnotherRoundHasStarted(string competitionId, string id);
 
-        public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top);
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_DAO.DTO;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.ConstrainedExecution;
 
@@ -152,6 +153,21 @@ namespace KoiManagement_DAO
                 .ToListAsync();
 
             return topRounds;
+        }
+        public List<CompetitionRoundInfoDTO> GetListIDByCompetitionCategoryIdNRoundId(string competitionCategoryId, string roundId) 
+        {
+            var competitionRoundInfoList = context.CompetitionRounds
+             .Where(cr => cr.CompetitionCategoryId == competitionCategoryId && cr.RoundId == roundId).Include(cr => cr.Koi).ThenInclude(cr => cr.User)
+             .Select(cr => new CompetitionRoundInfoDTO
+             {
+                 CompetitionRoundId = cr.Id,
+                 KoiId = cr.KoiId,
+                 KoiName = cr.Koi.Name,         
+                 OwnerName = cr.Koi.User.FullName 
+             })
+             .ToList();
+
+            return competitionRoundInfoList;
         }
 
         public async Task<bool> AddNewCompetitionRoundBasedOnTopScoresAsync(string competitionId, string roundId, int top)

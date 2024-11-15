@@ -26,6 +26,8 @@ builder.Services.AddScoped<IPredictionService, PredictionService>();
 builder.Services.AddScoped<ICompetitionService, CompetitionService>();
 builder.Services.AddScoped<ICompetitionCategoryService, CompetitionCategoryService>();
 builder.Services.AddScoped<ICompetitionRoundService, CompetitionRoundService>();
+builder.Services.AddScoped<ICompetitionRoundRepository, CompetitionRoundRepository>();
+
 builder.Services.AddScoped<IRoundService, RoundService>();
 builder.Services.AddScoped<ICriteriaRepository, CriteriaRepository>();
 builder.Services.AddScoped<IRefereeMarkRepository, RefereeMarkRepository>();
@@ -37,6 +39,7 @@ builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
 builder.Services.AddScoped<IResultService, ResultService>();
 builder.Services.AddScoped<IResultRepository, ResultRepository>();
+
 builder.Services.AddScoped<IKoiService, KoiService>();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {

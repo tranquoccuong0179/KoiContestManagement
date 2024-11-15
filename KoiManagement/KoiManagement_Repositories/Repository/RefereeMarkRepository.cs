@@ -1,5 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_DAO.DTO;
 using KoiManagement_Repositories.IRepository;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,8 @@ namespace KoiManagement_Repositories.Repository
         public List<RefereeMark> GetRefereeMarks() => RefereeMarkDAO.Instance.GetRefereeMarks();
 
         public bool UpdateRefereeMark(RefereeMark refereeMarkUpdate) => RefereeMarkDAO.Instance.UpdateRefereeMark(refereeMarkUpdate);
+
+        public List<CompetitionRoundScore> GetTopCompetitionRoundsByAverageScore(
+   List<CompetitionRoundInfoDTO> competitionRoundInfoList, int top) => RefereeMarkDAO.Instance.GetTopCompetitionRoundsByAverageScore(competitionRoundInfoList, top);
     }
 }

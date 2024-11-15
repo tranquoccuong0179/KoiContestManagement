@@ -1,5 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_DAO.DTO;
 using KoiManagement_Repositories.IRepository;
 
 namespace KoiManagement_Repositories.Repository
@@ -9,6 +10,7 @@ namespace KoiManagement_Repositories.Repository
         public List<CompetitionRound> GetAll() => CompetitionRoundDAO.Instance.GetAll();
 
         public CompetitionRound? GetById(string id) => CompetitionRoundDAO.Instance.GetById(id);
+        public List<CompetitionRoundInfoDTO> GetListIDByCompetitionCategoryIdNRoundId(string competitionCategoryId, string roundId )=> CompetitionRoundDAO.Instance.GetListIDByCompetitionCategoryIdNRoundId(competitionCategoryId, roundId);
 
         public  string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId) => CompetitionRoundDAO.Instance.GetCompetitionRoundId(koiId, roundId, competitionCategoryId);
         public bool AddCompetitionRound(CompetitionRound competitionRound) => CompetitionRoundDAO.Instance.AddCompetitionRound(competitionRound);
@@ -19,8 +21,6 @@ namespace KoiManagement_Repositories.Repository
 
         public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId) => CompetitionRoundDAO.Instance.GetCompetitionRoundWithKoi(competitionId, roundId);
         public bool CheckIfAnotherRoundHasStarted(string competitionId, string id) => CompetitionRoundDAO.Instance.CheckIfAnotherRoundHasStarted(competitionId, id);
-
-        public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.GetTopCompetitionRoundsByAverageScore(competitionId, roundId, top);
 
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.AddNewCompetitionRoundBasedOnTopScoresAsync(competitionId,roundId,top);
     }
