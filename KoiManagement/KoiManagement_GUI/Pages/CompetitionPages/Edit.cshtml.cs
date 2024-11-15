@@ -60,7 +60,7 @@ namespace KoiManagement_GUI.Pages.CompetitionPages
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./IndexAdmin");
         }
 
         private bool CompetitionExists(string id)

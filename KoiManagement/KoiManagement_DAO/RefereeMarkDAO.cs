@@ -30,6 +30,12 @@ namespace KoiManagement_DAO
             return context.RefereeMarks.Include(r => r.CompetitionRound).ThenInclude(r => r.Koi).Include(k => k.User).Where(r => r.Active == true).ToList();
         }
 
+        public RefereeMark? GetExistRefereeMark(string competitionId, string userId)
+        {
+            var refereeMark = context.RefereeMarks.SingleOrDefault(r => r.CompetitionRoundId.Equals(competitionId) && r.UserId.Equals(userId));
+            return refereeMark;
+        }
+
         public RefereeMark GetRefereeMark(string id)
         {
 

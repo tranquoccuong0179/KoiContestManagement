@@ -9,5 +9,6 @@ namespace KoiManagement_Repositories.IRepository
         public bool AddRefereeMark(RefereeMark refereeMarkNew);
         public bool UpdateRefereeMark(RefereeMark refereeMarkUpdate);
         public bool DeleteRefereeMark(RefereeMark refereeMarkDelete);
+        public RefereeMark? GetExistRefereeMark(string competitionId, string userId);
     }
 }

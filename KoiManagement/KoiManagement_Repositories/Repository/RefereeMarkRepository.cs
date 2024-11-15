@@ -10,6 +10,8 @@ namespace KoiManagement_Repositories.Repository
 
         public bool DeleteRefereeMark(RefereeMark refereeMarkDelete) => RefereeMarkDAO.Instance.DeleteRefereeMark(refereeMarkDelete);
 
+        public RefereeMark? GetExistRefereeMark(string competitionId, string userId) => RefereeMarkDAO.Instance.GetExistRefereeMark(competitionId, userId);
+
         public RefereeMark GetRefereeMark(string id) => RefereeMarkDAO.Instance.GetRefereeMark(id);
 
         public List<RefereeMark> GetRefereeMarks() => RefereeMarkDAO.Instance.GetRefereeMarks();

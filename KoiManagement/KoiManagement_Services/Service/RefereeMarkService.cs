@@ -16,6 +16,8 @@ namespace KoiManagement_Services.Service
 
         public bool DeleteRefereeMark(RefereeMark refereeMarkDelete) => refereeMarkRepository.DeleteRefereeMark(refereeMarkDelete);
 
+        public RefereeMark? GetExistRefereeMark(string competitionId, string userId) => refereeMarkRepository.GetExistRefereeMark(competitionId, userId);
+
         public RefereeMark GetRefereeMark(string id) => refereeMarkRepository.GetRefereeMark(id);
 
         public List<RefereeMark> GetRefereeMarks() => refereeMarkRepository.GetRefereeMarks();

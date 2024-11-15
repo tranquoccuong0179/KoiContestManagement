@@ -60,7 +60,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPages
         }
 
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -68,6 +68,11 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPages
             }
             RefereeMark.CompetitionRoundId = Request.Form["RefereeMark.CompetitionRoundId"];
             RefereeMark.UserId = Request.Form["RefereeMark.UserId"];
+            RefereeMark? refereeMark = refereeMarkService.GetExistRefereeMark(RefereeMark.CompetitionRoundId, RefereeMark.UserId);
+            if (refereeMark != null)
+            {
+                return RedirectToPage("./Details");
+            }
             refereeMarkService.AddRefereeMark(RefereeMark);
             double totalPoints = 0;
             foreach (var criteriaPoint in RefereeMark.CriteriaPoints)
