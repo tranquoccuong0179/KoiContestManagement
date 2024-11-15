@@ -22,5 +22,7 @@ namespace KoiManagement_Services.Service
         public Round? GetFirstRound() => _roundRepository.GetFirstRound();
         public Round? GetNextRound(int currentRoundNumber) => _roundRepository.GetNextRound(currentRoundNumber);
 
+        public bool IsFinalRound(Round round) => _roundRepository.IsFinalRound(round);
+
     }
 }

@@ -27,7 +27,6 @@ builder.Services.AddScoped<ICompetitionService, CompetitionService>();
 builder.Services.AddScoped<ICompetitionCategoryService, CompetitionCategoryService>();
 builder.Services.AddScoped<ICompetitionRoundService, CompetitionRoundService>();
 builder.Services.AddScoped<ICompetitionRoundRepository, CompetitionRoundRepository>();
-
 builder.Services.AddScoped<IRoundService, RoundService>();
 builder.Services.AddScoped<ICriteriaRepository, CriteriaRepository>();
 builder.Services.AddScoped<IRefereeMarkRepository, RefereeMarkRepository>();

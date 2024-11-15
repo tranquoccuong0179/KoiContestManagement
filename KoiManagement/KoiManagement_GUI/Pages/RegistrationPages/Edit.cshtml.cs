@@ -86,7 +86,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
             {
                 // Check if another round has already started (same CompetitionCategoryId, different RoundId)
                 Round? round = roundService.GetFirstRound();
-                Round? nextRound = roundService.GetNextRound(1);
+                Round? nextRound = roundService.GetNextRound(round.OrderNumber);
 
                 bool roundExists = competitionRoundService.CheckIfAnotherRoundHasStarted(Registration.CompetitionCategory.Id , nextRound.Id);
              
