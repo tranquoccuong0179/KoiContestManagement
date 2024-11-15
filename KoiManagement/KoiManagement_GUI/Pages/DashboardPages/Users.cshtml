@@ -75,24 +75,25 @@
 													}
 												</td>
 												<td>
-													@{
-														if (@user.Roles.Contains(Role.Admin))
-														{
-															@Html.Raw(Role.Admin)
-														}
-														else if (user.Roles.Contains(Role.Manager))
-														{
-															@Html.Raw(Role.Manager)
-														}
-														else if (user.Roles.Contains(Role.Referee))
-														{
-															@Html.Raw(Role.Referee)
-														}
-														else if (user.Roles.Contains(Role.Contestant))
-														{
-															@Html.Raw(Role.Contestant)
-														}
-													}
+													@user.Roles[0]
+													@* @{
+													// 	if (@user.Roles.Contains(Role.Admin))
+													// 	{
+													// 		@Html.Raw(Role.Admin)
+													// 	}
+													// 	else if (user.Roles.Contains(Role.Manager))
+													// 	{
+													// 		@Html.Raw(Role.Manager)
+													// 	}
+													// 	else if (user.Roles.Contains(Role.Referee))
+													// 	{
+													// 		@Html.Raw(Role.Referee)
+													// 	}
+													// 	else if (user.Roles.Contains(Role.Contestant))
+													// 	{
+													// 		@Html.Raw(Role.Contestant)
+													// 	}
+													// }*@
 												</td>
 												<td>
 													<form method="post">
