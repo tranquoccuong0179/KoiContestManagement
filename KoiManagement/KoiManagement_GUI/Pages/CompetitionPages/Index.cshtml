@@ -7,49 +7,6 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-@* <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].MaxApplication)
-            </th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Competition) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxApplication)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> 
-@*                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-*@
 <div class="container my-5">
 
     <!-- Header Section -->
@@ -73,23 +30,31 @@
 
     <!-- Awards Section -->
     <section id="awards" class="mb-5 bg-light p-4 rounded">
-        <h2 class="text-center">Awards</h2>
+        <h2 class="text-center">Categories</h2>
         <div class="row text-center">
-            <div class="col-md-3">
-                <img src="https://via.placeholder.com/100" class="img-fluid rounded-circle mb-2" alt="Award image">
+            <div class="col-md-2">
+                <img src="~/images/Season_2023_-_Platinum.webp" class="img-fluid rounded-circle mb-2" alt="Award image">
                 <p>Grand Champion</p>
             </div>
-            <div class="col-md-3">
-                <img src="https://via.placeholder.com/100" class="img-fluid rounded-circle mb-2" alt="Award image">
-                <p>Best in Show</p>
+            <div class="col-md-2">
+                <img src="~/images/Season_2023_-_Emerald.webp" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p>Sakura Champion</p>
             </div>
-            <div class="col-md-3">
-                <img src="https://via.placeholder.com/100" class="img-fluid rounded-circle mb-2" alt="Award image">
-                <p>People's Choice</p>
+            <div class="col-md-2">
+                <img src="~/images/Season_2023_-_Diamond.webp" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p> Mature Champion</p>
             </div>
-            <div class="col-md-3">
-                <img src="https://via.placeholder.com/100" class="img-fluid rounded-circle mb-2" alt="Award image">
-                <p>Category-specific Awards</p>
+            <div class="col-md-2">
+                <img src="~/images/Season_2023_-_Master.webp" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p>Adult Champion</p>
+            </div>            
+            <div class="col-md-2">
+                <img src="~/images/Season_2023_-_GrandMaster.webp" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p>Young Champion</p>
+            </div>
+            <div class="col-md-2">
+                <img src="~/images/Season_2023_-_Challenger.webp" class="img-fluid rounded-circle mb-2" alt="Award image">
+                <p>Baby Champion</p>
             </div>
         </div>
     </section>
@@ -107,7 +72,7 @@
                 </ul>
             </div>
             <div class="col-md-6 order-md-1">
-                <img src="https://via.placeholder.com/500x300" class="img-fluid rounded" alt="Rules image">
+                <img src="~/images/z6034261921500_3bc89964f85346d8cd26212a0d7b723d.jpg" class="img-fluid rounded" alt="Rules image">
             </div>
         </div>
     </section>
@@ -139,7 +104,7 @@
                             <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
                             <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
                         }
-                        <a asp-page="../CompetitionCategoryPages/Index" asp-route-competitionId="@item.Id" class="btn btn-info btn-sm">Categories</a>                      
+                        <a asp-page="../CompetitionCategoryPages/Index" asp-route-competitionId="@item.Id" class="btn btn-info btn-sm">Details</a>                      
                     </td>
                 </tr>
             }
@@ -152,16 +117,16 @@
         <p class="text-center">Entries are judged based on the following:</p>
         <div class="row text-center">
             <div class="col-md-4">
-                <h4>Color and Pattern</h4>
-                <img src="https://via.placeholder.com/150" class="img-fluid mb-2" alt="Scoring image">
+                <h4>Color</h4>
+                <img src="~/images/z6034261934881_ca2ecbe61c4705de1b9f7c9efbf345af.jpg" class="img-fluid mb-2" alt="Scoring image">
             </div>
             <div class="col-md-4">
                 <h4>Body Shape and Proportion</h4>
-                <img src="https://via.placeholder.com/150" class="img-fluid mb-2" alt="Scoring image">
+                <img src="~/images/z6034261941164_c868ca9913c2b40965fba3d480a43fc5.jpg" class="img-fluid mb-2" alt="Scoring image">
             </div>
             <div class="col-md-4">
-                <h4>Overall Health</h4>
-                <img src="https://via.placeholder.com/150" class="img-fluid mb-2" alt="Scoring image">
+                <h4>Overall Pattern</h4>
+                <img src="~/images/z6034261921500_3bc89964f85346d8cd26212a0d7b723d.jpg" class="img-fluid mb-2" alt="Scoring image">
             </div>
         </div>
     </section>

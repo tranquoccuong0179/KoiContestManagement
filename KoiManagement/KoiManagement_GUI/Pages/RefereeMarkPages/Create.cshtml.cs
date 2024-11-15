@@ -1,8 +1,16 @@
-﻿using KoiManagement_BusinessObjects;
-using KoiManagement_Services.IService;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
+using KoiManagement_Services.Service;
+using KoiManagement_Services.IService;
+using KoiManagement_Services.AuthenticationServices.DTO;
+using KoiManagement_Service.Service;
 
 
 namespace KoiManagement_GUI.Pages.RefereeMarkPages
@@ -33,13 +41,17 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPages
         public RefereeMark RefereeMark { get; set; } = new RefereeMark();
 
         public List<Criteria> Criterias { get; set; } = new List<Criteria>();
+        public UserForReturnDto UserForReturnDto { get; set; }
 
         public async Task<IActionResult> OnGet(string competitionRoundId)
         {
+            string userId = HttpContext.Session.GetString("Id");
+            UserForReturnDto = await authenticationService.GetUserById(userId);
             var koi = await koiService.GetAllWithKois(competitionRoundId);
+            //ViewData["CompetitionRoundId"] = koi.KoiName;
+            //ViewData["UserId"] = UserForReturnDto.FullName;
             ViewData["CompetitionRoundId"] = new SelectList(new[] { koi }, "CompetitionRoundId", "KoiName");
-            ViewData["UserId"] = new SelectList(await authenticationService.GetAllUsersExcepAdmin(), "Id", "FullName");
-
+            ViewData["UserId"] = new SelectList(new[] { UserForReturnDto }, "Id", "FullName");
             Criterias = criteriaService.GetCriterias();
             RefereeMark.CriteriaPoints = Criterias
                 .Select(c => new CriteriaPoint { CriteriaId = c.Id, Point = 0 })

@@ -1,17 +1,23 @@
-﻿using KoiManagement_BusinessObjects;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
+using KoiManagement_Services.IService;
 
 namespace KoiManagement_GUI.Pages.RefereeMarkPages
 {
     public class DetailsModel : PageModel
     {
-        private readonly KoiManagement_DAO.KoiManagementContext _context;
+        private readonly IRefereeMarkService refereeMarkService;
 
-        public DetailsModel(KoiManagement_DAO.KoiManagementContext context)
+        public DetailsModel(IRefereeMarkService refereeMarkService)
         {
-            _context = context;
+            this.refereeMarkService = refereeMarkService;
         }
 
         public RefereeMark RefereeMark { get; set; } = default!;
@@ -23,7 +29,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPages
                 return NotFound();
             }
 
-            var refereemark = await _context.RefereeMarks.FirstOrDefaultAsync(m => m.Id == id);
+            var refereemark = refereeMarkService.GetRefereeMark(id);
             if (refereemark == null)
             {
                 return NotFound();

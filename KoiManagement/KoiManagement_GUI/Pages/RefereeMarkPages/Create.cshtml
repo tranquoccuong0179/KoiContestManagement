@@ -17,17 +17,16 @@
                     <h3 class="d-flex justify-content-center animate__animated animate__backInDown">Create RefereeMark</h3>
                     <form class="requires-validation" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                         <!-- User Selection -->
                         <div class="col-md-12 form-group animate__animated animate__backInLeft">
-                            <label asp-for="RefereeMark.UserId" class="control-label"></label>
+                            <label class="control-label">Referee Name</label>
                             <select asp-for="RefereeMark.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
                             <span asp-validation-for="RefereeMark.UserId" class="text-danger"></span>
                         </div>
 
                         <!-- Competition Round Selection -->
                         <div class="col-md-12 form-group animate__animated animate__backInLeft">
-                            <label asp-for="RefereeMark.CompetitionRoundId" class="control-label"></label>
+                            <label class="control-label">Koi Name</label>
                             <select asp-for="RefereeMark.CompetitionRoundId" class="form-control" asp-items="ViewBag.CompetitionRoundId"></select>
                             <span asp-validation-for="RefereeMark.CompetitionRoundId" class="text-danger"></span>
                         </div>
@@ -54,7 +53,7 @@
 
                     <!-- Back Button -->
                     <div class="mt-3 d-flex justify-content-center animate__animated animate__backInUp">
-                        <a asp-page="Index" class="btn btn-primary mt-2">Back to List</a>
+                        <a asp-page="../CompetitionRoundPages/Index" class="btn btn-primary mt-2">Back to List</a>
                     </div>
                 </div>
             </div>

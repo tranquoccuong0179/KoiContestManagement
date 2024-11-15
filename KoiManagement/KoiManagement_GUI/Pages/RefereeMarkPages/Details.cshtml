@@ -2,60 +2,86 @@
 @model KoiManagement_GUI.Pages.RefereeMarkPages.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Referee Mark Details";
 }
 
-<h1>Details</h1>
+<h1 class="page-title">Referee Mark Details</h1>
 
-<div>
-    <h4>RefereeMark</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
+<div class="details-container shadow-lg p-4 mb-4 bg-white rounded">
+    <h4 class="section-title">Referee Mark Information</h4>
+    <hr class="section-divider" />
+    <dl class="row details-list">
+        <dt class="col-sm-3 detail-label">
             @Html.DisplayNameFor(model => model.RefereeMark.Point)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9 detail-value">
             @Html.DisplayFor(model => model.RefereeMark.Point)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RefereeMark.CompetitionRound)
+
+        <dt class="col-sm-3 detail-label">
+            @Html.DisplayNameFor(model => model.RefereeMark.CompetitionRound.Koi.Name)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RefereeMark.CompetitionRound.Id)
+        <dd class="col-sm-9 detail-value">
+            @Html.DisplayFor(model => model.RefereeMark.CompetitionRound.Koi.Name)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RefereeMark.User)
+
+        <dt class="col-sm-3 detail-label">
+            @Html.DisplayNameFor(model => model.RefereeMark.User.FullName)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RefereeMark.User.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RefereeMark.Active)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RefereeMark.Active)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RefereeMark.CreateAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RefereeMark.CreateAt)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RefereeMark.UpdateAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RefereeMark.UpdateAt)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RefereeMark.DeleteAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RefereeMark.DeleteAt)
+        <dd class="col-sm-9 detail-value">
+            @Html.DisplayFor(model => model.RefereeMark.User.FullName)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.RefereeMark.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+
+<div class="action-buttons mt-4">
+    <a asp-page="./Index" class="btn btn-primary">Back to List</a>
 </div>
+
+<style>
+    .page-title {
+        font-size: 2rem;
+        color: #333;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .details-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        color: #555;
+        margin-bottom: 1rem;
+    }
+
+    .section-divider {
+        border-top: 2px solid #e0e0e0;
+    }
+
+    .details-list dt.detail-label {
+        font-weight: bold;
+        color: #666;
+    }
+
+    .details-list dd.detail-value {
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .action-buttons {
+        text-align: center;
+    }
+
+        .action-buttons .btn {
+            font-size: 1rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+        }
+</style>

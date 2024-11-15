@@ -27,7 +27,7 @@ namespace KoiManagement_DAO
 
         public List<RefereeMark> GetRefereeMarks()
         {
-            return context.RefereeMarks.Where(r => r.Active == true).ToList();
+            return context.RefereeMarks.Include(r => r.CompetitionRound).ThenInclude(r => r.Koi).Include(k => k.User).Where(r => r.Active == true).ToList();
         }
 
         public RefereeMark GetRefereeMark(string id)
