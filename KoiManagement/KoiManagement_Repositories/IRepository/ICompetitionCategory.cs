@@ -13,5 +13,6 @@ namespace KoiManagement_Repositories.IRepository
         bool DeleteCompetitionCategory(CompetitionCategory competitionCategory);
         void DeleteAllCategoriesForCompetition(string competitionId);
         void UpdateCompetitionCategories(string competitionId, List<string> selectedCategoryIds);
+        CompetitionCategory? GetCompetitionCategory(string competitionId, string categoryId);
     }
 }

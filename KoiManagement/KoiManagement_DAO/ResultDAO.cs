@@ -27,7 +27,14 @@ namespace KoiManagement_DAO
 
         public List<Result> GetResults()
         {
-            return context.Results.Include(x => x.Registration).ToList();
+            return context.Results
+                .Include(x => x.Registration)
+                    .ThenInclude(x => x.CompetitionCategory)
+                    .ThenInclude(x => x.Competition)
+                .Include(x => x.Registration)
+                    .ThenInclude(x => x.Koi)
+                .OrderByDescending(x => x.Ranking)
+                .ToList();
         }
 
         public Result GetResult(string id)

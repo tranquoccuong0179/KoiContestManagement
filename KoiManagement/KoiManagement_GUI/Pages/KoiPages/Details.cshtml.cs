@@ -1,18 +1,25 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_Service.IService;
+using KoiManagement_Services.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace KoiManagement_GUI.Pages.KoiPages
 {
     public class DetailsModel : PageModel
     {
         private readonly IServiceManager serviceManager;
-        private string userId;
+		private readonly IKoiService koiService;
+		private readonly IResultService resultService;
 
-        public DetailsModel(IServiceManager serviceManager)
+		private string userId;
+
+        public DetailsModel(IServiceManager serviceManager, IKoiService koiService, IResultService resultService)
         {
             this.serviceManager = serviceManager;
+            this.koiService = koiService;
+            this.resultService = resultService;
         }
 
         public Koi Koi { get; set; } = default!;
@@ -34,7 +41,7 @@ namespace KoiManagement_GUI.Pages.KoiPages
             {
                 Koi = koi;
             }
-            return Page();
+			return Page();
         }
     }
 }
