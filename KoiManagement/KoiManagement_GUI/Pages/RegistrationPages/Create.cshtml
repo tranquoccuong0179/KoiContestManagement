@@ -21,11 +21,14 @@
                 <select asp-for="Registration.KoiId" class="form-control" asp-items="ViewBag.KoiId" style="border-color: #3b5d50;"></select>
             </div>
 
-            <!-- Category Dropdown -->
+            <!-- Hiển thị tên Category dưới dạng text, không cho phép chỉnh sửa -->
             <div class="form-group mt-3">
-                <label asp-for="Registration.CompetitionCategoryId" class="control-label" style="color: #3b5d50;">Category</label>
-                <select asp-for="Registration.CompetitionCategoryId" class="form-control" asp-items="ViewBag.CompetitionCategoryId" style="border-color: #3b5d50;"></select>
+                <label class="control-label" style="color: #3b5d50;">Category</label>
+                <input type="text" class="form-control" value="@ViewData["CategoryName"]" readonly style="border-color: #3b5d50;" />
             </div>
+
+            <!-- Truyền CompetitionCategoryId dưới dạng input hidden -->
+            <input type="hidden" asp-for="Registration.CompetitionCategoryId" value="@ViewData["CompetitionCategoryId"]" />
 
             <!-- Submit Button -->
             <div class="form-group mt-4">

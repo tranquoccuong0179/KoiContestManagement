@@ -9,6 +9,7 @@
 <style>
     .content-wrapper {
         margin: 20px;
+        padding-bottom: 100px; /* Khoảng trống dưới để tránh bị footer đè */
     }
     /* Định dạng cho container chứa cả hai nút */
     .button-container {
@@ -74,7 +75,7 @@
                     <select asp-for="Registration.CompetitionCategoryId" class="form-control" asp-items="ViewBag.CompetitionCategoryId"></select>
                     <span asp-validation-for="Registration.CompetitionCategoryId" class="text-danger"></span>
                 </div>
-                @if (userRole == "Admin")
+                @if (userRole == "Admin" && !Model.Registration.IsCheckIn)
                 {
                     <div class="form-group form-check">
                         <label class="form-check-label">

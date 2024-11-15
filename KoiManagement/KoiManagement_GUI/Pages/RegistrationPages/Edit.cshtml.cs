@@ -34,7 +34,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
         public Registration Registration { get; set; } = default!;
 
         bool wasCheckIn = false;
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id, string competitionid)
         {
             if (id == null)
             {
@@ -48,10 +48,13 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 return NotFound();
             }
             Registration = registration;
-            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategoryService.GetCompetitionCategories(), "Id", "Id");
-            Task<List<Koi>> koiTask = koiService.GetAll();
+            string userId = registrationService.GetUserIdByKoiId(registration.KoiId);
+
+            var competitionCategories = competitionCategoryService.GetCompetitionCategoryByCompetitionId(competitionid);
+            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategories, "Id", "CategoryName");
+            Task<List<Koi>> koiTask = koiService.GetByUserIdActive(userId);
             List<Koi> koiList = await koiTask;
-            ViewData["KoiId"] = new SelectList(koiList, "Id", "Id");
+            ViewData["KoiId"] = new SelectList(koiList, "Id", "Name");
             return Page();
         }
 

@@ -46,6 +46,11 @@ namespace KoiManagement_DAO
             return result;
         }
 
+        public CompetitionCategory? GetCompetitionCategory(string competitionId, string categoryId)
+        {
+            return context.CompetitionCategories.SingleOrDefault(m => m.CompetitionId.Equals(competitionId) && m.CategoryId.Equals(categoryId));
+        }
+
         public bool AddCompetitionCategory(CompetitionCategory competitionCategory)
         {
             bool result = false;

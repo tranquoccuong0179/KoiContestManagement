@@ -4,75 +4,73 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>
+    .content-wrapper {
+        margin: 20px;
+        padding-bottom: 100px; /* Khoảng trống dưới để tránh bị footer đè */
+    }
 
-<h1>Index</h1>
+    h1 {
+        text-align: center; /* Căn giữa chỉ cho thẻ h1 */
+    }
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Result[0].FinalMark)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Result[0].Ranking)
-            </th>
-@*             <th>
-                @Html.DisplayNameFor(model => model.Result[0].Koi)
-            </th> *@
-            <th>
-                @Html.DisplayNameFor(model => model.Result[0].Registration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Result[0].Active)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Result[0].CreateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Result[0].UpdateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Result[0].DeleteAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Result) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinalMark)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ranking)
-            </td>
-@*             <td>
-                @Html.DisplayFor(modelItem => item.Koi.Id)
-            </td> *@
-            <td>
-                @Html.DisplayFor(modelItem => item.Registration.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeleteAt)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    .koi-thumbnail {
+        width: 100px; /* Kích thước ảnh tùy chỉnh */
+        height: auto;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="content-wrapper">
+    
+    @if (Model.Result.Count == 0)
+    {
+        <h1>Cuộc thi @ViewData["CompetitionName"] hiện chưa có kể quả</h1>
+    }
+    else
+    {
+        <h1>Kết quả cuộc thi @ViewData["CompetitionName"]</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Result[0].Ranking)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Result[0].FinalMark)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Result[0].Registration.Koi.Name)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Result)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ranking)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FinalMark)
+                        </td>
+                        <td>
+                            <div class="koi-info">
+                                <span>@Html.DisplayFor(modelItem => item.Registration.Koi.Name)</span>
+                                <br />
+                                <img class="koi-thumbnail img-fluid" src="@Html.DisplayFor(model => item.Registration.Koi.Image)"
+                                     alt="@Html.DisplayFor(model => item.Registration.KoiId)" />
+                            </div>
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

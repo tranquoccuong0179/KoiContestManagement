@@ -17,5 +17,7 @@ namespace KoiManagement_Repositories.Repository
         public void DeleteAllCategoriesForCompetition(string competitionId) => CompetitionCategoryDAO.Instance.DeleteAllCategoriesForCompetition(competitionId);
 
         public void UpdateCompetitionCategories(string competitionId, List<string> selectedCategoryIds) => CompetitionCategoryDAO.Instance.UpdateCompetitionCategories(competitionId, selectedCategoryIds);
+
+        public CompetitionCategory? GetCompetitionCategory(string competitionId, string categoryId) => CompetitionCategoryDAO.Instance.GetCompetitionCategory(competitionId, categoryId);
     }
 }

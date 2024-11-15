@@ -11,23 +11,44 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
         private readonly IRegistrationService registrationService;
         private readonly IKoiService koiService;
         private readonly ICompetitionCategoryService competitionCategoryService;
+        private readonly ICategoryService categoryService;
 
-        public CreateModel(IRegistrationService registrationService, IKoiService koiService, ICompetitionCategoryService competitionCategoryService)
+        public CreateModel(IRegistrationService registrationService, IKoiService koiService, ICompetitionCategoryService competitionCategoryService, ICategoryService categoryService)
         {
             this.registrationService = registrationService;
             this.koiService = koiService;
             this.competitionCategoryService = competitionCategoryService;
+            this.categoryService = categoryService;
         }
 
-        public async Task<IActionResult> OnGet(string? competitionId)
+        public async Task<IActionResult> OnGet(string? competitionId, string? categoryId)
         {
             string userId = HttpContext.Session.GetString("Id");
 
-            var competitionCategories = competitionCategoryService.GetCompetitionCategoryByCompetitionId(competitionId);
-            ViewData["CompetitionCategoryId"] = new SelectList(competitionCategories, "Id", "CategoryName");
+            var category = categoryService.GetCategory(categoryId);
+            ViewData["CategoryName"] = category.Name;
+
+            var competiotionCategory = competitionCategoryService.GetCompetitionCategory(competitionId, categoryId);
+            ViewData["CompetitionCategoryId"] = competiotionCategory.Id;
+
+            var registration = registrationService.GetRegistrations(userId);
             Task<List<Koi>> koiTask = koiService.GetByUserIdActive(userId);
             List<Koi> koiList = await koiTask;
-            ViewData["KoiId"] = new SelectList(koiList, "Id", "Name");
+
+            List<Koi> listCheck = new List<Koi>(koiList);
+            foreach (var regis in registration)
+            {
+                foreach (var koi in koiList)
+                {
+                    if(regis.CompetitionCategoryId.Equals(competiotionCategory.Id) && regis.KoiId.Equals(koi.Id))
+                    {
+                        listCheck.Remove(koi);
+                    }
+                }
+            }
+
+            
+            ViewData["KoiId"] = new SelectList(listCheck, "Id", "Name");
             return Page();
         }
 
