@@ -90,7 +90,10 @@
     <h1>Registration</h1>
 
     <p style="text-align: right;">
-        <a asp-page="/CompetitionPages/Index" class="btn-custom">Sign up for another competition</a>
+        @if (userRole == "Contestant")
+        {
+            <a asp-page="/CompetitionPages/Index" class="btn-custom">Sign up for another competition</a>
+        }
     </p>
 
     <table class="table">
