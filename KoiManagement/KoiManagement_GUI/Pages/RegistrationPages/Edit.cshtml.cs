@@ -69,7 +69,7 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
 
 
             if (!updateSuccess)
-            {
+            { 
                 // Kiểm tra nếu CandidateProfile không tồn tại
                 if (!RegistrationExists(Registration.Id))
                 {

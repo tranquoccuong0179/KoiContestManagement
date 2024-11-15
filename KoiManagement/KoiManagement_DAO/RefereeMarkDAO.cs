@@ -33,7 +33,7 @@ namespace KoiManagement_DAO
         public RefereeMark GetRefereeMark(string id)
         {
 
-            var entity = context.RefereeMarks.SingleOrDefault(m => m.Id.Equals(id) && m.Active == true);
+            var entity = context.RefereeMarks.Include(r => r.CompetitionRound).ThenInclude(r => r.Koi).Include(k => k.User).SingleOrDefault(m => m.Id.Equals(id) && m.Active == true);
             if (entity != null)
             {
                 context.Entry(entity).State = EntityState.Detached;
