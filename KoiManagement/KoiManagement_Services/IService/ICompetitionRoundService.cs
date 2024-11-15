@@ -20,9 +20,7 @@ namespace KoiManagement_Services.IService
         public bool DeleteCompetitionRound(CompetitionRound competitionRound);
 
         public bool CheckIfAnotherRoundHasStarted(string competitionId, string id);
-        public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top);
-        public bool CheckIfAnotherRoundHasStarted(string competitionId , string id);
-  
+        //public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top);  
 
         //public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top);
 

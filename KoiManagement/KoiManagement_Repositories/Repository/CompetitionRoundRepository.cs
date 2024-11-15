@@ -22,7 +22,7 @@ namespace KoiManagement_Repositories.Repository
         public Dictionary<(CompetitionCategory CompetitionCategory, Round Round), List<Koi>> GetCompetitionRoundWithKoi(string competitionId, string roundId) => CompetitionRoundDAO.Instance.GetCompetitionRoundWithKoi(competitionId, roundId);
         public bool CheckIfAnotherRoundHasStarted(string competitionId, string id) => CompetitionRoundDAO.Instance.CheckIfAnotherRoundHasStarted(competitionId, id);
 
-        public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.GetTopCompetitionRoundsByAverageScoreAsync(competitionId, roundId, top);
+        //public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.GetTopCompetitionRoundsByAverageScoreAsync(competitionId, roundId, top);
 
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) => CompetitionRoundDAO.Instance.AddNewCompetitionRoundBasedOnTopScoresAsync(competitionId, roundId, top);
     }
