@@ -36,6 +36,7 @@
                     {
                         @foreach (var item in Model.CompetitionRoundWithKoi)
                         {
+                            var koiCount = item.Value?.Count ?? 0;
                             <tr>
                                 <td class="align-middle">@(item.Key.CompetitionCategory?.Competition?.Name ?? "N/A")</td>
                                 <td class="align-middle">@(item.Key.CompetitionCategory?.Category?.Name ?? "N/A")</td>
@@ -46,7 +47,10 @@
                                         {
                                             <li class="mb-1">
                                                 <i class="fas fa-fish me-2 text-primary"></i>
-                                                <a asp-page="./Details" asp-route-koiId="@koi?.Id" class="text-decoration-none">
+                                                <a asp-page="./Details" asp-route-koiId="@koi?.Id"
+                                                    asp-route-roundId="@item.Key.Round?.Id"
+                                                    asp-route-competitionCategoryId="@item.Key.CompetitionCategory?.Id"
+                                                    class="text-decoration-none">
                                                     @(koi?.Name ?? "Unknown Koi")
                                                 </a>
                                             </li>
@@ -54,6 +58,13 @@
                                     </ul>
                                 </td>
                                 <td class="align-middle">
+                                    <a asp-page="/CompetitionRoundPages/ViewPoints"
+                                       asp-route-competitionCategoryId="@item.Key.CompetitionCategory?.Id"
+                                       asp-route-roundId="@item.Key.Round?.Id"
+                                       asp-route-koiCount="@koiCount"
+                                       class="btn btn-primary">
+                                        View Top (@koiCount)View Top
+                                    </a>
                                     <a asp-page="./Delete" asp-route-competitionCategoryId="@item.Key.CompetitionCategory?.Id"
                                         asp-route-roundId="@item.Key.Round?.Id" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash-alt me-1"></i> Xóa

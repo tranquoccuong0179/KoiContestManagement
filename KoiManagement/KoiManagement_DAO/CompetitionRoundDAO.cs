@@ -1,5 +1,7 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_DAO.DTO;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.ConstrainedExecution;
 
 namespace KoiManagement_DAO
 {
@@ -47,6 +49,18 @@ namespace KoiManagement_DAO
                 //Log
             }
             return result;
+        }
+
+        public string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId)
+        {
+            var competitionRound = context.CompetitionRounds
+            .FirstOrDefault(cr =>
+                    cr.Koi.Id == koiId &&                
+            cr.Round.Id == roundId &&
+            cr.CompetitionCategory.Id == competitionCategoryId
+                );
+
+            return competitionRound?.Id;
         }
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound)
@@ -119,7 +133,7 @@ namespace KoiManagement_DAO
                 .Any(cr => cr.CompetitionCategoryId == competitionId && cr.RoundId == id);
         }
 
-        public async Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScoreAsync(string competitionId, string roundId, int top)
+        public async Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top)
         {
             var topCompetitionRounds = await context.RefereeMarks
                 .Where(rm => rm.CompetitionRound.CompetitionCategoryId == competitionId && rm.CompetitionRound.RoundId == roundId)
@@ -140,43 +154,51 @@ namespace KoiManagement_DAO
 
             return topRounds;
         }
-
-        public async Task AddNewCompetitionRoundBasedOnTopScoresAsync(string competitionId, string roundId, int top)
+        public List<CompetitionRoundInfoDTO> GetListIDByCompetitionCategoryIdNRoundId(string competitionCategoryId, string roundId) 
         {
+            var competitionRoundInfoList = context.CompetitionRounds
+             .Where(cr => cr.CompetitionCategoryId == competitionCategoryId && cr.RoundId == roundId).Include(cr => cr.Koi).ThenInclude(cr => cr.User)
+             .Select(cr => new CompetitionRoundInfoDTO
+             {
+                 CompetitionRoundId = cr.Id,
+                 KoiId = cr.KoiId,
+                 KoiName = cr.Koi.Name,         
+                 OwnerName = cr.Koi.User.FullName 
+             })
+             .ToList();
 
-            var topCompetitionRounds = await GetTopCompetitionRoundsByAverageScoreAsync(competitionId, roundId, top);
+            return competitionRoundInfoList;
+        }
 
-            string newRoundId;
-            switch (top)
+        public async Task<bool> AddNewCompetitionRoundBasedOnTopScoresAsync(string competitionId, string roundId, int top)
+        {
+            bool result = false;
+
+            var topCompetitionRounds = await GetTopCompetitionRoundsByAverageScore(competitionId, roundId, top);
+            try
             {
-                case 8:
-                    newRoundId = "7ad10d9064fd411184bd57c1a6a94ba8";
-                    break;
-                case 4:
-                    newRoundId = "ab6d43fba87b45f3a28a5d76e03c0fc7";
-                    break;
-                case 2:
-                    newRoundId = "032d64ec6f8642c09e22a6f63193e76e";
-                    break;
-                default:
-                    throw new ArgumentException("Invalid 'top' value. Only 8, 4, or 2 are allowed.");
-            }
-
-
-            foreach (var topRecord in topCompetitionRounds)
-            {
-                var newCompetitionRound = new CompetitionRound
+                foreach (var topRecord in topCompetitionRounds)
                 {
-                    KoiId = topRecord.KoiId,
-                    CompetitionCategoryId = topRecord.CompetitionCategoryId,
-                    RoundId = newRoundId
-                };
+                  
+                    var newCompetitionRound = new CompetitionRound
+                    {
+                        KoiId = topRecord.KoiId,                
+                        CompetitionCategoryId = topRecord.CompetitionCategoryId,
+                        RoundId = roundId
+                    };
 
+                    context.CompetitionRounds.Add(newCompetitionRound);
+                }
 
-                context.CompetitionRounds.Add(newCompetitionRound);
+                await context.SaveChangesAsync();
+                result = true;
             }
-
-            await context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                // Log the error
+               
+            }
+            return result;
         }
 
 

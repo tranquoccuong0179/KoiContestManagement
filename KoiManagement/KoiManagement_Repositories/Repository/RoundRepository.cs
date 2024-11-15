@@ -16,5 +16,6 @@ namespace KoiManagement_Repositories.Repository
 
         public Round? GetFirstRound() => RoundDAO.Instance.GetFirstRound();
         public Round? GetNextRound(int currentRoundNumber) => RoundDAO.Instance.GetNextRound(currentRoundNumber);
+        public bool IsFinalRound(Round round) => RoundDAO.Instance.IsFinalRound(round);
     }
 }

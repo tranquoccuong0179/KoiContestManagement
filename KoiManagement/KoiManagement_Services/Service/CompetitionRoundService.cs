@@ -1,4 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_DAO;
+using KoiManagement_DAO.DTO;
 using KoiManagement_Repositories.IRepository;
 using KoiManagement_Repositories.Repository;
 using KoiManagement_Services.IService;
@@ -16,6 +18,10 @@ namespace KoiManagement_Services.Service
 
         public CompetitionRound? GetById(string id) => _competitionRoundRepository.GetById(id);
 
+        public string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId) => _competitionRoundRepository.GetCompetitionRoundId(koiId, roundId, competitionCategoryId);
+
+        public List<CompetitionRoundInfoDTO> GetListIDByCompetitionCategoryIdNRoundId(string competitionCategoryId, string roundId) => _competitionRoundRepository.GetListIDByCompetitionCategoryIdNRoundId(competitionCategoryId, roundId);
+
         public bool AddCompetitionRound(CompetitionRound competitionRound) => _competitionRoundRepository.AddCompetitionRound(competitionRound);
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound) => _competitionRoundRepository.UpdateCompetitionRound(competitionRound);
@@ -29,6 +35,11 @@ namespace KoiManagement_Services.Service
         public Task<List<CompetitionRound>> GetTopCompetitionRoundsByAverageScore(string competitionId, string roundId, int top) => _competitionRoundRepository.GetTopCompetitionRoundsByAverageScore(competitionId, roundId, top);
         public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) => _competitionRoundRepository.AddNewCompetitionRoundBasedOnTopScores(competitionId, roundId, top);
 
+        //public Task AddNewCompetitionRoundBasedOnTopScores(string competitionId, string roundId, int top) 
+        //{ 
+            
+        //    _competitionRoundRepository.AddNewCompetitionRoundBasedOnTopScores(competitionId,roundId,top);
+        //}
         public bool DeleteCompetitionRoundByCompetitionIDAndRoundID(string competitionId, string roundId)
         {
             bool isDeleted = false;

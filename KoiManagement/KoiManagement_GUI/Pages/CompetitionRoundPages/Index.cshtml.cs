@@ -20,33 +20,7 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
             CompetitionRoundWithKoi = competitionRoundService.GetCompetitionRoundWithKoi(competitionCategoryId, roundId);
 
         }
-
-
-        //public class DeleteModel
-        //{
-        //    public string CompetitionCategoryId { get; set; }
-        //    public string RoundId { get; set; }
-        //}
-
-        //public IActionResult OnPostDelete([FromBody] DeleteModel model)
-        //{
-        //    if (string.IsNullOrEmpty(model.CompetitionCategoryId) || string.IsNullOrEmpty(model.RoundId))
-        //    {
-        //        return BadRequest("Invalid competition or round ID.");
-        //    }
-
-        //    var success = competitionRoundService.DeleteCompetitionRoundByCompetitionIDAndRoundID(
-        //        model.CompetitionCategoryId,
-        //        model.RoundId);
-
-        //    if (success)
-        //    {
-        //        return new JsonResult(new { success = true });
-        //    }
-
-        //    return StatusCode(500, "Error deleting competition rounds.");
-        //}
-
+        
     }
 }
 

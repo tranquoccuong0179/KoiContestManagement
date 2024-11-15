@@ -1,4 +1,10 @@
 ﻿using KoiManagement_BusinessObjects;
+using KoiManagement_DAO.DTO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace KoiManagement_Services.IService
 {
@@ -10,5 +16,6 @@ namespace KoiManagement_Services.IService
         public bool UpdateRefereeMark(RefereeMark refereeMarkUpdate);
         public bool DeleteRefereeMark(RefereeMark refereeMarkDelete);
         public RefereeMark? GetExistRefereeMark(string competitionId, string userId);
+        public List<CompetitionRoundScore> GetTopCompetitionRoundScoreByCRIdnRId(string competitionCategoryId, string roundId, int top);
     }
 }

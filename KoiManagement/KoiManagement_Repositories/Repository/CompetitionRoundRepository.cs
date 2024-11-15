@@ -1,5 +1,6 @@
 ﻿using KoiManagement_BusinessObjects;
 using KoiManagement_DAO;
+using KoiManagement_DAO.DTO;
 using KoiManagement_Repositories.IRepository;
 
 namespace KoiManagement_Repositories.Repository
@@ -9,7 +10,9 @@ namespace KoiManagement_Repositories.Repository
         public List<CompetitionRound> GetAll() => CompetitionRoundDAO.Instance.GetAll();
 
         public CompetitionRound? GetById(string id) => CompetitionRoundDAO.Instance.GetById(id);
+        public List<CompetitionRoundInfoDTO> GetListIDByCompetitionCategoryIdNRoundId(string competitionCategoryId, string roundId )=> CompetitionRoundDAO.Instance.GetListIDByCompetitionCategoryIdNRoundId(competitionCategoryId, roundId);
 
+        public  string GetCompetitionRoundId(string koiId, string roundId, string competitionCategoryId) => CompetitionRoundDAO.Instance.GetCompetitionRoundId(koiId, roundId, competitionCategoryId);
         public bool AddCompetitionRound(CompetitionRound competitionRound) => CompetitionRoundDAO.Instance.AddCompetitionRound(competitionRound);
 
         public bool UpdateCompetitionRound(CompetitionRound competitionRound) => CompetitionRoundDAO.Instance.UpdateCompetitionRound(competitionRound);

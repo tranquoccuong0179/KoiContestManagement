@@ -108,12 +108,19 @@ namespace KoiManagement_DAO
         }
         public Round? GetFirstRound()
         {
-            return context.Rounds.OrderBy(r => r.OrderNumber).FirstOrDefault();
+            return context.Rounds.OrderByDescending(r => r.OrderNumber).FirstOrDefault();
         }
 
         public Round? GetNextRound(int currentRoundNumber)
         {
-            return context.Rounds.Where(r => r.OrderNumber > currentRoundNumber).OrderBy(r => r.OrderNumber).FirstOrDefault();
+            return  context.Rounds.Where(r => r.OrderNumber < currentRoundNumber).OrderBy(r => r.OrderNumber).FirstOrDefault();
         }
+        public bool IsFinalRound(Round round)
+        {
+            var min = context.Rounds.Min(r => r.OrderNumber);
+
+            return round.OrderNumber == min;
+        }
+
     }
 }

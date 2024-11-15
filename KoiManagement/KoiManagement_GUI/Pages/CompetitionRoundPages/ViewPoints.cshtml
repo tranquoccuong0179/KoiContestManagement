@@ -1,0 +1,107 @@
+﻿@page
+@model KoiManagement_GUI.Pages.CompetitionRoundPages.ViewPointsModel
+
+@{
+    ViewData["Title"] = "Điểm số hiện tại của Koi";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Top Koi theo điểm trung bình</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th>Thứ hạng</th>
+                        <th>Tên Koi</th>
+                        <th>Chủ sở hữu</th>
+                        <th>Điểm trung bình</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.TopKois?.Any() == true)
+                    {
+                        @for (int i = 0; i < Model.TopKois.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@Model.TopKois[i].KoiName</td>
+                                <td>@Model.TopKois[i].OwnerName</td>
+                                <td>@Model.TopKois[i].AveragePoint.ToString("F2")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-3">
+                                <i class="fas fa-info-circle me-2"></i>Chưa có dữ liệu điểm số
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="text-center mb-3">
+                @if (Model.CanAddNewRound || Model.CanExportResult)
+                {
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoundModal">
+                        @if (Model.IsLastRound)
+                        {
+                            <span>Export Results</span>
+                        }
+                        else
+                        {
+                            <span>Add Next Round</span>
+                        }
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Add Round or Export -->
+<div class="modal fade" id="addRoundModal" tabindex="-1" aria-labelledby="addRoundModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post">
+                <input type="hidden" asp-for="CompetitionCategoryId" />
+                <input type="hidden" asp-for="RoundId" />
+                <input type="hidden" asp-for="KoiCount" />
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addRoundModalLabel">
+                        @if (Model.IsLastRound)
+                        {
+                            <span>Export Results</span>
+                        }
+                        else
+                        {
+                            <span>Add Next Round</span>
+                        }
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to proceed with this action?</p>
+                </div>
+                <div class="modal-footer">
+                    @if (Model.IsLastRound)
+                    {
+                        <button type="submit" class="btn btn-success" asp-page-handler="ExportResult">
+                            Export
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary" asp-page-handler="AddRound">
+                            Add Round
+                        </button>
+                    }
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

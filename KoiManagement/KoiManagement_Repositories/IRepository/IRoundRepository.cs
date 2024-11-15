@@ -12,5 +12,6 @@ namespace KoiManagement_Repositories.IRepository
         public Round? GetRoundByName(string name);
         public Round? GetFirstRound();
         public Round? GetNextRound(int currentRoundNumber);
+        public bool IsFinalRound(Round round);
     }
 }
