@@ -86,7 +86,7 @@ namespace KoiManagement_GUI.Pages.RefereeMarkPages
             RefereeMark.Point = totalPoints;
             refereeMarkService.UpdateRefereeMark(RefereeMark);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../CompetitionRoundPages/Index");
         }
     }
 

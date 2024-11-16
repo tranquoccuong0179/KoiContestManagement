@@ -25,11 +25,11 @@ namespace KoiManagement_DAO
         }
         public List<CompetitionRound> GetAll()
         {
-            return context.CompetitionRounds.Include(c => c.CompetitionCategory).ThenInclude(c => c.Category).Include(c => c.Koi).Include(c => c.Round).ToList();
+            return context.CompetitionRounds.Include(c => c.CompetitionCategory).ThenInclude(c => c.Category).Include(c => c.Koi).Include(c => c.Round).Where(c => c.Active == true).ToList();
         }
         public CompetitionRound? GetById(string id)
         {
-            return context.CompetitionRounds.Include(c => c.CompetitionCategory).Include(c => c.Koi).Include(c => c.Round).SingleOrDefault(c => c.Id.Equals(id));
+            return context.CompetitionRounds.Include(c => c.CompetitionCategory).Include(c => c.Koi).Include(c => c.Round).SingleOrDefault(c => c.Id.Equals(id) && c.Active == true);
         }
         public bool AddCompetitionRound(CompetitionRound competitionRound)
         {
@@ -55,7 +55,7 @@ namespace KoiManagement_DAO
         {
             var competitionRound = context.CompetitionRounds
             .FirstOrDefault(cr =>
-                    cr.Koi.Id == koiId &&                
+                    cr.Koi.Id == koiId && cr.Active == true &&              
             cr.Round.Id == roundId &&
             cr.CompetitionCategory.Id == competitionCategoryId
                 );
@@ -91,7 +91,8 @@ namespace KoiManagement_DAO
             {
                 if (existComperitionRound != null)
                 {
-                    context.CompetitionRounds.Remove(competitionRound);
+                    competitionRound.Active = false;
+                    context.CompetitionRounds.Update(competitionRound);
                     context.SaveChanges();
                     result = true;
                 }
@@ -107,7 +108,7 @@ namespace KoiManagement_DAO
 
             var competitionRounds = context.CompetitionRounds
        .Where(cr => (string.IsNullOrWhiteSpace(competitionId) || cr.CompetitionCategory.Id == competitionId) &&
-                    (string.IsNullOrWhiteSpace(roundId) || cr.Round.Id == roundId)).Include(cr => cr.CompetitionCategory)
+                    (string.IsNullOrWhiteSpace(roundId) || cr.Round.Id == roundId) && cr.Active == true).Include(cr => cr.CompetitionCategory)
             .ThenInclude(cc => cc.Competition)
         .Include(cr => cr.CompetitionCategory)
             .ThenInclude(cc => cc.Category)
@@ -157,7 +158,7 @@ namespace KoiManagement_DAO
         public List<CompetitionRoundInfoDTO> GetListIDByCompetitionCategoryIdNRoundId(string competitionCategoryId, string roundId) 
         {
             var competitionRoundInfoList = context.CompetitionRounds
-             .Where(cr => cr.CompetitionCategoryId == competitionCategoryId && cr.RoundId == roundId).Include(cr => cr.Koi).ThenInclude(cr => cr.User)
+             .Where(cr => cr.CompetitionCategoryId == competitionCategoryId && cr.RoundId == roundId && cr.Active == true).Include(cr => cr.Koi).ThenInclude(cr => cr.User)
              .Select(cr => new CompetitionRoundInfoDTO
              {
                  CompetitionRoundId = cr.Id,

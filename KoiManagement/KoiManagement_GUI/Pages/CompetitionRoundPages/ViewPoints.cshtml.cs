@@ -36,10 +36,10 @@ namespace KoiManagement_GUI.Pages.CompetitionRoundPages
         [BindProperty(SupportsGet = true)]
         public int KoiCount { get; set; }
 
-        public bool IsLastRound { get; set; }
+        public bool IsLastRound { get; set; } = true;
         public bool IsNextRoundStarted { get; set; }
-        public bool CanAddNewRound { get; set; }
-        public bool CanExportResult { get; set; }
+        public bool CanAddNewRound { get; set; } = true;
+        public bool CanExportResult { get; set; } = true;
 
         public async Task<IActionResult> OnGetAsync(string competitionCategoryId, string roundId, int koiCount)
         {

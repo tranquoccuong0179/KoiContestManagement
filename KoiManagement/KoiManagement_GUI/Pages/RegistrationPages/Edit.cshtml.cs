@@ -94,11 +94,11 @@ namespace KoiManagement_GUI.Pages.RegistrationPages
                 bool roundExists = competitionRoundService.CheckIfAnotherRoundHasStarted(Registration.CompetitionCategory.Id, nextRound.Id);
 
 
-                if (roundExists)
-                {
-                    ModelState.AddModelError(string.Empty, "Another round has already started. You cannot check in.");
-                    return NotFound();
-                }
+                //if (roundExists)
+                //{
+                //    ModelState.AddModelError(string.Empty, "Another round has already started. You cannot check in.");
+                //    return NotFound();
+                //}
 
                 // Handle the creation of a new CompetitionRound
                 if (Registration.CompetitionCategory == null || Registration.CompetitionCategory.CompetitionId == null)
